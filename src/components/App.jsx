@@ -10,8 +10,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>IT WORKS!!!!</h1>
+      <div className="background">
+        <h1 className="blue">BLUE COLOR</h1>
+        <h1 className="dark-blue">DARK BLUE COLOR</h1>
+        <h1 className="light-blue">LIGHT BLUE COLOR</h1>
+        <h1 className="black-color">BLACK COLOR</h1>
+        <h1 className="white-color">WHITE COLOR</h1>
       </div>
     );
   }
