@@ -1,1 +1,6 @@
-@import './components/home.scss'
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import './components/navbar/Navbar.scss';
+
+.body {
+  color: $white !important;
+}

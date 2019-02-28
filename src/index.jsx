@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './components/App.jsx';
 
+require('webpack-icons-installer/google');
+
 ReactDOM.render(
-  <App />, document.getElementById('root')
+  <BrowserRouter><App /></BrowserRouter>, document.getElementById('root')
 );
