@@ -13,7 +13,7 @@ const NavBar = () => (
   <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
     <Navbar.Brand href="/">
       <img
-        src="https://sample-videos.com/img/Sample-jpg-image-500kb.jpg"
+        src="src/components/navbar/progeek.png"
         width="100px  "
         alt=""
       />
