@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   Navbar,
   Nav,
-  NavDropdown,
-  Form,
   Button,
   FormControl,
   InputGroup
 } from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
 
 const NavBar = () => (
   <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -35,10 +35,10 @@ const NavBar = () => (
         </InputGroup>
       </Nav>
       <Nav>
-        <Nav.Link href="#deets">Signup</Nav.Link>
-        <Nav.Link eventKey={2} href="#memes">
+        <Link to="/signup">Signup</Link>
+        <Link to="/login">
           Login
-        </Nav.Link>
+        </Link>
         <Nav.Link eventKey={3} href="/cart" className="material-icons">
           shopping_cart
         </Nav.Link>
