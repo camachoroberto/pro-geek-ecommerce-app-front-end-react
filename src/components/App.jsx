@@ -4,6 +4,7 @@ import CategoryList from './categorylist/CategoryList.jsx';
 import '../css/main.scss';
 import NavBar from './navbar/Navbar.jsx';
 import Form from './form/Form.jsx';
+import Footer from './footer/Footer.jsx';
 
 class App extends Component {
   constructor() {
@@ -31,6 +32,7 @@ class App extends Component {
         <NavBar />
         <CategoryList categories={this.state.categories} />
         <Form name username password />
+        <Footer />
       </div>
     );
   }
