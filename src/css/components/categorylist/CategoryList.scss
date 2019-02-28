@@ -1,0 +1,11 @@
+.list-container {
+  display: flex;
+  justify-content: space-evenly;
+  border: 2px, solid, black;
+}
+
+.list-item {
+  text-decoration: none;
+  color: $white;
+  background-color: $black;
+}

@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import CategoryList from './categorylist/CategoryList.jsx';
 import '../css/main.scss';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      categories: []
     };
+  }
+
+  componentDidMount() {
+    axios.get('https://pro-geek-ecommerce-api.herokuapp.com/categories')
+      .then((response) => {
+        const categories = response.data.response;
+        this.setState({ categories }, () => {
+        });
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   render() {
     return (
-      <div className="background">
-        <h1 className="blue">BLUE COLOR</h1>
-        <h1 className="dark-blue">DARK BLUE COLOR</h1>
-        <h1 className="light-blue">LIGHT BLUE COLOR</h1>
-        <h1 className="black-color">BLACK COLOR</h1>
-        <h1 className="white-color">WHITE COLOR</h1>
+      <div>
+        <CategoryList categories={this.state.categories} />
       </div>
     );
   }
