@@ -34,7 +34,7 @@ const Footer = () => (
         <div id="fb-root"><div className="fb-page" data-href="https://www.facebook.com/ConviteriaDouxPapier/" data-width="250" data-hide-cover="false" data-show-facepile="false" /></div>
       </div>
     </div>
-    <div className="row ">
+    <div className="row">
       <div className="col-md-2 side-container" />
       <div className="col-md-8 methods-container">
         <h5>Payment & Delivery</h5>
