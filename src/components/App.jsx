@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/main.scss';
 import NavBar from './navbar/Navbar.jsx';
 import Form from './form/Form.jsx';
+import Counter from './counter/Counter.jsx'
 
 class App extends Component {
   constructor() {
@@ -14,6 +15,8 @@ class App extends Component {
       <div className="body">
         <NavBar />
         <Form name username password />
+        <Counter />
+
       </div>
     );
   }
