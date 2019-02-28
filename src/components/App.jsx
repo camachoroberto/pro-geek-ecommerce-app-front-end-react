@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import CategoryList from './categorylist/CategoryList.jsx';
 import '../css/main.scss';
+import NavBar from './navbar/Navbar.jsx';
+import Form from './form/Form.jsx';
 
 class App extends Component {
   constructor() {
@@ -25,8 +27,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="body">
+        <NavBar />
         <CategoryList categories={this.state.categories} />
+        <Form name username password />
       </div>
     );
   }
