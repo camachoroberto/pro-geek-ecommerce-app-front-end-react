@@ -18,15 +18,15 @@ const Footer = () => (
       <div className="col-md-3">
         <strong className="header">Contact Information</strong>
         <p className="contact-text" href="sss">
-          <spam className="material-icons">email </spam>
+          <span className="material-icons">email </span>
           - atendimento@progeek.com.br
         </p>
         <p className="contact-text" href="sss">
-          <spam className="material-icons">phone </spam>
+          <span className="material-icons">phone </span>
             - (38) 99145-6183
         </p>
         <p className="contact-text" href="sss">
-          <spam className="material-icons">watch_later </spam>
+          <span className="material-icons">watch_later </span>
             - Monday to Friday from 8 to 12 and from 13:30 to 18
         </p>
       </div>

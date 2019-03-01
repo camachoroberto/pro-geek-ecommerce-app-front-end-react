@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CategoryList from './categorylist/CategoryList.jsx';
 import '../css/main.scss';
 import { Switch, Route } from 'react-router-dom';
+import CategoryList from './categorylist/CategoryList.jsx';
 import NavBar from './navbar/Navbar.jsx';
-import Form from './form/Form.jsx';
 import Footer from './footer/Footer.jsx';
 import Counter from './counter/Counter.jsx';
 import AuthForm from './auth/Form.jsx';
@@ -65,7 +64,6 @@ class App extends Component {
       <div className="body">
         <NavBar />
         <CategoryList categories={categories} />
-        <Form name username password />
         <Counter />
         <Footer />
         <Switch>
