@@ -1,22 +1,13 @@
 import React from 'react';
-import {
-  Navbar,
-  Nav,
-  Button,
-  FormControl,
-  InputGroup
-} from 'react-bootstrap';
-
+import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => (
   <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-    <Navbar.Brand href="/">
-      <img
-        src="src/components/navbar/progeek.png"
-        width="100px  "
-        alt=""
-      />
+    <Navbar.Brand>
+      <Link to="/">
+        <img src="./public/images/progeek.png" width="100px" alt="" />
+      </Link>
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
@@ -36,12 +27,8 @@ const NavBar = () => (
       </Nav>
       <Nav>
         <Link to="/signup">Signup</Link>
-        <Link to="/login">
-          Login
-        </Link>
-        <Nav.Link eventKey={3} href="/cart" className="material-icons">
-          shopping_cart
-        </Nav.Link>
+        <Link to="/login">Login</Link>
+        <Link to="/cart" className="material-icons">shopping_cart</Link>
       </Nav>
     </Navbar.Collapse>
   </Navbar>

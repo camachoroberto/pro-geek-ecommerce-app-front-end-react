@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from './auth-service.jsx';
+import AuthService from './service/auth-service.jsx';
 
 class AuthForm extends Component {
   constructor(props) {
@@ -60,14 +60,14 @@ class AuthForm extends Component {
 
   createForm() {
     return Object.keys(this.props).map((prop, idx) => {
-      console.log(prop)
+      console.log(prop);
       if (prop === 'username' || prop === 'name' || prop === 'password' || prop === 'birthDate') {
         if (prop === 'username') {
           return (
             <div key={idx}>
               <label htmlFor={prop}>
                 Email
-                <input type='text' name={prop} id={prop} value={this.state[prop]} onChange={e => this.handleText(e)} />
+                <input type="text" name={prop} id={prop} value={this.state[prop]} onChange={e => this.handleText(e)} />
               </label>
             </div>
           );

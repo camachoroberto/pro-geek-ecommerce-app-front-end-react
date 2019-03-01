@@ -38,8 +38,8 @@ const Footer = () => (
       <div className="col-md-2 side-container" />
       <div className="col-md-8 methods-container">
         <h5>Payment & Delivery</h5>
-        <img src="./src/components/footer/pagseguro2.png" alt="" height="100" />
-        <img src="./src/components/footer/metodos-envio-correios.png" alt="" height="100" />
+        <img src="./public/images/pagseguro.png" alt="" height="100" />
+        <img src="./public/images/correios.png" alt="" height="100" />
       </div>
       <div className="col-md-2 side-container" />
     </div>
