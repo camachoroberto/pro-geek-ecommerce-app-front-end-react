@@ -18,7 +18,6 @@ class AuthForm extends Component {
   }
 
   getInputType(type) {
-    console.log(type)
     if (type === 'password') {
       this.inputType = type;
     } else {
@@ -60,7 +59,6 @@ class AuthForm extends Component {
 
   createForm() {
     return Object.keys(this.props).map((prop, idx) => {
-      console.log(prop);
       if (prop === 'username' || prop === 'name' || prop === 'password' || prop === 'birthDate') {
         if (prop === 'username') {
           return (

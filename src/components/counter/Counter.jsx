@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
-import { InputGroup, Button, FormControl } from 'react-bootstrap';
-
-class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-
-  }
+import { InputGroup, Button } from 'react-bootstrap';
 
 
+const Counter = (props) => {
 
-  render() {
-    return (
+  const { plus1, minus1, counter} = props
 
-      < div >
-        <InputGroup className="mb-3">
-          <InputGroup.Prepend>
-            <Button variant="outline-secondary" onClick={e => this.props.minus1(e)}>-</Button>
-            <InputGroup.Text>{this.state.counter}</InputGroup.Text>
-          </InputGroup.Prepend>
+  return (
 
-          <InputGroup.Append>
-            <Button variant="outline-secondary" onClick={e => this.props.plus1(e)}>+</Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </div >
+    < div >
+      <InputGroup className="mb-3">
+        <InputGroup.Prepend>
+          <Button variant="outline-secondary" onClick={e => minus1(e)}>-</Button>
+          <InputGroup.Text>{counter}</InputGroup.Text>
+        </InputGroup.Prepend>
 
-    )
-  }
+        <InputGroup.Append>
+          <Button variant="outline-secondary" onClick={e => plus1(e)}>+</Button>
+        </InputGroup.Append>
+      </InputGroup>
+    </div >
 
+  )
 }
+
 
 export default Counter;

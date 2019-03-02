@@ -29,19 +29,23 @@ class ProductCard extends Component {
   }
 
   render() {
-    const { product } = this.props
+    //addCart({[id]: counter})
+    const { product, addCart } = this.props;
+    const { counter } = this.state;
+    const id = product._id;
     return (
       <div className='list-container'>
         <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src=""/>
+          <Card.Img variant="top" src="" />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">${product.price},00</Card.Subtitle>
             <Card.Text>
               {product.description}
             </Card.Text>
-            <Counter  />
-            <Button className="ButtonCardP" variant="primary">BUY</Button>
+            <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
+          <Button variant="primary" className="ButtonCardP" onClick={ () => addCart({[id]:counter})}>BUY</Button>
+            {/* {[id]: counter} */}
           </Card.Body>
         </Card>
       </div>
