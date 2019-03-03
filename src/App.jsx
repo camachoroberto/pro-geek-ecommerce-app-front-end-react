@@ -5,14 +5,11 @@ import { Switch, Route } from 'react-router-dom';
 import CategoryList from './components/categorylist/CategoryList.jsx';
 import NavBar from './components/navbar/Navbar.jsx';
 import Footer from './components/footer/Footer.jsx';
-import Counter from './components/counter/Counter.jsx';
 import ProductCard from './components/productcard/ProductCard.jsx';
 import AuthForm from './components/auth/AuthForm.jsx';
 import AuthService from './components/auth/service/auth-service.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
-import ProductRow from './components/productrow/ProductRow.jsx'
-import SideBar from './components/sidebar/Sidebar.jsx';
-import { Button } from 'react-bootstrap';
+import ProductRow from './components/productrow/ProductRow.jsx';
 
 class App extends Component {
   constructor() {
@@ -29,36 +26,12 @@ class App extends Component {
     this.deleteCart = this.deleteCart.bind(this);
   }
 
-  // cart functions and components
-  addCart(obj) {
-    const { cart } = this.state;
-    this.setState({
-      cart: Object.assign(cart, obj)
-    }, () => console.log(cart))
+  // products and categories arrays
+
+  componentWillMount() {
+    this.setState({ cart: (JSON.parse(localStorage.getItem('cart')) || {}) }, () => console.log('oi', this.state.cart));
   }
 
-  deleteCart(property){
-    const { cart } = this.state;
-    this.setState({
-      cart : Object.assign({}, delete cart[property],cart)
-    }, ()=> console.log(cart))
-  } 
-
-  productRowTable() {
-    const { products, cart } = this.state;
-    return products.map((product) => {
-      if (cart[product._id]) {
-        return <ProductRow product={product} counter={cart[product._id]} addCart={this.addCart}  deleteCart={this.deleteCart}  />
-      }
-    })
-  }
-
-  cardList() {
-    const { products, cart } = this.state;
-    return products.map((product) => <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />)
-  }
-
-  //products and categories arrays
   componentDidMount() {
     axios.get('https://pro-geek-ecommerce-api.herokuapp.com/categories')
       .then((response) => {
@@ -72,14 +45,14 @@ class App extends Component {
     axios.get('https://pro-geek-ecommerce-api.herokuapp.com/products')
       .then((response) => {
         const products = response.data.response;
-        this.setState({ products })
+        this.setState({ products });
       })
       .catch((err) => {
         throw new Error(err);
       });
   }
 
-  //auth components and functions
+  // auth components and functions
   getTheUser(userObj) {
     this.setState({
       loggedInUser: userObj
@@ -103,8 +76,39 @@ class App extends Component {
     }
   }
 
+  // cart functions and components
+  addCart(obj) {
+    const { cart } = this.state;
+    this.setState({
+      cart: Object.assign(cart, obj)
+    }, () => console.log(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  deleteCart(property) {
+    const { cart } = this.state;
+    this.setState({
+      cart: Object.assign({}, delete cart[property], cart)
+    }, () => console.log(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  productRowTable() {
+    const { products, cart } = this.state;
+    return products.map((product) => {
+      if (cart[product._id]) {
+        return <ProductRow product={product} counter={cart[product._id]} addCart={this.addCart} deleteCart={this.deleteCart} />;
+      }
+    });
+  }
+
+  cardList() {
+    const { products, cart } = this.state;
+    return products.map(product => <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />);
+  }
+
   render() {
-    { this.fetchUser() }
+    { this.fetchUser(); }
     const { categories } = this.state;
     return (
       <div className="body">

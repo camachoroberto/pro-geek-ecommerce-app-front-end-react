@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "react-sidebar";
+// import Sidebar from "react-sidebar";
 import AuthForm from '../auth/AuthForm.jsx';
 
 class SideBar extends React.Component {
