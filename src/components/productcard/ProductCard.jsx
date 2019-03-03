@@ -5,6 +5,7 @@ import Counter from '../counter/Counter.jsx';
 class ProductCard extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       counter: 0
     }
@@ -12,27 +13,31 @@ class ProductCard extends Component {
     this.minus1 = this.minus1.bind(this)
   }
 
-  plus1() {
-    const { counter } = this.state;
+
+  componentDidMount() {
+    const { counter } = this.props;
     this.setState({
-      counter: counter + 1,
+      counter: (counter || 0)
     })
+  }
+
+  plus1() {
+    const { counter } = this.state
+    this.setState({ counter: counter + 1 })
   }
 
   minus1() {
     const { counter } = this.state;
     if (counter > 0) {
-      this.setState({
-        counter: counter - 1
-      })
+      this.setState({ counter: counter - 1 })
     }
   }
 
   render() {
-    //addCart({[id]: counter})
-    const { product, addCart } = this.props;
+    const { product, addCart, counterCart } = this.props;
     const { counter } = this.state;
     const id = product._id;
+    const total =  counter + (counterCart||0);
     return (
       <div className='list-container'>
         <Card style={{ width: '18rem' }}>
@@ -44,8 +49,7 @@ class ProductCard extends Component {
               {product.description}
             </Card.Text>
             <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
-          <Button variant="primary" className="ButtonCardP" onClick={ () => addCart({[id]:counter})}>BUY</Button>
-            {/* {[id]: counter} */}
+            <Button variant="primary" className="ButtonCardP" onClick={() => addCart({ [id]: total  })}>BUY</Button>
           </Card.Body>
         </Card>
       </div>

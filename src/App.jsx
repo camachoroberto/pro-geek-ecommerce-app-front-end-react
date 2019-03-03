@@ -10,6 +10,7 @@ import ProductCard from './components/productcard/ProductCard.jsx';
 import AuthForm from './components/auth/AuthForm.jsx';
 import AuthService from './components/auth/service/auth-service.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
+import ProductRow from './components/productrow/ProductRow.jsx'
 import SideBar from './components/sidebar/Sidebar.jsx';
 import { Button } from 'react-bootstrap';
 
@@ -19,22 +20,45 @@ class App extends Component {
     this.state = {
       categories: [],
       products: [],
-       cart: {},
+      cart: {},
       loggedInUser: null
     };
     this.service = new AuthService();
     this.getTheUser = this.getTheUser.bind(this);
-    this.addCart = this.addCart.bind(this)
+    this.addCart = this.addCart.bind(this);
+    this.deleteCart = this.deleteCart.bind(this);
   }
 
+  // cart functions and components
   addCart(obj) {
     const { cart } = this.state;
     this.setState({
-      cart: Object.assign({}, cart, obj)
-    }, () => console.log(this.state.cart))
+      cart: Object.assign(cart, obj)
+    }, () => console.log(cart))
   }
 
+  deleteCart(property){
+    const { cart } = this.state;
+    this.setState({
+      cart : Object.assign({}, delete cart[property],cart)
+    }, ()=> console.log(cart))
+  } 
 
+  productRowTable() {
+    const { products, cart } = this.state;
+    return products.map((product) => {
+      if (cart[product._id]) {
+        return <ProductRow product={product} counter={cart[product._id]} addCart={this.addCart}  deleteCart={this.deleteCart}  />
+      }
+    })
+  }
+
+  cardList() {
+    const { products, cart } = this.state;
+    return products.map((product) => <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />)
+  }
+
+  //products and categories arrays
   componentDidMount() {
     axios.get('https://pro-geek-ecommerce-api.herokuapp.com/categories')
       .then((response) => {
@@ -55,14 +79,11 @@ class App extends Component {
       });
   }
 
-
-
-
-
+  //auth components and functions
   getTheUser(userObj) {
     this.setState({
       loggedInUser: userObj
-    }, () => console.log('bbdvfdgfdbb', this.state));
+    });
   }
 
   fetchUser() {
@@ -72,8 +93,6 @@ class App extends Component {
         .then((response) => {
           this.setState({
             loggedInUser: response
-          }, () => {
-            console.log('aaaa', response);
           });
         })
         .catch((err) => {
@@ -86,14 +105,13 @@ class App extends Component {
 
   render() {
     { this.fetchUser() }
-    const { categories, products } = this.state;
-    const productList = products.map((product) => <ProductCard product={product} addCart={this.addCart} />)
+    const { categories } = this.state;
     return (
       <div className="body">
         <NavBar />
         <CategoryList categories={categories} />
-        <Counter />
-        {productList}
+        {this.cardList()}
+        {this.productRowTable()}
         <Switch>
           <ProtectedRoute user={this.state.loggedInUser} path="/projects" component={AuthForm} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
