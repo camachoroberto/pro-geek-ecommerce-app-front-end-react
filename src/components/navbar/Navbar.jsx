@@ -3,7 +3,7 @@ import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => (
-  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+  <Navbar collapseOnSelect expand="lg" className="nav-bg">
     <Navbar.Brand>
       <Link to="/">
         <img src="./public/images/progeek.png" width="100px" alt="" />

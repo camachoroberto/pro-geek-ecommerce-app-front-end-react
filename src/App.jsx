@@ -10,6 +10,7 @@ import AuthForm from './components/auth/AuthForm.jsx';
 import AuthService from './components/auth/service/auth-service.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
+import Sidebar from './components/sidebar/Sidebar.jsx';
 
 class App extends Component {
   constructor() {
@@ -29,7 +30,7 @@ class App extends Component {
   // products and categories arrays
 
   componentWillMount() {
-    this.setState({ cart: (JSON.parse(localStorage.getItem('cart')) || {}) }, () => console.log('oi', this.state.cart));
+    this.setState({ cart: (JSON.parse(localStorage.getItem('cart')) || {}) });
   }
 
   componentDidMount() {
@@ -81,7 +82,7 @@ class App extends Component {
     const { cart } = this.state;
     this.setState({
       cart: Object.assign(cart, obj)
-    }, () => console.log(cart));
+    });
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
@@ -89,7 +90,7 @@ class App extends Component {
     const { cart } = this.state;
     this.setState({
       cart: Object.assign({}, delete cart[property], cart)
-    }, () => console.log(cart));
+    });
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
@@ -113,6 +114,7 @@ class App extends Component {
     return (
       <div className="body">
         <NavBar />
+        <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
         <CategoryList categories={categories} />
         {this.cardList()}
         {this.productRowTable()}
@@ -121,9 +123,6 @@ class App extends Component {
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
         </Switch>
-        {/* <div>
-          <SideBar />
-        </div> */}
         <Footer />
       </div>
     );

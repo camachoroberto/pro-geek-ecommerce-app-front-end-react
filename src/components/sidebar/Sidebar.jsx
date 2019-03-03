@@ -1,34 +1,22 @@
-import React from "react";
-// import Sidebar from "react-sidebar";
-import AuthForm from '../auth/AuthForm.jsx';
+import React from 'react';
+import { slide as Menu } from 'react-burger-menu';
 
-class SideBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sidebarOpen: false
-    };
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-  }
+export default props => (
+  <Menu {...props} >
+    <a className="menu-item" href="/">
+        Home
+    </a>
 
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
-  }
+    <a className="menu-item" href="/burgers">
+        Burgers
+    </a>
 
-  render() {
-    return (
-      <Sidebar
-        sidebar={<AuthForm username password type="login" getUser={this.getTheUser} />}
-        open={this.state.sidebarOpen}
-        onSetOpen={this.onSetSidebarOpen}
-        styles={{ sidebar: { background: "white", width: "15%" } }}
-      >
-        <button onClick={() => this.onSetSidebarOpen(true)}>
-          Open sidebar
-        </button>
-      </Sidebar>
-    );
-  }
-}
- 
-export default SideBar;
+    <a className="menu-item" href="/pizzas">
+        Pizzas
+    </a>
+
+    <a className="menu-item" href="/desserts">
+        Desserts
+    </a>
+  </Menu>
+);

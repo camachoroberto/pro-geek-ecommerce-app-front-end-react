@@ -39,9 +39,7 @@ class ProductRow extends Component {
         <td><Counter counter={counter} plus1={this.plus1} minus1={this.minus1} /></td>
         <td>{total}</td>
         <td>
-          {' '}
           <Button onClick={() => deleteCart(product._id)} className="material-icons" variant="outline-danger"> delete </Button>
-          {' '}
         </td>
       </tr>
 
