@@ -3,7 +3,7 @@ import axios from 'axios';
 class AuthService {
   constructor() {
     const service = axios.create({
-      baseURL: 'https://pro-geek-ecommerce-api.herokuapp.com/',
+      baseURL: 'http://localhost:8080',
       withCredentials: true
     });
     this.service = service;
@@ -12,7 +12,7 @@ class AuthService {
   signup(name, username, password, birthDate) {
     return this.service.post('/users/signup', { name, username, password, birthDate })
       .then(response => response.data)
-      .catch(err => console.log())
+      .catch(err => console.log(err));
   }
 
   loggedin() {

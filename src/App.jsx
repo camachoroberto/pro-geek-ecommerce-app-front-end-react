@@ -8,6 +8,7 @@ import Footer from './components/footer/Footer.jsx';
 import ProductCard from './components/productcard/ProductCard.jsx';
 import AuthForm from './components/auth/AuthForm.jsx';
 import AuthService from './components/auth/service/auth-service.jsx';
+import FormProduct from './components/routes/formproduct/FormProduct.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
 import Sidebar from './components/sidebar/Sidebar.jsx';
@@ -25,6 +26,7 @@ class App extends Component {
     this.getTheUser = this.getTheUser.bind(this);
     this.addCart = this.addCart.bind(this);
     this.deleteCart = this.deleteCart.bind(this);
+    this.fetchUser = this.fetchUser.bind(this);
   }
 
   // products and categories arrays
@@ -34,7 +36,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://pro-geek-ecommerce-api.herokuapp.com/categories')
+    axios.get('http://localhost:8080/categories')
       .then((response) => {
         const categories = response.data.response;
         this.setState({ categories });
@@ -65,14 +67,10 @@ class App extends Component {
     if (loggedInUser === null) {
       this.service.loggedin()
         .then((response) => {
-          this.setState({
-            loggedInUser: response
-          });
+          this.setState({ loggedInUser: response });
         })
-        .catch((err) => {
-          this.setState({
-            loggedInUser: false
-          });
+        .catch(() => {
+          this.setState({ loggedInUser: false });
         });
     }
   }
@@ -108,24 +106,54 @@ class App extends Component {
     return products.map(product => <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />);
   }
 
+  logoutUser() {
+    this.service.logout()
+      .then(() => {
+        this.setState({ loggedInUser: null });
+        this.getTheUser(null);
+      });
+  }
+
   render() {
     { this.fetchUser(); }
     const { categories } = this.state;
+    this.fetchUser();
+    if (this.state.loggedInUser) {
+      return (
+        <div>
+          <NavBar userInSession={this.state.loggedInUser} />
+          <CategoryList categories={categories} />
+          <Counter />
+          <Footer />
+        </div>
+      );
+    }
     return (
       <div className="body">
-        <NavBar />
         <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
+        <NavBar userInSession={this.state.loggedInUser} />
         <CategoryList categories={categories} />
         {this.cardList()}
         {this.productRowTable()}
         <Switch>
-          <ProtectedRoute user={this.state.loggedInUser} path="/projects" component={AuthForm} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
+          <FormProduct categories={categories} />
         </Switch>
         <Footer />
       </div>
     );
+    // <div className="body">
+    //   <NavBar />
+    //   <CategoryList categories={categories} />
+    //   <Counter />
+    //   <Switch>
+    //     <ProtectedRoute user={this.state.loggedInUser} path="/projects" component={AuthForm} />
+    //     <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
+    //     <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
+    //   </Switch>
+    //   <Footer />
+    // </div>
   }
 }
 

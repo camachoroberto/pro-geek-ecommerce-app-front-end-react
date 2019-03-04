@@ -52,8 +52,6 @@ class AuthForm extends Component {
     const { name, value } = e.currentTarget;
     this.setState({
       [name]: value
-    }, () => {
-      console.log(this.state);
     });
   }
 
