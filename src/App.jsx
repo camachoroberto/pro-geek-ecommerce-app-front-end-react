@@ -114,7 +114,7 @@ class App extends Component {
     return (
       <div className="body">
         <NavBar />
-        <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
+        <Sidebar pageWrapId="page-wrap" outerContainerId="App" customBurgerIcon={<img src="./public/images/sideBar.svg" />} />
         <CategoryList categories={categories} />
         {this.cardList()}
         {this.productRowTable()}
