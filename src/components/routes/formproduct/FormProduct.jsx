@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-import { ReactCloudinaryUploader } from '@app-masters/react-cloudinary-uploader';
 import InputForm from '../../inputform/InputForm.jsx';
 import CategoryCheckbox from '../../categorycheckbox/CategoryCheckbox.jsx';
 import FileUpload from '../../auth/service/file-upload.jsx';
@@ -20,7 +19,6 @@ class FormProduct extends Component {
       manufacturer: '',
       category: {}
     };
-    // this.fileUploadService = new FileUpload();
     this.handleText = this.handleText.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.listCategories = this.listCategories.bind(this);

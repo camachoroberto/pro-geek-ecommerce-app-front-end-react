@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/henriquegmendes/pro-geek-ecommerce-app-front-end-react#readme",
   "dependencies": {
-    "@app-masters/react-cloudinary-uploader": "^0.1.41",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "react": "^16.8.3",
