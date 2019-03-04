@@ -4,8 +4,9 @@ class CategoryCheckbox extends Component {
   constructor() {
     super();
     this.state = {
-      name: ''
+      id: ''
     };
+    this.checkHandleChange = this.checkHandleChange.bind(this)
   }
 
   componentDidMount() {
@@ -13,11 +14,19 @@ class CategoryCheckbox extends Component {
     this.setState( { name } );
   }
 
+  checkHandleChange(e) {
+    const { id, checked } = e.currentTarget;
+    console.log(id)
+    const {updateCategories} = this.props;
+    updateCategories(id, checked);
+  }
+
   render() {
-    const { name, change } = this.props
+    const { id, name, checkHandleChange } = this.props;
     return (
       <div>
-        <input type="checkbox" name={name} onChange={e => change(e)} />
+        <label name={id}>{name}</label>
+        <input type="checkbox" name={id} id={id} onChange={e => this.checkHandleChange(e)} />
       </div>
     );
   }

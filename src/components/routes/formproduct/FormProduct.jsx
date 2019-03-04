@@ -3,9 +3,7 @@ import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import InputForm from '../../inputform/InputForm.jsx';
 import CategoryCheckbox from '../../categorycheckbox/CategoryCheckbox.jsx';
-
 let newArr = [];
-
 class FormProduct extends Component {
   constructor() {
     super();
@@ -18,12 +16,12 @@ class FormProduct extends Component {
       material: '',
       height: '',
       manufacturer: '',
-      category: []
+      category: {}
     };
     this.handleText = this.handleText.bind(this);
     this.listCategories = this.listCategories.bind(this);
-    this.checkHandleChange = this.checkHandleChange.bind(this);
     this.saveProduct = this.saveProduct.bind(this);
+    this.updateCategories = this.updateCategories.bind(this);
   }
 
   handleText(e) {
@@ -33,35 +31,31 @@ class FormProduct extends Component {
     });
   }
 
-  checkHandleChange(e) {
-    const category = this.state.category;
-    const { name, checked } = e.currentTarget;
-    console.log('checked', checked);
+  updateCategories(id, checked) {
+    const { category } = this.state;
     if (checked) {
-      newArr.push(name);
-      console.log('newArr True', newArr);
+      this.setState({category: Object.assign(category, {[id]: id})})
     } else {
-      newArr = newArr.filter(item => !item.includes(name));
-      console.log('newArr false', newArr);
-    }
-    this.setState({ category: newArr }, () => {
-      console.log('category', category);
-    });
+      this.setState({category: Object.assign({}, delete category[id], category)})
+    }  
   }
 
   listCategories() {
-    return this.props.categories.map((element, idx) => <div key={idx}><CategoryCheckbox name={element.name} change={this.checkHandleChange} /></div>);
+    const { categories } = this.props;
+    return categories.map((element) => <div key={element._id}><CategoryCheckbox id={element._id} updateCategories={this.updateCategories} name={element.name} /></div>);
   }
 
   saveProduct(e) {
     e.preventDefault();
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.state;
-    axios.post('http://localhost:8080/products', { name, price, leadTime, image, description, material, height, manufacturer, category })
+    const categoryArray = Object.keys(category);
+    axios.post('http://localhost:8080/products', { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray})
       .then(response => console.log(response.data))
       .catch(err => console.log(err));
   }
 
   render() {
+    const { change } = this.props;
     return (
       <Form onSubmit={e => this.saveProduct(e)}>
         <InputForm labelText="Product Name" type="text" name="name" placeholder="Enter product name" value={this.state.name} change={this.handleText} />
