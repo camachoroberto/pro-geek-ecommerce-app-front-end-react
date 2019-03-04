@@ -37,9 +37,7 @@ class FormProduct extends Component {
     const { image } = this.state;
     console.log('The file to be uploaded is: ', e.target.files[0]);
     const uploadData = new FormData();
-
     uploadData.append('image', e.target.files[0]);
-
     FileUpload.handleUpload(uploadData)
       .then((response) => {
         this.setState({ image: image.push(response.secure_url) });

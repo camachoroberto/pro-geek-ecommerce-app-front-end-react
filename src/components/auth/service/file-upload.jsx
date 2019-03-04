@@ -7,12 +7,11 @@ const service = axios.create({
 
 export default {
   service,
-
   handleUpload(theFile) {
     return service.post('/upload', theFile)
       .then(res => res.data)
-      .catch(err => {
-        throw err
+      .catch((err) => {
+        throw err;
       });
   }
 };
