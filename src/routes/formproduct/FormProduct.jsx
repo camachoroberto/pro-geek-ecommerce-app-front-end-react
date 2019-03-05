@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-import InputForm from '../../inputform/InputForm.jsx';
-import CategoryCheckbox from '../../categorycheckbox/CategoryCheckbox.jsx';
+import InputForm from '../../components/inputform/InputForm.jsx';
+import CategoryCheckbox from '../../components/categorycheckbox/CategoryCheckbox.jsx';
 let newArr = [];
 class FormProduct extends Component {
   constructor() {
@@ -69,7 +69,7 @@ class FormProduct extends Component {
         <Form.Group controlId="formBasicChecbox">
           {this.listCategories()}
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="ButtonPG">
           Create Product
         </Button>
       </Form>

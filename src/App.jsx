@@ -8,10 +8,11 @@ import Footer from './components/footer/Footer.jsx';
 import ProductCard from './components/productcard/ProductCard.jsx';
 import AuthForm from './components/auth/AuthForm.jsx';
 import AuthService from './components/auth/service/auth-service.jsx';
-import FormProduct from './components/routes/formproduct/FormProduct.jsx';
+import FormProduct from './routes/formproduct/FormProduct.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
 import Sidebar from './components/sidebar/Sidebar.jsx';
+import Home from './routes/home/home.jsx'
 
 class App extends Component {
   constructor() {
@@ -121,21 +122,24 @@ class App extends Component {
     if (this.state.loggedInUser) {
       return (
         <div>
+          <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
           <NavBar userInSession={this.state.loggedInUser} />
           <CategoryList categories={categories} />
-          <Counter />
+
+
           <Footer />
         </div>
       );
     }
     return (
       <div className="body">
-        <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
+         <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
         <NavBar userInSession={this.state.loggedInUser} />
         <CategoryList categories={categories} />
-        {this.cardList()}
+        {/* {this.cardList()} */}
         {this.productRowTable()}
         <Switch>
+          <Route exact path="/" render={() =><Home cardList={this.cardList().slice(0,2)}/>} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <FormProduct categories={categories} />
@@ -143,6 +147,7 @@ class App extends Component {
         <Footer />
       </div>
     );
+
     // <div className="body">
     //   <NavBar />
     //   <CategoryList categories={categories} />

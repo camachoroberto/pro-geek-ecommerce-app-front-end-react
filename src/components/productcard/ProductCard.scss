@@ -1,10 +1,23 @@
 .ButtonCardP {
-  background-color: $darkBlue !important;
+  background-color: $darkBlue;
   color: $white;
+  border-color: $darkBlue;
   width: 14em;
 }
 
+.ButtonCardP:hover {
+  background-color: $blue;
+  color: $white;
+  border-color: $darkBlue
+}
+
+
 .cardModel {
-  height: 40px
+  margin: 20px;
+}
+
+
+.margin10 {
+  margin: 20px;
 
 }
