@@ -16,8 +16,7 @@ class CategoryCheckbox extends Component {
 
   checkHandleChange(e) {
     const { id, checked } = e.currentTarget;
-    console.log(id)
-    const {updateCategories} = this.props;
+    const { updateCategories } = this.props;
     updateCategories(id, checked);
   }
 
