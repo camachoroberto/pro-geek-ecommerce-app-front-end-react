@@ -10,11 +10,8 @@
 @import '../routes/formproduct/FormProduct.scss';
 @import  '../routes/home/home.scss';
 @import '../routes/products/Products.scss';
-<<<<<<< HEAD
 @import '../routes/productdetail/ProductDetail.scss';
-=======
 @import '../routes/cart/Cart.scss';
->>>>>>> 7198236af2a811fe69e2c9fdd907bfe118542ae3
 
 .ButtonPG {
   background-color: $darkBlue;
@@ -30,6 +27,10 @@
 
 .white {
   color: $white
+}
+
+.blue {
+  color: $blue
 }
 
 .containerCol {

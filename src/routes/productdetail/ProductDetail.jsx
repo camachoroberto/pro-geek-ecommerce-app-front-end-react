@@ -26,10 +26,11 @@ class ProductCard extends Component {
   }
 
   render() {
-    const { addCart, product, counterCart } = this.props;
+    const { addCart, product, counterCart, addTotal } = this.props;
     const { counter } = this.state;
     const id = product._id;
      const total = counter + (counterCart || 0);
+     const subtotal = counter * product.price;
     return (
       <div className="containerRowB">
         <div className="containerCol margin">
@@ -61,7 +62,7 @@ class ProductCard extends Component {
           <p className="margin">Height: {product.height} </p>
           <p className="margin">Manufacturer: {product.manufacturer} </p>
           <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
-          <Button variant="primary" className="ButtonCardP" onClick={() => addCart({ [id]: total })}>BUY</Button>
+          <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>
         </div>
       </div>
     );
