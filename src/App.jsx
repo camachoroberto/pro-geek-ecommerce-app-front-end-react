@@ -46,7 +46,7 @@ class App extends Component {
         throw new Error(err);
       });
 
-    axios.get('https://pro-geek-ecommerce-api.herokuapp.com/products')
+    axios.get('http://localhost:8080/products')
       .then((response) => {
         const products = response.data.response;
         this.setState({ products });
@@ -139,7 +139,7 @@ class App extends Component {
         {/* {this.cardList()} */}
         {this.productRowTable()}
         <Switch>
-          <Route exact path="/" render={() =><Home cardList={this.cardList().slice(0,2)}/>} />
+          <Route exact path="/" render={() =><Home cardList={this.cardList().slice(0,3)}/>} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <FormProduct categories={categories} />

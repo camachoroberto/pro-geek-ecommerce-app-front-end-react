@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-import InputForm from '../../inputform/InputForm.jsx';
-import CategoryCheckbox from '../../categorycheckbox/CategoryCheckbox.jsx';
-import FileUpload from '../../auth/service/file-upload.jsx';
+import InputForm from '../../components/inputform/InputForm.jsx';
+import CategoryCheckbox from '../../components/categorycheckbox/CategoryCheckbox.jsx';
+import FileUpload from '../../components/auth/service/file-upload.jsx';
 
 class FormProduct extends Component {
   constructor(props) {
