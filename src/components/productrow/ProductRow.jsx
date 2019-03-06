@@ -21,7 +21,7 @@ class ProductRow extends Component {
 
 
   minus1() {
-    const { addCart, product } = this.props;
+    const { addCart, product, addTotal } = this.props;
     const { counter } = this.props;
     const id = product._id;
     const total = product.price * (counter - 1);

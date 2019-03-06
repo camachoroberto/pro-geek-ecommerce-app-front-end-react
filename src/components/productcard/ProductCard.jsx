@@ -35,7 +35,7 @@ class ProductCard extends Component {
   }
 
   render() {
-    const { product, addCart, counterCart, addTotal } = this.props;
+    const { product, addCart, counterCart, addTotal, selectProduct } = this.props;
     const { counter } = this.state;
     const id = product._id;
     const total =  counter + (counterCart||0);
@@ -49,7 +49,7 @@ class ProductCard extends Component {
             <Card.Subtitle className="mb-2 text-muted">${product.price.toFixed(2)}</Card.Subtitle>
             <Card.Text>
               {product.description.slice(0, 30)} <br/>
-              <Link onClick={() => selectProduct(product)} to={{ pathname: '/products/' + id  }}> ...details</Link>
+              <Link className="blue" onClick={() => selectProduct(product)} to={{ pathname: '/products/' + id  }}> ...details</Link>
             </Card.Text>
             <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
             <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>

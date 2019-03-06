@@ -170,7 +170,7 @@ class App extends Component {
 
     return mergedArr.map((product) => {
       if (product.price >= filterPrice[0] && product.price <= filterPrice[1]) {
-        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} selectProduct={this.selectProduct} />;
+        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} selectProduct={this.selectProduct} addTotal={this.addTotal} />;
       }
     });
   }
