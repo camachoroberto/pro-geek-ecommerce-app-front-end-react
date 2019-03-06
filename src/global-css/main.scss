@@ -13,6 +13,8 @@
 @import '../routes/editproduct/EditProduct.scss';
 @import '../routes/adminpage/AdminPage.scss';
 @import '../routes/adminproducts/AdminProducts.scss';
+@import '../routes/productdetail/ProductDetail.scss';
+@import '../routes/cart/Cart.scss';
 
 .ButtonPG {
   background-color: $darkBlue;
@@ -28,4 +30,17 @@
 
 .white {
   color: $white
+}
+
+.containerCol {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerRow {
+  display: flex;
+  flex-flow: row wrap;
+  
 }

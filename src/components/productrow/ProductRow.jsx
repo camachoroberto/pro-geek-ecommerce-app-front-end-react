@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import Counter from '../counter/Counter.jsx';
 
 class ProductRow extends Component {
@@ -11,10 +11,12 @@ class ProductRow extends Component {
 
 
   plus1() {
-    const { addCart, product } = this.props;
+    const { addCart, product, addTotal } = this.props;
     const { counter } = this.props;
     const id = product._id;
+    const total = product.price * (counter + 1);
     addCart({ [id]: counter + 1 });
+    addTotal({ [id]: total })
   }
 
 
@@ -22,8 +24,10 @@ class ProductRow extends Component {
     const { addCart, product } = this.props;
     const { counter } = this.props;
     const id = product._id;
+    const total = product.price * (counter - 1);
     if (counter > 1) {
       addCart({ [id]: counter - 1 });
+      addTotal({ [id]: total });
     }
   }
 
@@ -35,14 +39,13 @@ class ProductRow extends Component {
       <tr>
         <td>{product.image}</td>
         <td>{product.name}</td>
-        <td>{product.price}</td>
+        <td>{product.price.toFixed(2)}</td>
         <td><Counter counter={counter} plus1={this.plus1} minus1={this.minus1} /></td>
-        <td>{total}</td>
+        <td >${total.toFixed(2)}</td>
         <td>
           <Button onClick={() => deleteCart(product._id)} className="material-icons" variant="outline-danger"> delete </Button>
         </td>
       </tr>
-
     );
   }
 }

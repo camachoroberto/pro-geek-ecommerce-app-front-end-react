@@ -18,3 +18,12 @@
 .marg {
   margin: 10px;
 }
+
+a {
+  color: $white;
+}
+
+a:hover {
+  text-decoration: none;
+  color: $lightBlue;
+}

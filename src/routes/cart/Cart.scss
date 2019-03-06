@@ -1,0 +1,22 @@
+.cart {
+  margin: 5%;
+}
+
+.class-header {
+  color: $darkBlue;
+  font-size: 20px;
+  font-weight: 10000;
+}
+
+.subtotal {
+  color: $red;
+}
+
+.cart {
+  border-color: $lightBlue;
+}
+
+.cart:hover {
+  border-color: $lightBlue !important;
+  background-color: $white !important;
+}

@@ -11,11 +11,12 @@ import AuthService from './components/auth/service/auth-service.jsx';
 import FormProduct from './routes/formproduct/FormProduct.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
-import Sidebar from './components/sidebar/Sidebar.jsx';
 import Home from './routes/home/home.jsx';
 import Products from './routes/products/Products.jsx';
 import AdminPage from './routes/adminpage/AdminPage.jsx';
 import AdminProducts from './routes/adminproducts/AdminProducts.jsx';
+import ProductDetail from './routes/productdetail/ProductDetail.jsx';
+import Cart from './routes/cart/Cart.jsx';
 
 class App extends Component {
   constructor() {
@@ -25,6 +26,8 @@ class App extends Component {
       products: [],
       orders: [],
       cart: {},
+      productDetail: {},
+      total: {},
       loggedInUser: null,
       filterProduct: {},
       filterPrice: ['0', '100000000']
@@ -36,12 +39,16 @@ class App extends Component {
     this.fetchUser = this.fetchUser.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     this.updatePrice = this.updatePrice.bind(this);
+    this.selectProduct = this.selectProduct.bind(this)
+    this.productRowTable = this.productRowTable.bind(this);
+    this.addTotal = this.addTotal.bind(this);
   }
 
   // products and categories arrays
 
   componentWillMount() {
     this.setState({ cart: (JSON.parse(localStorage.getItem('cart')) || {}) });
+    this.setState({ total: (JSON.parse(localStorage.getItem('total')) || {}) });
   }
 
   componentDidMount() {
@@ -117,19 +124,29 @@ class App extends Component {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  deleteCart(property) {
-    const { cart } = this.state;
+  addTotal(obj) {
+    const { total } = this.state;
     this.setState({
-      cart: Object.assign({}, delete cart[property], cart)
+      total: Object.assign(total, obj)
+    });
+    localStorage.setItem('total', JSON.stringify(total));
+  }
+
+  deleteCart(property) {
+    const { cart, total } = this.state;
+    this.setState({
+      cart: Object.assign({}, delete cart[property], cart),
+      total: Object.assign({}, delete total[property], total)
     });
     localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('total', JSON.stringify(total))
   }
 
   productRowTable() {
     const { products, cart } = this.state;
     return products.map((product) => {
       if (cart[product._id]) {
-        return <ProductRow product={product} counter={cart[product._id]} addCart={this.addCart} deleteCart={this.deleteCart} />;
+        return <ProductRow product={product} counter={cart[product._id]} addTotal={this.addTotal} addCart={this.addCart} deleteCart={this.deleteCart} />;
       }
     });
   }
@@ -153,10 +170,17 @@ class App extends Component {
 
     return mergedArr.map((product) => {
       if (product.price >= filterPrice[0] && product.price <= filterPrice[1]) {
-        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />;
+        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} selectProduct={this.selectProduct} />;
       }
     });
   }
+
+  selectProduct (obj) {
+    this.setState({
+      productDetail : obj
+    })
+  }
+
 
   logoutUser() {
     this.service.logout()
@@ -168,12 +192,11 @@ class App extends Component {
 
   render() {
     this.fetchUser();
-    const { categories, products, orders } = this.state;
-    this.fetchUser();
+    const { categories, cart, productDetail, total, products, orders } = this.state;
     if (this.state.loggedInUser) {
       return (
         <div>
-          <NavBar userInSession={this.state.loggedInUser} />
+          <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
           <CategoryList categories={categories} />
           <Switch>
             <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
@@ -186,17 +209,17 @@ class App extends Component {
     }
     return (
       <div className="body">
-        <NavBar userInSession={this.state.loggedInUser} />
+        <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
         <CategoryList categories={categories} />
-        {/* {this.cardList()} */}
-        {this.productRowTable()}
         <Switch>
           <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
           <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
+          <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cart={cart} total={total} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
           <Route exact path="/admin/products" render={() => <AdminProducts products={products} />} />
+          <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
           <FormProduct categories={categories} />
         </Switch>
         <Footer />
