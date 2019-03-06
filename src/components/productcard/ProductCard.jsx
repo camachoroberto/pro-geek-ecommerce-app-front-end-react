@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import Counter from '../counter/Counter.jsx';
 import { Link } from 'react-router-dom';
+import Counter from '../counter/Counter.jsx';
 
 class ProductCard extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       counter: 0
-    }
-    this.plus1 = this.plus1.bind(this)
-    this.minus1 = this.minus1.bind(this)
+    };
+    this.plus1 = this.plus1.bind(this);
+    this.minus1 = this.minus1.bind(this);
   }
 
 
@@ -23,14 +22,14 @@ class ProductCard extends Component {
   }
 
   plus1() {
-    const { counter } = this.state
-    this.setState({ counter: counter + 1 })
+    const { counter } = this.state;
+    this.setState({ counter: counter + 1 });
   }
 
   minus1() {
     const { counter } = this.state;
     if (counter > 0) {
-      this.setState({ counter: counter - 1 })
+      this.setState({ counter: counter - 1 });
     }
   }
 
@@ -55,11 +54,9 @@ class ProductCard extends Component {
             <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>
           </Card.Body>
         </Card>
-      </div >
+      </div>
     );
   }
-
 }
-
 
 export default ProductCard;

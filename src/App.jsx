@@ -17,6 +17,7 @@ import AdminPage from './routes/adminpage/AdminPage.jsx';
 import AdminProducts from './routes/adminproducts/AdminProducts.jsx';
 import ProductDetail from './routes/productdetail/ProductDetail.jsx';
 import Cart from './routes/cart/Cart.jsx';
+import AdminProductDetail from './routes/adminproductdetail/AdminProductDetail.jsx';
 
 class App extends Component {
   constructor() {
@@ -39,7 +40,7 @@ class App extends Component {
     this.fetchUser = this.fetchUser.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     this.updatePrice = this.updatePrice.bind(this);
-    this.selectProduct = this.selectProduct.bind(this)
+    this.selectProduct = this.selectProduct.bind(this);
     this.productRowTable = this.productRowTable.bind(this);
     this.addTotal = this.addTotal.bind(this);
   }
@@ -175,7 +176,7 @@ class App extends Component {
     });
   }
 
-  selectProduct (obj) {
+  selectProduct(obj) {
     this.setState({
       productDetail : obj
     })
@@ -218,11 +219,12 @@ class App extends Component {
           <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cart={cart} total={total} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
-          <Route exact path="/admin/products" render={() => <AdminProducts products={products} />} />
+          <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
           <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
-          <FormProduct categories={categories} />
+          <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
         </Switch>
         <Footer />
+        <FormProduct categories={categories} />
       </div>
     );
 

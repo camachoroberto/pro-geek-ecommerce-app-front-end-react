@@ -15,7 +15,6 @@ const AdminPage = (props) => {
       <Link to="/admin/profile">Manage my profile</Link>
       <Switch>
         {/* <Route exact path="/admin/orders" /> */}
-        
         {/* <Route exact path="/admin/categories" /> */}
         {/* <Route exact path="/admin/profile" /> */}
       </Switch>

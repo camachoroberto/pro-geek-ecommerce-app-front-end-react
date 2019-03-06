@@ -21,11 +21,11 @@ class CategoryCheckbox extends Component {
   }
 
   render() {
-    const { id, name, checkHandleChange } = this.props;
+    const { id, name, check } = this.props;
     return (
       <div>
         <label name={id}>{name}</label>
-        <input type="checkbox" name={id} id={id} onChange={e => this.checkHandleChange(e)} />
+        <input type="checkbox" name={id} id={id} checked={check} onChange={e => this.checkHandleChange(e)} />
       </div>
     );
   }
