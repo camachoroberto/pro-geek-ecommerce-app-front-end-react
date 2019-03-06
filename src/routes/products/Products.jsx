@@ -1,6 +1,6 @@
-import React from "react";
-import Sidebar from '../../components/sidebar/Sidebar.jsx';
+import React from 'react';
 import { Container } from 'react-bootstrap';
+import Sidebar from '../../components/sidebar/Sidebar.jsx';
 
 const Products = ({ cardList, updateFilter, updatePrice, categories }) => {
   return (
@@ -14,12 +14,11 @@ const Products = ({ cardList, updateFilter, updatePrice, categories }) => {
         customBurgerIcon={<img src="./public/images/sideBar.svg" />}
       />
       <Container>
-        <div className="containerRow">   
+        <div className="containerRow">
           {cardList}
         </div>
       </Container>
     </div>
-    
   );
 };
 export default Products;
