@@ -39,20 +39,20 @@ class ProductCard extends Component {
     const id = product._id;
     const total =  counter + (counterCart||0);
     return (
-      <div className='list-container'>
+      <div className="margin10">
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">${product.price},00</Card.Subtitle>
             <Card.Text>
-              {product.description}
+              {product.description.slice(0,30) + '...'}
             </Card.Text>
             <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
             <Button variant="primary" className="ButtonCardP" onClick={() => addCart({ [id]: total  })}>BUY</Button>
           </Card.Body>
         </Card>
-      </div>
+        </div>
     );
   }
 

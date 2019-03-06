@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const NavBar = ({ userInSession }) => {
   if (userInSession) {
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" className="nav-bg">
         <Navbar.Brand>
           <Link to="/">
             <img src="./public/images/progeek.png" width="100px" alt="" />
@@ -28,16 +28,16 @@ const NavBar = ({ userInSession }) => {
             </InputGroup>
           </Nav>
           <Nav>
-            <Link to="/my-profile">My Profile</Link>
-            <Link to="/logout">Logout</Link>
-            <Link to="/cart" className="material-icons">shopping_cart</Link>
+            <Link to="/my-profile" className="marg">My Profile</Link>
+            <Link to="/logout" className="marg">Logout</Link>
+            <Link to="/cart" className="material-icons marg">shopping_cart</Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
   }
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="nav-bg">
       <Navbar.Brand>
         <Link to="/">
           <img src="./public/images/progeek.png" width="100px" alt="" />
@@ -60,9 +60,9 @@ const NavBar = ({ userInSession }) => {
           </InputGroup>
         </Nav>
         <Nav>
-          <Link to="/signup">Signup</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/cart" className="material-icons">shopping_cart</Link>
+          <Link to="/signup" className="marg">Signup</Link>
+          <Link to="/login" className="marg">Login</Link>
+          <Link to="/cart" className="material-icons marg">shopping_cart</Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

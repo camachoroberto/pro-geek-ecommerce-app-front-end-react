@@ -6,7 +6,7 @@ class CategoryCheckbox extends Component {
     this.state = {
       id: ''
     };
-    this.checkHandleChange = this.checkHandleChange.bind(this)
+    this.checkHandleChange = this.checkHandleChange.bind(this);
   }
 
   componentDidMount() {

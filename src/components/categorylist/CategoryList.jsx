@@ -22,7 +22,7 @@ class CategoryList extends Component {
 
   render() {
     return (
-      <div className="list-container">
+      <div className="list-container category-bg">
         {this.listMount()}
       </div>
     );
