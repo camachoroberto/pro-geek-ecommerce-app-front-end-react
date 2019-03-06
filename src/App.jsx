@@ -14,6 +14,7 @@ import ProductRow from './components/productrow/ProductRow.jsx';
 import Sidebar from './components/sidebar/Sidebar.jsx';
 import Home from './routes/home/home.jsx';
 import Products from './routes/products/Products.jsx';
+import ProductDetail from './routes/productdetail/ProductDetail.jsx'
 
 class App extends Component {
   constructor() {
@@ -22,6 +23,7 @@ class App extends Component {
       categories: [],
       products: [],
       cart: {},
+      productDetail: {},
       loggedInUser: null,
       filterProduct: {},
       filterPrice: ['0', '100000000']
@@ -32,7 +34,8 @@ class App extends Component {
     this.deleteCart = this.deleteCart.bind(this);
     this.fetchUser = this.fetchUser.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
-    this.updatePrice = this.updatePrice.bind(this)
+    this.updatePrice = this.updatePrice.bind(this);
+    this.selectProduct = this.selectProduct.bind(this)
   }
 
   // products and categories arrays
@@ -141,10 +144,17 @@ class App extends Component {
 
     return mergedArr.map((product) => {
       if (product.price >= filterPrice[0] && product.price <= filterPrice[1]) {
-        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />;
+        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} selectProduct={this.selectProduct} />;
       }
-      });
+    });
   }
+
+  selectProduct (obj) {
+    this.setState({
+      productDetail : obj
+    })
+  }
+
 
   logoutUser() {
     this.service.logout()
@@ -156,16 +166,18 @@ class App extends Component {
 
   render() {
     { this.fetchUser(); }
-    const { categories } = this.state;
+    const { categories, cart, productDetail } = this.state;
     this.fetchUser();
     if (this.state.loggedInUser) {
       return (
         <div>
-          <Sidebar pageWrapId="page-wrap" outerContainerId="App" customBurgerIcon={<img src="./public/images/sideBar.svg" />} />
           <NavBar userInSession={this.state.loggedInUser} />
           <CategoryList categories={categories} />
-
-
+          <Switch>
+            <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
+            <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+            {/* <FormProduct categories={categories} /> */}
+          </Switch>
           <Footer />
         </div>
       );
@@ -181,6 +193,8 @@ class App extends Component {
           <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
+          <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+
           <FormProduct categories={categories} />
         </Switch>
         <Footer />

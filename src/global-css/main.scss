@@ -10,6 +10,7 @@
 @import '../routes/formproduct/FormProduct.scss';
 @import  '../routes/home/home.scss';
 @import '../routes/products/Products.scss';
+@import '../routes/productdetail/ProductDetail.scss';
 
 .ButtonPG {
   background-color: $darkBlue;
@@ -25,4 +26,17 @@
 
 .white {
   color: $white
+}
+
+.containerCol {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerRow {
+  display: flex;
+  flex-flow: row wrap;
+  
 }
