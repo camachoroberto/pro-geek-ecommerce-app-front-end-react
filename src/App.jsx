@@ -12,7 +12,8 @@ import FormProduct from './routes/formproduct/FormProduct.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
 import Sidebar from './components/sidebar/Sidebar.jsx';
-import Home from './routes/home/home.jsx'
+import Home from './routes/home/home.jsx';
+import Products from './routes/products/Products.jsx';
 
 class App extends Component {
   constructor() {
@@ -21,13 +22,17 @@ class App extends Component {
       categories: [],
       products: [],
       cart: {},
-      loggedInUser: null
+      loggedInUser: null,
+      filterProduct: {},
+      filterPrice: ['0', '100000000']
     };
     this.service = new AuthService();
     this.getTheUser = this.getTheUser.bind(this);
     this.addCart = this.addCart.bind(this);
     this.deleteCart = this.deleteCart.bind(this);
     this.fetchUser = this.fetchUser.bind(this);
+    this.updateFilter = this.updateFilter.bind(this);
+    this.updatePrice = this.updatePrice.bind(this)
   }
 
   // products and categories arrays
@@ -76,6 +81,21 @@ class App extends Component {
     }
   }
 
+  //Sidebar functions
+  updateFilter(name, checked) {
+    const { filterProduct } = this.state;
+    if (checked) {
+      this.setState({ filterProduct: Object.assign(filterProduct, { [name]: name }) });
+    } else {
+      this.setState({ category: Object.assign({}, delete filterProduct[name], filterProduct) });
+    }
+  }
+
+  updatePrice(priceMin, priceMax) {
+    const { filterPrice } = this.state;
+    this.setState({ filterPrice: [priceMin, priceMax] });
+  }
+
   // cart functions and components
   addCart(obj) {
     const { cart } = this.state;
@@ -103,8 +123,27 @@ class App extends Component {
   }
 
   cardList() {
-    const { products, cart } = this.state;
-    return products.map(product => <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />);
+    const { products, cart, filterProduct, filterPrice } = this.state;
+    let productsFilter = [];
+    let mergedArr = [];
+    if (Object.keys(filterProduct).length === 0) {
+      mergedArr = products;
+    } else {
+      for (const key in filterProduct) {
+        productsFilter = products.filter(element => element.category.join(' ').includes(key)).concat(productsFilter);
+      }
+      productsFilter.forEach((item) => {
+        if (!mergedArr.includes(item)) {
+          mergedArr.push(item);
+        }
+      });
+    }
+
+    return mergedArr.map((product) => {
+      if (product.price >= filterPrice[0] && product.price <= filterPrice[1]) {
+        return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />;
+      }
+      });
   }
 
   logoutUser() {
@@ -122,7 +161,7 @@ class App extends Component {
     if (this.state.loggedInUser) {
       return (
         <div>
-          <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
+          <Sidebar pageWrapId="page-wrap" outerContainerId="App" customBurgerIcon={<img src="./public/images/sideBar.svg" />} />
           <NavBar userInSession={this.state.loggedInUser} />
           <CategoryList categories={categories} />
 
@@ -133,13 +172,13 @@ class App extends Component {
     }
     return (
       <div className="body">
-         <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} customBurgerIcon={ <img src="./public/images/sideBar.svg" /> } />
         <NavBar userInSession={this.state.loggedInUser} />
         <CategoryList categories={categories} />
         {/* {this.cardList()} */}
         {this.productRowTable()}
         <Switch>
-          <Route exact path="/" render={() =><Home cardList={this.cardList().slice(0,3)}/>} />
+          <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
+          <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <FormProduct categories={categories} />

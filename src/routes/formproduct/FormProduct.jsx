@@ -24,6 +24,8 @@ class FormProduct extends Component {
     this.listCategories = this.listCategories.bind(this);
     this.saveProduct = this.saveProduct.bind(this);
     this.updateCategories = this.updateCategories.bind(this);
+    this.listImages = this.listImages.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   handleText(e) {
@@ -35,16 +37,21 @@ class FormProduct extends Component {
 
   handleFileUpload(e) {
     const { image } = this.state;
-    console.log('The file to be uploaded is: ', e.target.files[0]);
-    const uploadData = new FormData();
-    uploadData.append('image', e.target.files[0]);
-    FileUpload.handleUpload(uploadData)
-      .then((response) => {
-        this.setState({ image: image.push(response.secure_url) });
-      })
-      .catch((err) => {
-        console.log('Error while uploading the file: ', err);
-      });
+    if (image.length < 5) {
+      const uploadData = new FormData();
+      uploadData.append('image', e.target.files[0]);
+      FileUpload.handleUpload(uploadData)
+        .then((response) => {
+          image.push(response.secure_url);
+          this.setState({ image });
+          console.log(image);
+        })
+        .catch((err) => {
+          console.log('Error while uploading the file: ', err);
+        });
+      return;
+    }
+    alert('Max number of uploads reached.');
   }
 
   updateCategories(id, checked) {
@@ -61,6 +68,17 @@ class FormProduct extends Component {
     return categories.map(element => <div key={element._id}><CategoryCheckbox id={element._id} updateCategories={this.updateCategories} name={element.name} /></div>);
   }
 
+  listImages() {
+    const { image } = this.state;
+    return image.map((element, idx) => <div key={idx}><img src={element} alt="product images" width="100" onClick={e => this.deleteImage(e)} /></div>);
+  }
+
+  deleteImage(e) {
+    const { image } = this.state;
+    const filtered = image.filter((el => el !== e.currentTarget.src));
+    this.setState({ image: filtered });
+  }
+
   saveProduct(e) {
     e.preventDefault();
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.state;
@@ -73,11 +91,14 @@ class FormProduct extends Component {
   render() {
     return (
       <Form onSubmit={e => this.saveProduct(e)}>
+        <div>
+          <input type="file" onChange={e => this.handleFileUpload(e)} />
+          {this.listImages()}
+        </div>
         <InputForm labelText="Product Name" type="text" name="name" placeholder="Enter product name" value={this.state.name} change={this.handleText} />
         <InputForm labelText="Product Description" type="text" as="textarea" name="description" placeholder="Enter product description" value={this.state.description} change={this.handleText} />
         <InputForm labelText="Product Price" type="number" name="price" placeholder="Enter product price" value={this.state.price} change={this.handleText} />
         <InputForm labelText="Delivery Lead Time" type="number" name="leadTime" placeholder="Enter product lead time" value={this.state.leadTime} change={this.handleText} />
-        <input type="file" onChange={e => this.handleFileUpload(e)} />
         <InputForm labelText="Material" type="text" name="material" placeholder="Describe product material" value={this.state.material} change={this.handleText} />
         <InputForm labelText="Product Height" type="number" name="height" placeholder="Enter product height in centimeters" value={this.state.height} change={this.handleText} />
         <InputForm labelText="Manufacturer" type="text" name="manufacturer" placeholder="Enter product manufacturer" value={this.state.manufacturer} change={this.handleText} />
