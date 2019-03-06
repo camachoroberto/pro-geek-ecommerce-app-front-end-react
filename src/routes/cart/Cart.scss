@@ -11,3 +11,12 @@
 .subtotal {
   color: $red;
 }
+
+.cart {
+  border-color: $lightBlue;
+}
+
+.cart:hover {
+  border-color: $lightBlue !important;
+  background-color: $white !important;
+}

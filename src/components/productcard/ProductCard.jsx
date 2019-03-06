@@ -50,7 +50,7 @@ class ProductCard extends Component {
               {product.description.slice(0,30) + '...'}
             </Card.Text>
             <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
-            <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal }); }}>BUY</Button>
+            <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>
           </Card.Body>
         </Card>
         </div>

@@ -11,7 +11,6 @@ import AuthService from './components/auth/service/auth-service.jsx';
 import FormProduct from './routes/formproduct/FormProduct.jsx';
 import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
-import Sidebar from './components/sidebar/Sidebar.jsx';
 import Home from './routes/home/home.jsx';
 import Products from './routes/products/Products.jsx';
 import Cart from './routes/cart/Cart.jsx';
@@ -26,7 +25,8 @@ class App extends Component {
       total: {},
       loggedInUser: null,
       filterProduct: {},
-      filterPrice: ['0', '100000000']
+      filterPrice: ['0', '100000000'],
+      show: false
     };
     this.service = new AuthService();
     this.getTheUser = this.getTheUser.bind(this);
@@ -114,7 +114,7 @@ class App extends Component {
     const { total } = this.state;
     this.setState({
       total: Object.assign(total, obj)
-    }, ()=> console.log(total));
+    });
     localStorage.setItem('total', JSON.stringify(total));
   }
 
@@ -171,12 +171,12 @@ class App extends Component {
 
   render() {
     { this.fetchUser(); }
-    const { categories, cart, total } = this.state;
+    const { categories, cart, total, show } = this.state;
     this.fetchUser();
     if (this.state.loggedInUser) {
       return (
         <div>
-          <NavBar userInSession={this.state.loggedInUser} />
+          <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
           <CategoryList categories={categories} />
           <Switch>
             <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
@@ -189,7 +189,7 @@ class App extends Component {
     }
     return (
       <div className="body">
-        <NavBar userInSession={this.state.loggedInUser} />
+        <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
         <CategoryList categories={categories} />
         <Switch>
           <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />

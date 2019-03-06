@@ -1,11 +1,11 @@
-import React from 'react';
-import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Navbar, Nav, Button, FormControl, InputGroup, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const NavBar = ({ userInSession }) => {
+const NavBar = ({ userInSession, cartCounter }) => {
   if (userInSession) {
     return (
-      <Navbar collapseOnSelect expand="lg" className="nav-bg">
+      <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
         <Navbar.Brand>
           <Link to="/">
             <img src="./public/images/progeek.png" width="100px" alt="" />
@@ -22,22 +22,31 @@ const NavBar = ({ userInSession }) => {
               />
               <InputGroup.Append>
                 <Button variant="outline-secondary" className="material-icons">
-              search
+                  search
                 </Button>
               </InputGroup.Append>
             </InputGroup>
           </Nav>
-          <Nav>
-            <Link to="/my-profile" className="marg">My Profile</Link>
-            <Link to="/logout" className="marg">Logout</Link>
-            <Link to="/cart" className="material-icons marg">shopping_cart</Link>
+          <Nav className="links-nav">
+            <Link to="/cart" className="cart-counter">
+              {cartCounter}
+            </Link>
+            <Link to="/cart" className="material-icons marg">
+              shopping_cart
+            </Link>
+            <Link to="/my-profile" className="marg">
+              My Profile
+            </Link>
+            <Link to="/logout" className="marg">
+              Logout
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
   }
   return (
-    <Navbar collapseOnSelect expand="lg" className="nav-bg">
+    <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
       <Navbar.Brand>
         <Link to="/">
           <img src="./public/images/progeek.png" width="100px" alt="" />
@@ -54,15 +63,24 @@ const NavBar = ({ userInSession }) => {
             />
             <InputGroup.Append>
               <Button variant="outline-secondary" className="material-icons">
-            search
+                search
               </Button>
             </InputGroup.Append>
           </InputGroup>
         </Nav>
         <Nav>
-          <Link to="/signup" className="marg">Signup</Link>
-          <Link to="/login" className="marg">Login</Link>
-          <Link to="/cart" className="material-icons marg">shopping_cart</Link>
+          <Link to="/cart" className="cart-counter">
+            {cartCounter}
+          </Link>
+          <Link to="/cart" className="material-icons marg">
+            shopping_cart
+          </Link>
+          <Link to="/signup" className="marg">
+            Signup
+          </Link>
+          <Link to="/login" className="marg">
+            Login
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
