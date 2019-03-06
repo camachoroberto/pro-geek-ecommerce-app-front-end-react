@@ -10,10 +10,10 @@ class AuthForm extends Component {
       password: '',
       birthDate: ''
     };
-    this.createForm = this.createForm.bind(this);
-    this.service = new AuthService();
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.inputType = '';
+    this.service = new AuthService();
+    this.createForm = this.createForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.getInputType = this.getInputType.bind(this);
   }
 
@@ -28,7 +28,7 @@ class AuthForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { type, getUser } = this.props;
-    const { name, username, password, birthDate } = this.state;
+    const { name, username, password, birthDate} = this.state;
     let route = '';
     if (type === 'signup') {
       route = this.service.signup(name, username, password, birthDate);
@@ -61,10 +61,6 @@ class AuthForm extends Component {
         if (prop === 'username') {
           return (
             <div key={idx}>
-              <div>
-                <input type="file" onChange={e => this.handleFileUpload(e)} />
-                {this.listImages()}
-              </div>
               <label htmlFor={prop}>
                 Email
                 <input type="text" name={prop} id={prop} value={this.state[prop]} onChange={e => this.handleText(e)} />
