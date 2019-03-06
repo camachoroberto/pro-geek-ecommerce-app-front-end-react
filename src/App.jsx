@@ -14,6 +14,8 @@ import ProductRow from './components/productrow/ProductRow.jsx';
 import Sidebar from './components/sidebar/Sidebar.jsx';
 import Home from './routes/home/home.jsx';
 import Products from './routes/products/Products.jsx';
+import AdminPage from './routes/adminpage/AdminPage.jsx';
+import AdminProducts from './routes/adminproducts/AdminProducts.jsx';
 
 class App extends Component {
   constructor() {
@@ -21,6 +23,7 @@ class App extends Component {
     this.state = {
       categories: [],
       products: [],
+      orders: [],
       cart: {},
       loggedInUser: null,
       filterProduct: {},
@@ -55,6 +58,15 @@ class App extends Component {
       .then((response) => {
         const products = response.data.response;
         this.setState({ products });
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+
+    axios.get('http://localhost:8080/orders')
+      .then((response) => {
+        const orders = response.data.response;
+        this.setState({ orders });
       })
       .catch((err) => {
         throw new Error(err);
@@ -156,7 +168,7 @@ class App extends Component {
 
   render() {
     this.fetchUser();
-    const { categories } = this.state;
+    const { categories, products, orders } = this.state;
     this.fetchUser();
     if (this.state.loggedInUser) {
       return (
@@ -183,6 +195,8 @@ class App extends Component {
           <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
+          <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
+          <Route exact path="/admin/products" render={() => <AdminProducts products={products} />} />
           <FormProduct categories={categories} />
         </Switch>
         <Footer />
