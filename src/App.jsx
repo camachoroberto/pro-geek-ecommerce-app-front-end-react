@@ -143,7 +143,7 @@ class App extends Component {
       if (product.price >= filterPrice[0] && product.price <= filterPrice[1]) {
         return <ProductCard product={product} addCart={this.addCart} counterCart={cart[product._id]} />;
       }
-      });
+    });
   }
 
   logoutUser() {
@@ -161,11 +161,13 @@ class App extends Component {
     if (this.state.loggedInUser) {
       return (
         <div>
-          <Sidebar pageWrapId="page-wrap" outerContainerId="App" customBurgerIcon={<img src="./public/images/sideBar.svg" />} />
           <NavBar userInSession={this.state.loggedInUser} />
           <CategoryList categories={categories} />
-
-
+          <Switch>
+            <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
+            <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+            {/* <FormProduct categories={categories} /> */}
+          </Switch>
           <Footer />
         </div>
       );

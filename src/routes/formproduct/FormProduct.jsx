@@ -49,9 +49,10 @@ class FormProduct extends Component {
         .catch((err) => {
           console.log('Error while uploading the file: ', err);
         });
-      return;
+    } else {
+      alert('Max number of uploads reached.');
     }
-    alert('Max number of uploads reached.');
+    e.currentTarget.value = '';
   }
 
   updateCategories(id, checked) {
