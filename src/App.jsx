@@ -32,7 +32,7 @@ class App extends Component {
     this.deleteCart = this.deleteCart.bind(this);
     this.fetchUser = this.fetchUser.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
-    this.updatePrice = this.updatePrice.bind(this)
+    this.updatePrice = this.updatePrice.bind(this);
   }
 
   // products and categories arrays
@@ -81,7 +81,7 @@ class App extends Component {
     }
   }
 
-  //Sidebar functions
+  // Sidebar functions
   updateFilter(name, checked) {
     const { filterProduct } = this.state;
     if (checked) {
@@ -155,7 +155,7 @@ class App extends Component {
   }
 
   render() {
-    { this.fetchUser(); }
+    this.fetchUser();
     const { categories } = this.state;
     this.fetchUser();
     if (this.state.loggedInUser) {
