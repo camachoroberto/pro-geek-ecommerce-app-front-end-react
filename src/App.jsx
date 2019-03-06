@@ -93,7 +93,7 @@ class App extends Component {
 
   updatePrice(priceMin, priceMax) {
     const { filterPrice } = this.state;
-    this.setState({ filterPrice: [priceMin, priceMax]}, () => {console.log(filterPrice)});
+    this.setState({ filterPrice: [priceMin, priceMax] });
   }
 
   // cart functions and components
