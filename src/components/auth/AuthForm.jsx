@@ -61,6 +61,10 @@ class AuthForm extends Component {
         if (prop === 'username') {
           return (
             <div key={idx}>
+              <div>
+                <input type="file" onChange={e => this.handleFileUpload(e)} />
+                {this.listImages()}
+              </div>
               <label htmlFor={prop}>
                 Email
                 <input type="text" name={prop} id={prop} value={this.state[prop]} onChange={e => this.handleText(e)} />
