@@ -34,22 +34,23 @@ class ProductCard extends Component {
   }
 
   render() {
-    const { product, addCart, counterCart } = this.props;
+    const { product, addCart, counterCart, addTotal } = this.props;
     const { counter } = this.state;
     const id = product._id;
     const total =  counter + (counterCart||0);
+    const subtotal = counter * product.price;
     return (
       <div className="margin10">
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">${product.price},00</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">${product.price.toFixed(2)}</Card.Subtitle>
             <Card.Text>
               {product.description.slice(0,30) + '...'}
             </Card.Text>
             <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
-            <Button variant="primary" className="ButtonCardP" onClick={() => addCart({ [id]: total  })}>BUY</Button>
+            <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal }); }}>BUY</Button>
           </Card.Body>
         </Card>
         </div>
