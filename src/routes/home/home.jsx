@@ -24,7 +24,7 @@ class Home extends Component {
         <div className="row justify-contentcenter">
         
           <div className="col col-md-6 ">
-            <h2 className="margin30">To Sellers</h2>
+            <h2 className="margin30">Top Sellers</h2>
           </div>
      
           <div className="containerRow margin30">
