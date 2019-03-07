@@ -30,9 +30,14 @@
   font-size: 0.9em;
 }
 
-.header {
+.lb {
+  color: $lightBlue;
+  font-size: 0.9em;
+}
+
+.headerFoot {
   font-size: 1em;
-  color: $black;
+  color: $lightBlue;
 }
 
 .botton-footer {
@@ -44,4 +49,12 @@
   text-align: center;
   padding: 1%;
   font-size: 0.8em;
+}
+
+.footer-bg{
+  background-color: $darkBlue
+}
+
+.align-center {
+  align-items: center;
 }

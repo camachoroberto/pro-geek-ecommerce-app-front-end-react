@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import CategoryList from '../../components/categorylist/CategoryList.jsx';
 
 
 class Home extends Component {
 
-
   render() {
+
+    const { categories, cardList } = this.props
+    console.log(this.props)
     return (
       <div>
-
+        <CategoryList categories={categories} />
+        
         <div className="header">
           <div className="caption0 containerCol paddinTop">
             <h2>NEW STAR WARS COLLECTIBLE</h2>
@@ -24,7 +28,7 @@ class Home extends Component {
           </div>
      
           <div className="containerRow">
-            {this.props.cardList}
+            {cardList}
           </div>
 
         </div>

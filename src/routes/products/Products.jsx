@@ -18,7 +18,9 @@ const Products = ({ cardList, updateFilter, updatePrice, categories }) => {
           {cardList}
         </div>
       </Container>
+      <div className="fillin"></div>
     </div>
+  
   );
 };
 export default Products;
