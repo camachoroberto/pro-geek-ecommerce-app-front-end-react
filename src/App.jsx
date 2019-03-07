@@ -30,7 +30,13 @@ class App extends Component {
       cart: {},
       productDetail: {},
       total: {},
-      loggedInUser: null,
+      loggedInUser: {
+        _id: '',
+        name: '',
+        username: '',
+        password: '',
+        birthDate: ''
+      },
       filterProduct: {},
       filterPrice: ['0', '100000000']
     };
@@ -45,6 +51,7 @@ class App extends Component {
     this.productRowTable = this.productRowTable.bind(this);
     this.addTotal = this.addTotal.bind(this);
     this.updateCategories = this.updateCategories.bind(this);
+    this.cartReset = this.cartReset.bind(this);
   }
 
   // products and categories arrays
@@ -97,7 +104,7 @@ class App extends Component {
 
   fetchUser() {
     const { loggedInUser } = this.state;
-    if (loggedInUser === null) {
+    if (loggedInUser.name === '') {
       this.service.loggedin()
         .then((response) => {
           this.setState({ loggedInUser: response });
@@ -128,8 +135,7 @@ class App extends Component {
     this.setState({
       cart: Object.assign(cart, obj)
     });
-    console.log(this.state.loggedInUser)
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart)); 
   }
 
   addTotal(obj) {
@@ -137,7 +143,16 @@ class App extends Component {
     this.setState({
       total: Object.assign(total, obj)
     });
-    localStorage.setItem('total', JSON.stringify(total));
+    localStorage.setItem('total', JSON.stringify(total))
+  }
+
+  cartReset() {
+    this.setState({
+      cart: {},
+      total: {}
+    });
+    localStorage.setItem('cart', JSON.stringify({}))
+    localStorage.setItem('total', JSON.stringify({}))
   }
 
   deleteCart(property) {
@@ -152,9 +167,9 @@ class App extends Component {
 
   productRowTable() {
     const { products, cart } = this.state;
-    return products.map((product) => {
+    return products.map((product, idx) => {
       if (cart[product._id]) {
-        return <ProductRow product={product} counter={cart[product._id]} addTotal={this.addTotal} addCart={this.addCart} deleteCart={this.deleteCart} />;
+        return <ProductRow key={idx} product={product} counter={cart[product._id]} addTotal={this.addTotal} addCart={this.addCart} deleteCart={this.deleteCart} />;
       }
     });
   }
@@ -185,7 +200,7 @@ class App extends Component {
 
   selectProduct(obj) {
     this.setState({
-      productDetail : obj
+      productDetail: obj
     })
   }
 
@@ -200,16 +215,24 @@ class App extends Component {
 
   render() {
     this.fetchUser();
-    const { categories, cart, productDetail, total, products, orders } = this.state;
+    const { categories, cart, productDetail, total, products, orders, loggedInUser } = this.state;
+
     if (this.state.loggedInUser) {
       return (
         <div>
           <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
-          <CategoryList categories={categories} />
           <Switch>
-            <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
-            <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-          </Switch>
+          <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
+          <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+          <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
+          <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+          <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
+          <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
+          <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
+          <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} />} />
+          <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+          <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+        </Switch>
           <Footer />
         </div>
       );
@@ -221,11 +244,11 @@ class App extends Component {
           <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
           <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
-          <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cart={cart} total={total} />} />
+          <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
           <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
-          <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories}/>} />
+          <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} />} />
           <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
           <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
         </Switch>
