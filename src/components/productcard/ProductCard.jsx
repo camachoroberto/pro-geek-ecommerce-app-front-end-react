@@ -40,7 +40,7 @@ class ProductCard extends Component {
     const total =  counter + (counterCart||0);
     const subtotal = counter * product.price;
     return (
-      <div className="margin10">
+      <div className="col-md-4">
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body>

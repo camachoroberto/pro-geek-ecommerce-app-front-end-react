@@ -26,7 +26,7 @@ const Cart = ({ cartRow, cart, total }) => {
               </thead>
               <tbody>{cartRow()}</tbody>
             </Table>
-            <Link to="/products"><button type="button" class="btn btn-outline-info btn-lg btn-block">Info</button></Link>
+            <Link to="/products"><button type="button" class="btn btn-outline-info btn-lg btn-block">Keep Buying</button></Link>
           </Col>
           <Col md="5">
             <Table responsive>
@@ -39,7 +39,7 @@ const Cart = ({ cartRow, cart, total }) => {
                 </tr>
               </thead>
               <tbody>
-                <Button variant="danger">Proceed to checkout</Button>
+                <button type="button" class="btn btn lightblue btn-lg btn-block"> Proceed to checkout</button>
               </tbody>
             </Table>
           </Col>

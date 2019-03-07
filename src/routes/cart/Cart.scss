@@ -20,3 +20,13 @@
   border-color: $lightBlue !important;
   background-color: $white !important;
 }
+
+.lightblue {
+  background-color: $darkBlue;
+  color: $white;
+}
+
+.lightblue:hover {
+  background-color: $blue;
+  color: $white;
+}
