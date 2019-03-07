@@ -20,17 +20,17 @@ class Home extends Component {
             <h4> <Button variant="primary" className="ButtonPG">VIEW ALL</Button> </h4>
           </div><a href=""></a>
         </div>
-
-        <div className="middle containerCol">
+        <div className="container">
+        <div className="row justify-contentcenter">
         
-          <div className="containerRow">
-            <h2>Top Sellers</h2>
+          <div className="col col-md-6 ">
+            <h2 className="margin30">To Sellers</h2>
           </div>
      
-          <div className="containerRow">
+          <div className="containerRow margin30">
             {cardList}
           </div>
-
+        </div>
         </div>
 
         <div className="header">
@@ -38,7 +38,6 @@ class Home extends Component {
             <h2>NOW AVAILABLE</h2>
           </div>
         </div>
-
       </div>
     )
   }

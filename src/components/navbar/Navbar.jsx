@@ -27,6 +27,14 @@ const NavBar = ({ userInSession, cartCounter }) => {
               </InputGroup.Append>
             </InputGroup>
           </Nav>
+          <Nav>
+            <Link to="/" className="marg">
+              Home
+            </Link>
+            <Link to="/products" className="marg">
+              Products
+            </Link>
+          </Nav>
           <Nav className="links-nav">
             <Link to="/cart" className="cart-counter">
               {cartCounter}
@@ -67,6 +75,14 @@ const NavBar = ({ userInSession, cartCounter }) => {
               </Button>
             </InputGroup.Append>
           </InputGroup>
+        </Nav>
+        <Nav>
+          <Link to="/" className="marg">
+            Home
+            </Link>
+          <Link to="/products" className="marg">
+            Products
+            </Link>
         </Nav>
         <Nav>
           <Link to="/cart" className="cart-counter">

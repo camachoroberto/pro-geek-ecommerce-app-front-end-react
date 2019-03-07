@@ -26,7 +26,7 @@ const Cart = ({ cartRow, cart, total }) => {
               </thead>
               <tbody>{cartRow()}</tbody>
             </Table>
-            <Link to="/products"><button type="button" class="btn btn-outline-info btn-lg btn-block">Info</button></Link>
+            <Link to="/products"><button type="button" class="btn btn-lg ButtonKeep">Keep Buying</button></Link>
           </Col>
           <Col md="5">
             <Table responsive>
@@ -38,19 +38,24 @@ const Cart = ({ cartRow, cart, total }) => {
                   <td>${subtotal}</td>
                 </tr>
               </thead>
-              <tbody>
-                <Button variant="danger">Proceed to checkout</Button>
+              <tbody className="containerCol">
+                  <button type="button" class="btn btn lightblue btn-lg btn-block"> Proceed to checkout</button>
               </tbody>
             </Table>
           </Col>
         </Row>
+        <div className="fillin0"></div>
       </div>
     );
   } else {
     return (
-      <div className="container">
-        <div className="row justify-content-md-center">
-          <div className="col col-lg-2">Your Shopping Cart is empty.</div>
+      <div className="fillin">
+        <div className="containerCol paddinTop">
+            <div> Your Shopping Cart is empty.</div>
+            <br/>
+            <br/>
+            <div className="material-icons"> add_shopping_cart </div>
+
         </div>
       </div>
     );

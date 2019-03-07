@@ -18,6 +18,7 @@ import AdminProducts from './routes/adminproducts/AdminProducts.jsx';
 import ProductDetail from './routes/productdetail/ProductDetail.jsx';
 import Cart from './routes/cart/Cart.jsx';
 import AdminProductDetail from './routes/adminproductdetail/AdminProductDetail.jsx';
+import Category from './routes/categories/Category.jsx';
 
 class App extends Component {
   constructor() {
@@ -43,6 +44,7 @@ class App extends Component {
     this.selectProduct = this.selectProduct.bind(this);
     this.productRowTable = this.productRowTable.bind(this);
     this.addTotal = this.addTotal.bind(this);
+    this.updateCategories = this.updateCategories.bind(this);
   }
 
   // products and categories arrays
@@ -81,11 +83,16 @@ class App extends Component {
       });
   }
 
+  //categories
+  updateCategories(categories) {
+    this.setState({ categories })
+  }
+
   // auth components and functions
   getTheUser(userObj) {
     this.setState({
       loggedInUser: userObj
-    });
+    }, console.log(this.state.loggedInUser));
   }
 
   fetchUser() {
@@ -112,7 +119,6 @@ class App extends Component {
   }
 
   updatePrice(priceMin, priceMax) {
-    const { filterPrice } = this.state;
     this.setState({ filterPrice: [priceMin, priceMax] });
   }
 
@@ -122,6 +128,7 @@ class App extends Component {
     this.setState({
       cart: Object.assign(cart, obj)
     });
+    console.log(this.state.loggedInUser)
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
@@ -202,7 +209,6 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
             <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-            {/* <FormProduct categories={categories} /> */}
           </Switch>
           <Footer />
         </div>
@@ -219,24 +225,13 @@ class App extends Component {
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
           <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
+          <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories}/>} />
           <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
           <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
         </Switch>
         <Footer />
       </div>
     );
-
-    // <div className="body">
-    //   <NavBar />
-    //   <CategoryList categories={categories} />
-    //   <Counter />
-    //   <Switch>
-    //     <ProtectedRoute user={this.state.loggedInUser} path="/projects" component={AuthForm} />
-    //     <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
-    //     <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
-    //   </Switch>
-    //   <Footer />
-    // </div>
   }
 }
 
