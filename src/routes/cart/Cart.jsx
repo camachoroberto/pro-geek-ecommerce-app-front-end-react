@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Table, Row, Col, Container } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 const Cart = ({ cartRow, cart, total }) => {
   const totalArr = Object.values(total);
@@ -25,7 +26,7 @@ const Cart = ({ cartRow, cart, total }) => {
               </thead>
               <tbody>{cartRow()}</tbody>
             </Table>
-            <button type="button" class="btn btn-outline-info btn-lg btn-block">Info</button>
+            <Link to="/products"><button type="button" class="btn btn-outline-info btn-lg btn-block">Info</button></Link>
           </Col>
           <Col md="5">
             <Table responsive>

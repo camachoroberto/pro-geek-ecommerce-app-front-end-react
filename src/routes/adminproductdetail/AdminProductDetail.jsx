@@ -77,6 +77,7 @@ class AdminProductDetail extends Component {
   listCategories() {
     const { categories } = this.props;
     const checkedCategories = Object.keys(this.state.category);
+    console.log('##################',categories, 'a',checkedCategories);
     return categories.map((element) => {
       if (checkedCategories.join(' ').includes(element._id)) {
         return (

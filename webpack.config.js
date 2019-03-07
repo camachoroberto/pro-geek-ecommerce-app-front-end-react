@@ -40,7 +40,8 @@ module.exports = {
   devServer: {
     historyApiFallback: {
       disableDotRule: true
-    }
+    },
+    port: 3000
   },
   plugins: [
     new HtmlWebpackPlugin({
