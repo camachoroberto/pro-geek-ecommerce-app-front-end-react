@@ -223,7 +223,6 @@ class App extends Component {
           <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
         </Switch>
         <Footer />
-        <FormProduct categories={categories} />
       </div>
     );
 

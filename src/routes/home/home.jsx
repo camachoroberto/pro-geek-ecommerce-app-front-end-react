@@ -9,7 +9,7 @@ class Home extends Component {
   render() {
 
     const { categories, cardList } = this.props
-    console.log(this.props)
+ 
     return (
       <div>
         <CategoryList categories={categories} />
