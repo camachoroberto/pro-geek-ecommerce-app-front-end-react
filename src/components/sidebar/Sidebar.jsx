@@ -24,10 +24,14 @@ export default ({categories, updateFilter, updatePrice, ...rest}) => {
   return (
     <Menu {...rest}>
       <h3>Category</h3>
+      <p>______</p>
       <div>
       {listCategories}
       </div>
+      <br/>
+      <br/>
       <h3>Price</h3>
+      <p>______</p>
       <div>
           <input type="radio" name='price' id="any" value="0 1000000" onClick={e => handleCheckPrice(e)}/>
           <label htmlFor="any">Any</label>

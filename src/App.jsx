@@ -217,9 +217,8 @@ class App extends Component {
     return (
       <div className="body">
         <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
-        <CategoryList categories={categories} />
         <Switch>
-          <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
+          <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
           <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cart={cart} total={total} />} />
