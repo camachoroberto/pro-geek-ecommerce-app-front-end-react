@@ -2,7 +2,8 @@ import React from "react";
 import { Navbar, Nav, Button, FormControl, InputGroup, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const NavBar = ({ userInSession, cartCounter }) => {
+const NavBar = ({ userInSession, cartCounter, user }) => {
+  console.log(user);
   if (userInSession) {
     return (
       <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
@@ -34,7 +35,7 @@ const NavBar = ({ userInSession, cartCounter }) => {
             <Link to="/cart" className="material-icons marg">
               shopping_cart
             </Link>
-            <Link to="/my-profile" className="marg">
+            <Link to={`/profile/${user._id}`} className="marg">
               My Profile
             </Link>
             <Link to="/logout" className="marg">

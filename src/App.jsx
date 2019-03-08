@@ -18,6 +18,7 @@ import AdminProducts from './routes/adminproducts/AdminProducts.jsx';
 import ProductDetail from './routes/productdetail/ProductDetail.jsx';
 import Cart from './routes/cart/Cart.jsx';
 import AdminProductDetail from './routes/adminproductdetail/AdminProductDetail.jsx';
+import ProfileUpdate from './routes/profileupdate/ProfileUpdate.jsx';
 
 class App extends Component {
   constructor() {
@@ -29,7 +30,13 @@ class App extends Component {
       cart: {},
       productDetail: {},
       total: {},
-      loggedInUser: null,
+      loggedInUser: {
+        _id: '',
+        name: '',
+        username: '',
+        password: '',
+        birthDate: ''
+      },
       filterProduct: {},
       filterPrice: ['0', '100000000']
     };
@@ -37,6 +44,7 @@ class App extends Component {
     this.getTheUser = this.getTheUser.bind(this);
     this.addCart = this.addCart.bind(this);
     this.deleteCart = this.deleteCart.bind(this);
+    this.deleteProduct = this.deleteProduct.bind(this);
     this.fetchUser = this.fetchUser.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     this.updatePrice = this.updatePrice.bind(this);
@@ -53,6 +61,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchUser();
     axios.get('http://localhost:8080/categories')
       .then((response) => {
         const categories = response.data.response;
@@ -88,19 +97,6 @@ class App extends Component {
     });
   }
 
-  fetchUser() {
-    const { loggedInUser } = this.state;
-    if (loggedInUser === null) {
-      this.service.loggedin()
-        .then((response) => {
-          this.setState({ loggedInUser: response });
-        })
-        .catch(() => {
-          this.setState({ loggedInUser: false });
-        });
-    }
-  }
-
   // Sidebar functions
   updateFilter(name, checked) {
     const { filterProduct } = this.state;
@@ -112,7 +108,6 @@ class App extends Component {
   }
 
   updatePrice(priceMin, priceMax) {
-    const { filterPrice } = this.state;
     this.setState({ filterPrice: [priceMin, priceMax] });
   }
 
@@ -140,7 +135,16 @@ class App extends Component {
       total: Object.assign({}, delete total[property], total)
     });
     localStorage.setItem('cart', JSON.stringify(cart));
-    localStorage.setItem('total', JSON.stringify(total))
+    localStorage.setItem('total', JSON.stringify(total));
+  }
+
+  deleteProduct(product) {
+    const { products } = this.state;
+    axios.delete(`http://localhost:8080/products/${product._id}`)
+      .then(() => {
+        const filteredProducts = products.filter(element => !element._id.includes(product._id));
+        this.setState({ products: filteredProducts });
+      });
   }
 
   productRowTable() {
@@ -182,7 +186,6 @@ class App extends Component {
     })
   }
 
-
   logoutUser() {
     this.service.logout()
       .then(() => {
@@ -191,18 +194,36 @@ class App extends Component {
       });
   }
 
+  fetchUser() {
+    const { loggedInUser } = this.state;
+    if (loggedInUser.name === '') {
+      this.service.loggedin()
+        .then((response) => {
+          this.setState({ loggedInUser: response });
+        })
+        .catch(() => {
+          this.setState({ loggedInUser: false });
+        });
+    }
+  }
+
   render() {
     this.fetchUser();
-    const { categories, cart, productDetail, total, products, orders } = this.state;
-    if (this.state.loggedInUser) {
+    console.log('truta');
+    const { categories, cart, productDetail, total, products, orders, loggedInUser } = this.state;
+    if (loggedInUser) {
       return (
         <div>
-          <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
+          <NavBar userInSession={loggedInUser} cartCounter={Object.keys(cart).length} user={loggedInUser} />
           <CategoryList categories={categories} />
           <Switch>
             <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
             <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-            {/* <FormProduct categories={categories} /> */}
+            <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} user={loggedInUser} />} />
+            <Route exact path="/admin/products" render={() => <AdminProducts user={loggedInUser} products={products} selectProduct={this.selectProduct} deleteProduct={this.deleteProduct} />} />
+            <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+            <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+            <Route exact path="/profile/:id" render={() => <ProfileUpdate user={this.state.loggedInUser} />} />
           </Switch>
           <Footer />
         </div>
@@ -210,7 +231,7 @@ class App extends Component {
     }
     return (
       <div className="body">
-        <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
+        <NavBar userInSession={loggedInUser} cartCounter={Object.keys(cart).length} />
         <CategoryList categories={categories} />
         <Switch>
           <Route exact path="/" render={() => <Home cardList={this.cardList().slice(0, 3)} />} />
@@ -218,28 +239,18 @@ class App extends Component {
           <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
           <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cart={cart} total={total} />} />
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
-          <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
-          <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
+          <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} user={loggedInUser} />} />
+          <Route exact path="/admin/products" render={() => <AdminProducts user={loggedInUser} products={products} selectProduct={this.selectProduct} deleteProduct={this.deleteProduct} />} />
           <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
           <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+          <Route path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
         </Switch>
         <Footer />
         <FormProduct categories={categories} />
       </div>
     );
-
-    // <div className="body">
-    //   <NavBar />
-    //   <CategoryList categories={categories} />
-    //   <Counter />
-    //   <Switch>
-    //     <ProtectedRoute user={this.state.loggedInUser} path="/projects" component={AuthForm} />
-    //     <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="signup" getUser={this.getTheUser} />} />
-    //     <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
-    //   </Switch>
-    //   <Footer />
-    // </div>
   }
 }
+
 
 export default App;

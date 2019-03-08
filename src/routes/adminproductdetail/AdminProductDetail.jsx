@@ -29,7 +29,6 @@ class AdminProductDetail extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.product);
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.props.product;
     const categoryObj = {};
     category.forEach((element) => {
