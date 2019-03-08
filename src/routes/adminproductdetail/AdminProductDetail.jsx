@@ -29,7 +29,6 @@ class AdminProductDetail extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.product);
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.props.product;
     const categoryObj = {};
     category.forEach((element) => {
@@ -77,7 +76,6 @@ class AdminProductDetail extends Component {
   listCategories() {
     const { categories } = this.props;
     const checkedCategories = Object.keys(this.state.category);
-    console.log('##################',categories, 'a',checkedCategories);
     return categories.map((element) => {
       if (checkedCategories.join(' ').includes(element._id)) {
         return (

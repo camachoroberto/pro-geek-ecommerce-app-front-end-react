@@ -1,25 +1,36 @@
-import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
-import AdminProducts from '../adminproducts/AdminProducts.jsx';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-const AdminPage = (props) => {
-  const { orders, categories, products } = props;
-  return (
-    <div>
-      <Link to="/admin/orders">Manage my orders</Link>
-      <br />
-      <Link to="/admin/products">Manage my products</Link>
-      <br />
-      <Link to="/admin/categories">Manage my categories</Link>
-      <br />
-      <Link to="/admin/profile">Manage my profile</Link>
-      <Switch>
-        {/* <Route exact path="/admin/orders" /> */}
-        {/* <Route exact path="/admin/categories" /> */}
-        {/* <Route exact path="/admin/profile" /> */}
-      </Switch>
-    </div>
-  );
+class AdminPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
+    };
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
+    this.setState({ user });
+  }
+
+  render() {
+    const { user } = this.props;
+    return (
+      <div className="container mt-5">
+       <div className="row justify-content-center">
+         <div className="col-md-6">
+            <ul class="list-group">
+            <Link to="/admin/orders"><li class="list-group-item mb-2">Manage my orders</li></Link>
+            <Link to="/admin/products"><li class="list-group-item mb-2">Manage my products</li></Link>
+            <Link to="/admin/categories"><li class="list-group-item mb-2">Manage my categories</li></Link>
+            <Link to={`/profile/${user._id}`}><li class="list-group-item mb-2">Manage my profile</li></Link>
+            </ul>
+         </div>
+       </div>
+      </div>
+    );
+  }
 }
 
 export default AdminPage;

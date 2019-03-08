@@ -1,9 +1,20 @@
-import React from "react";
-import { Navbar, Nav, Button, FormControl, InputGroup, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import AuthService from '../auth/service/auth-service.jsx'; 
 
-const NavBar = ({ userInSession, cartCounter }) => {
-  if (userInSession) {
+const NavBar = ({ cartCounter, user, getTheUser }) => {
+  const service = new AuthService();
+
+  const Logout = () => {
+    service.logout()
+      .then(() => {
+        getTheUser(false)
+      })
+
+  }
+
+  if (user) {
     return (
       <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
         <Navbar.Brand>
@@ -42,10 +53,10 @@ const NavBar = ({ userInSession, cartCounter }) => {
             <Link to="/cart" className="material-icons marg">
               shopping_cart
             </Link>
-            <Link to="/my-profile" className="marg">
+            <Link to={`/profile/${user._id}`} className="marg">
               My Profile
             </Link>
-            <Link to="/logout" className="marg">
+            <Link to="/" onClick={Logout} className="marg">
               Logout
             </Link>
           </Nav>
@@ -79,10 +90,10 @@ const NavBar = ({ userInSession, cartCounter }) => {
         <Nav>
           <Link to="/" className="marg">
             Home
-            </Link>
+          </Link>
           <Link to="/products" className="marg">
             Products
-            </Link>
+          </Link>
         </Nav>
         <Nav>
           <Link to="/cart" className="cart-counter">

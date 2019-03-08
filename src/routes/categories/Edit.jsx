@@ -69,6 +69,6 @@ const Edit = ({show, handleClose, updateCategories, categories, setSuccess, add,
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default Edit;

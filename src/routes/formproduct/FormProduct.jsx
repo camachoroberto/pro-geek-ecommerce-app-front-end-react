@@ -47,7 +47,7 @@ class FormProduct extends Component {
           console.log(image);
         })
         .catch((err) => {
-          console.log('Error while uploading the file: ', err);
+          throw err;
         });
     } else {
       alert('Max number of uploads reached.');

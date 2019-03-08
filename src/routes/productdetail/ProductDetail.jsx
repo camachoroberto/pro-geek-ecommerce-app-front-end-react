@@ -7,21 +7,21 @@ class ProductCard extends Component {
     super(props);
 
     this.state = {
-      counter: 0,
-    }
+      counter: 0
+    };
     this.plus1 = this.plus1.bind(this)
     this.minus1 = this.minus1.bind(this)
   }
 
   plus1() {
-    const { counter } = this.state
-    this.setState({ counter: counter + 1 })
+    const { counter } = this.state;
+    this.setState({ counter: counter + 1 });
   }
 
   minus1() {
     const { counter } = this.state;
     if (counter > 0) {
-      this.setState({ counter: counter - 1 })
+      this.setState({ counter: counter - 1 });
     }
   }
 
@@ -29,8 +29,8 @@ class ProductCard extends Component {
     const { addCart, product, counterCart, addTotal } = this.props;
     const { counter } = this.state;
     const id = product._id;
-     const total = counter + (counterCart || 0);
-     const subtotal = counter * product.price;
+    const total = counter + (counterCart || 0);
+    const subtotal = counter * product.price;
     return (
       <div className="containerRowB">
         <div className="containerCol margin">
@@ -67,8 +67,6 @@ class ProductCard extends Component {
       </div>
     );
   }
-
 }
-
 
 export default ProductCard;

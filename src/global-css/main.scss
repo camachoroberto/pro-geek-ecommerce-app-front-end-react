@@ -10,12 +10,12 @@
 @import '../routes/formproduct/FormProduct.scss';
 @import  '../routes/home/home.scss';
 @import '../routes/products/Products.scss';
-@import '../routes/editproduct/EditProduct.scss';
 @import '../routes/adminpage/AdminPage.scss';
 @import '../routes/adminproducts/AdminProducts.scss';
 @import '../routes/productdetail/ProductDetail.scss';
 @import '../routes/cart/Cart.scss';
 @import '../routes/adminproductdetail/AdminProductDetail.scss';
+@import '../routes/profileupdate/ProfileUpdate.scss';
 
 .ButtonPG {
   background-color: $darkBlue;
@@ -47,5 +47,9 @@
 .containerRow {
   display: flex;
   flex-flow: row wrap;
-  
+}
+
+.body {
+  position: relative;
+  min-height: 100vh;
 }

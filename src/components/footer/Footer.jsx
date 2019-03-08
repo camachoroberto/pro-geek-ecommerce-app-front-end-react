@@ -1,8 +1,7 @@
 import React from 'react';
 
 const Footer = () => (
-  <div className="container-fluid footer-container">
-
+  <div className="container-fluid footer-container ">
     <div className="row footer-container-1">
       <div className="col-md-3 align-center">
         <p><strong className="headerFoot">About Us</strong></p>
@@ -29,7 +28,7 @@ const Footer = () => (
       </div>
 
       <div className="col-md-3">
-        <div id="fb-root"><div className="fb-page" data-href="https://www.facebook.com/GeekStickersOficial/" data-width="250"  data-height="100" data-hide-cover="false" data-show-facepile="false" /></div>
+        <div id="fb-root"><div className="fb-page" data-href="https://www.facebook.com/GeekStickersOficial/" data-width="250" data-height="100" data-hide-cover="false" data-show-facepile="false" /></div>
       </div>
     </div>
 
@@ -48,7 +47,6 @@ const Footer = () => (
         <strong className="botton-footer-header lb">  © Pro Geek Limited. All rights reserved</strong>
       </div>
     </div>
-
   </div>
 );
 
