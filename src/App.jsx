@@ -21,6 +21,7 @@ import AdminProductDetail from './routes/adminproductdetail/AdminProductDetail.j
 import ProfileUpdate from './routes/profileupdate/ProfileUpdate.jsx';
 import Category from './routes/categories/Category.jsx';
 import Loader from "react-loaders";
+import Orders from './routes/orders/Orders.jsx';
 
 class App extends Component {
   constructor() {
@@ -110,6 +111,7 @@ class App extends Component {
         throw err;
       });
   }
+
   //message functions
   showMessage() {
     const { message } = this.state
@@ -279,47 +281,69 @@ class App extends Component {
       if (loggedInUser) {
         return (
           <div className="body">
+            <div className="content-wrap">
+            
             <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser}/>
             {this.showMessage()}
             <Switch>
-            <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
-            <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-            <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="Signup" getUser={this.getTheUser} />} />
-            <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage()} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
-            <Route exact path="/login" render={() => <AuthForm username password type="Login" getUser={this.getTheUser} />} />
-            <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
-            <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
-            <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} />} />
-            <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
-            <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
-            <Route exact path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
-          </Switch>
+              <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
+              <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+              <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="Signup" getUser={this.getTheUser} />} />
+              <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+              <Route exact path="/login" render={() => <AuthForm username password type="Login" getUser={this.getTheUser} />} />
+              <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
+              <Route exact path="/admin/products" render={() => <AdminProducts products={products}  selectProduct={this.selectProduct} />} />
+              <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
+              <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+              <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+              <Route exact path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
+              <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders}/>} />
+            </Switch>
             <Footer />
+            </div>
           </div>
         );
       } else {
         return (
           <div className="body">
-            <NavBar userInSession={this.state.loggedInUser} cartCounter={Object.keys(cart).length} />
+            <div className="content-wrap">
+            <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser}/>
             {this.showMessage()}
             <Switch>
               <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
               <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
               <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
-              <Route exact path="/cart" render={() => <Cart updateMessage={this.updateMessage} cartRow={this.productRowTable} cartReset={this.cartReset} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+              <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
               <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
-              <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
-              <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
-              <Route exact path="/admin/categories" render={() => <Category categories={categories} category={category} selectCategory={this.selectCategory} updateCategories={this.updateCategories}/>} />
+              <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
+              <Route exact path="/admin/products" render={() => <AdminProducts products={products}  selectProduct={this.selectProduct} />} />
+              <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory}/>} />
               <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
               <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+              <Route exact path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
+              <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders}/>} />
             </Switch>
             <Footer />
+            </div>
           </div>
         );
       }
     } else {
-      return <Loader type="ball-pulse" />;
+      return (
+        <div>
+          <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser}/>
+          <div className="container">
+            <div className="row justify-content-center">
+            <div class="col align-self-center">
+              <div class="d-flex align-items-center">
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      );
     }
   }
 }

@@ -16,7 +16,7 @@ const AdminProducts = ({ products, selectProduct, deleteProduct }) => {
     </tr>
   ));
   return (
-    <table className="table">
+    <table className="table table-responsive">
       <thead>
         <tr>
           <th>Product</th>

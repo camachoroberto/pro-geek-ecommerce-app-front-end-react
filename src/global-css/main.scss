@@ -16,6 +16,7 @@
 @import '../routes/cart/Cart.scss';
 @import '../routes/adminproductdetail/AdminProductDetail.scss';
 @import '../routes/profileupdate/ProfileUpdate.scss';
+@import '../routes/orders/Order.scss';
 
 .ButtonPG {
   background-color: $darkBlue;
@@ -52,4 +53,8 @@
 .body {
   position: relative;
   min-height: 100vh;
+}
+
+.content-wrap {
+  padding-bottom: 2.5rem;
 }

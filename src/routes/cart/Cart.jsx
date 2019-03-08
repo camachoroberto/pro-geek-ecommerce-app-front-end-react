@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Table, Row, Col, Container } from 'react-bootstrap';
+import { Table, Row, Col } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import { checkPropTypes } from 'prop-types';
 import Axios from 'axios';
 
 class Cart extends Component {
@@ -35,11 +34,12 @@ class Cart extends Component {
       return;
     } else {
       Axios({
-        method: 'post', // verbo http
-        url: 'http://localhost:8080/orders', // url
-        data: Object.assign({}, { products: order }, { userId: loggedInUser._id })
+        method: 'post',
+        url: 'http://localhost:8080/orders',
+        data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address }})
       })
         .then((response) => {
+          console.log(Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address }}))
           cartReset();
           this.setRedirect();
         })

@@ -67,10 +67,10 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
 
   const categoriesList = () => {
     return categories.map((category, idx) => (
-      <tr>
+      <tr key={category._id}>
         <td>{category.name}</td>
         <td>
-          <button onClick={() => {handleShow(); selectCategory(category); selectCategoryIndex(idx) }} className="btn ButtonCardP">Edit</button>
+          <button onClick={() => { handleShow(); selectCategory(category); selectCategoryIndex(idx) }} className="btn ButtonCardP">Edit</button>
         </td>
         <td>
           <button className="btn btn-danger" onClick={() => { selectCategoryIndex(idx); deleteCategory(idx, category) }} >delete</button>
@@ -94,7 +94,7 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
             </thead>
             <tbody>{categoriesList()}</tbody>
           </table>
-          <button className="btn btn-lg lightblue btn-block" onClick={() => handleShow(true)}>add</button>
+          <button className="btn btn-lg lightblue btn-block" onClick={() => {handleShow(true)}}>add</button>
         </div>
       </div>
     );
