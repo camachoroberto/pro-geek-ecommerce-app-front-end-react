@@ -12,7 +12,7 @@ class Home extends Component {
  
     return (
       <div>
-        {/* <CategoryList categories={categories} /> */}
+        <CategoryList categories={categories} />
         
         <div className="header">
           <div className="caption0 containerCol paddinTop">
