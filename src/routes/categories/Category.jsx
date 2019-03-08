@@ -1,33 +1,25 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Edit from './Edit.jsx';
 
-class Category extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false
-    };
-    this.handleClose = this.handleClose.bind(this);
-    this.handleShow = this.handleShow.bind(this);
-    this.categoriesList = this.categoriesList.bind(this);
+const Category = ({ categories, updateCategories, selectCategory, category }) => {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
   }
 
-  handleClose() {
-    this.setState({ show: false });
+  const handleShow = () => {
+    setShow(true);
   }
 
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  categoriesList() {
-    const { categories } = this.props
+  const categoriesList = () => {
     return categories.map((category) => (
       <tr>
         <td>{category.name}</td>
         <td>
-          <button onClick={() => this.handleShow()} className="btn ButtonCardP">edit</button>
+          <button onClick={() => {handleShow(); selectCategory(category) }} className="btn ButtonCardP">Edit</button>
         </td>
         <td>
           <button className="btn btn-danger">delete</button>
@@ -36,11 +28,10 @@ class Category extends Component {
     ));
   }
 
-  render() {
     return (
       <div>
-        <Edit handleClose={this.handleClose} show={this.state.show}/>
-        <div className="cart">
+        <Edit handleClose={handleClose} updateCategories={updateCategories} show={show} category={category} />
+        <div className="cart table-responsive">
           <table className="table">
             <thead>
               <tr>
@@ -49,12 +40,11 @@ class Category extends Component {
                 <th />
               </tr>
             </thead>
-            <tbody>{this.categoriesList()}</tbody>
+            <tbody>{categoriesList()}</tbody>
           </table>
         </div>
       </div>
     );
-  }
 }
 
 export default Category;

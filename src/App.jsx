@@ -32,7 +32,8 @@ class App extends Component {
       total: {},
       loggedInUser: null,
       filterProduct: {},
-      filterPrice: ['0', '100000000']
+      filterPrice: ['0', '100000000'],
+      category: {}
     };
     this.service = new AuthService();
     this.getTheUser = this.getTheUser.bind(this);
@@ -45,6 +46,7 @@ class App extends Component {
     this.productRowTable = this.productRowTable.bind(this);
     this.addTotal = this.addTotal.bind(this);
     this.updateCategories = this.updateCategories.bind(this);
+    this.selectCategory = this.selectCategory.bind(this);
   }
 
   // products and categories arrays
@@ -86,6 +88,10 @@ class App extends Component {
   //categories
   updateCategories(categories) {
     this.setState({ categories })
+  }
+
+  selectCategory(category) {
+    this.setState({category})
   }
 
   // auth components and functions
@@ -200,7 +206,7 @@ class App extends Component {
 
   render() {
     this.fetchUser();
-    const { categories, cart, productDetail, total, products, orders } = this.state;
+    const { categories, cart, productDetail, total, products, orders, category } = this.state;
     if (this.state.loggedInUser) {
       return (
         <div>
@@ -225,7 +231,7 @@ class App extends Component {
           <Route exact path="/login" render={() => <AuthForm username password type="login" getUser={this.getTheUser} />} />
           <Route exact path="/admin" render={() => <AdminPage products={products} categories={categories} orders={orders} />} />
           <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
-          <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories}/>} />
+          <Route exact path="/admin/categories" render={() => <Category categories={categories} category={category} selectCategory={this.selectCategory} updateCategories={this.updateCategories}/>} />
           <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
           <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
         </Switch>
