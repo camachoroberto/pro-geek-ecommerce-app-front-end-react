@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { InputGroup, Button } from 'react-bootstrap';
 
-
 const Counter = (props) => {
-
-  const { plus1, minus1, counter} = props
-
+  const { plus1, minus1, counter } = props;
   return (
-
-    < div >
+    <div>
       <InputGroup className="mb-3">
         <InputGroup.Prepend>
           <Button variant="outline-secondary" onClick={e => minus1(e)}>-</Button>
@@ -19,10 +15,8 @@ const Counter = (props) => {
           <Button variant="outline-secondary" onClick={e => plus1(e)}>+</Button>
         </InputGroup.Append>
       </InputGroup>
-    </div >
-
-  )
-}
-
+    </div>
+  );
+};
 
 export default Counter;

@@ -9,20 +9,16 @@ class ProductRow extends Component {
     this.minus1 = this.minus1.bind(this);
   }
 
-
   plus1() {
-    const { addCart, product, addTotal } = this.props;
-    const { counter } = this.props;
+    const { addCart, product, addTotal, counter } = this.props;
     const id = product._id;
     const total = product.price * (counter + 1);
     addCart({ [id]: counter + 1 });
     addTotal({ [id]: total })
   }
 
-
   minus1() {
-    const { addCart, product, addTotal } = this.props;
-    const { counter } = this.props;
+    const { addCart, product, addTotal, counter } = this.props;
     const id = product._id;
     const total = product.price * (counter - 1);
     if (counter > 1) {
@@ -30,7 +26,6 @@ class ProductRow extends Component {
       addTotal({ [id]: total });
     }
   }
-
 
   render() {
     const { product, counter, deleteCart } = this.props;
@@ -41,7 +36,7 @@ class ProductRow extends Component {
         <td>{product.name}</td>
         <td>{product.price.toFixed(2)}</td>
         <td><Counter counter={counter} plus1={this.plus1} minus1={this.minus1} /></td>
-        <td >${total.toFixed(2)}</td>
+        <td>${total.toFixed(2)}</td>
         <td>
           <Button onClick={() => deleteCart(product._id)} className="material-icons" variant="outline-danger"> delete </Button>
         </td>
@@ -49,4 +44,5 @@ class ProductRow extends Component {
     );
   }
 }
+
 export default ProductRow;

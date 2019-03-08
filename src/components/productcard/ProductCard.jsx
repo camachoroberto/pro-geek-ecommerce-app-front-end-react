@@ -13,12 +13,11 @@ class ProductCard extends Component {
     this.minus1 = this.minus1.bind(this);
   }
 
-
   componentDidMount() {
     const { counter } = this.props;
     this.setState({
       counter: (counter || 0)
-    })
+    });
   }
 
   plus1() {
@@ -37,21 +36,22 @@ class ProductCard extends Component {
     const { product, addCart, counterCart, addTotal, selectProduct } = this.props;
     const { counter } = this.state;
     const id = product._id;
-    const total =  counter + (counterCart||0);
+    const total = counter + (counterCart || 0);
     const subtotal = counter * product.price;
     return (
-      <div className="margin10">
+      <div className="col-md-3 margin10">
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">${product.price.toFixed(2)}</Card.Subtitle>
             <Card.Text>
-              {product.description.slice(0, 30)} <br/>
-              <Link className="blue" onClick={() => selectProduct(product)} to={{ pathname: '/products/' + id  }}> ...details</Link>
+              {product.description.slice(0, 30)}
+              <br />
+              <Link className="blue" onClick={() => selectProduct(product)} to={{ pathname: `/products/${id}` }}> ...details</Link>
             </Card.Text>
             <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
-            <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>
+            <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal }); }}>BUY</Button>
           </Card.Body>
         </Card>
       </div>

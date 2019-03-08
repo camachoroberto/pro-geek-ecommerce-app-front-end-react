@@ -10,7 +10,6 @@
 @import '../routes/formproduct/FormProduct.scss';
 @import  '../routes/home/home.scss';
 @import '../routes/products/Products.scss';
-@import '../routes/editproduct/EditProduct.scss';
 @import '../routes/adminpage/AdminPage.scss';
 @import '../routes/adminproducts/AdminProducts.scss';
 @import '../routes/productdetail/ProductDetail.scss';
@@ -48,5 +47,4 @@
 .containerRow {
   display: flex;
   flex-flow: row wrap;
-  
 }

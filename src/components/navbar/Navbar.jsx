@@ -1,10 +1,9 @@
-import React from "react";
-import { Navbar, Nav, Button, FormControl, InputGroup, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-const NavBar = ({ userInSession, cartCounter, user }) => {
-  console.log(user);
-  if (userInSession) {
+const NavBar = ({ cartCounter, user }) => {
+  if (user) {
     return (
       <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
         <Navbar.Brand>
@@ -27,6 +26,14 @@ const NavBar = ({ userInSession, cartCounter, user }) => {
                 </Button>
               </InputGroup.Append>
             </InputGroup>
+          </Nav>
+          <Nav>
+            <Link to="/" className="marg">
+              Home
+            </Link>
+            <Link to="/products" className="marg">
+              Products
+            </Link>
           </Nav>
           <Nav className="links-nav">
             <Link to="/cart" className="cart-counter">
@@ -68,6 +75,14 @@ const NavBar = ({ userInSession, cartCounter, user }) => {
               </Button>
             </InputGroup.Append>
           </InputGroup>
+        </Nav>
+        <Nav>
+          <Link to="/" className="marg">
+            Home
+          </Link>
+          <Link to="/products" className="marg">
+            Products
+          </Link>
         </Nav>
         <Nav>
           <Link to="/cart" className="cart-counter">

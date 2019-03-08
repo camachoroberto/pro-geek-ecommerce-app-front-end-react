@@ -40,7 +40,6 @@ class FormProduct extends Component {
     if (image.length < 5) {
       const uploadData = new FormData();
       uploadData.append('image', e.target.files[0]);
-      console.log('FKJASHDKJDASHJKASHDKJASH');
       FileUpload.handleUpload(uploadData)
         .then((response) => {
           image.push(response.secure_url);
@@ -48,7 +47,7 @@ class FormProduct extends Component {
           console.log(image);
         })
         .catch((err) => {
-          console.log('Error while uploading the file: ', err);
+          throw err;
         });
     } else {
       alert('Max number of uploads reached.');

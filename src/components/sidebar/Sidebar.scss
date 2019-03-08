@@ -17,8 +17,13 @@
 }
 
 /* Change color on hover */
-.bm-item:hover {
-  color: white;
+// .bm-item:hover {
+//   color: $blue;
+// }
+
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
 }
 
 /* The rest copied directly from react-burger-menu docs */
@@ -29,12 +34,12 @@
   width: 36px;
   height: 30px;
   left: 0px;
-  top: 90vh;
+  top: 40vh;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #373a47;
+  background: $black;
 }
 
 /* Position and sizing of clickable cross button */
@@ -50,14 +55,14 @@
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: $black;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
 
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
-  fill: #373a47;
+  fill: $black;
 }
 
 /* Wrapper for item list */

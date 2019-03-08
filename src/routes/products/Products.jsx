@@ -9,16 +9,18 @@ const Products = ({ cardList, updateFilter, updatePrice, categories }) => {
         updateFilter={updateFilter}
         updatePrice={updatePrice}
         categories={categories}
-        pageWrapId={"page-wrap"}
-        outerContainerId={"App"}
-        customBurgerIcon={<img src="./public/images/sideBar.svg" />}
+        pageWrapId="page-wrap"
+        outerContainerId="App"
+        customBurgerIcon={<img src="./public/images/sideBar.svg" alt="sidebar" />}
       />
       <Container>
         <div className="containerRow">
           {cardList}
         </div>
       </Container>
+      <div className="fillin" />
     </div>
   );
 };
+
 export default Products;

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import CategoryList from '../../components/categorylist/CategoryList.jsx';
 
 
 class Home extends Component {
-
-
   render() {
+    const { categories, cardList } = this.props
     return (
       <div>
-
+        {/* <CategoryList categories={categories} /> */}
         <div className="header">
           <div className="caption0 containerCol paddinTop">
             <h2>NEW STAR WARS COLLECTIBLE</h2>
@@ -17,16 +16,16 @@ class Home extends Component {
           </div><a href=""></a>
         </div>
 
-        <div className="middle containerCol">
-        
-          <div className="containerRow">
-            <h2>Top Sellers</h2>
-          </div>
-     
-          <div className="containerRow">
-            {this.props.cardList}
+        <div className="container">
+        <div className="row justify-contentcenter">
+          <div className="col col-md-6 ">
+            <h2 className="margin30">Top Sellers</h2>
           </div>
 
+          <div className="containerRow margin30">
+            {cardList}
+          </div>
+        </div>
         </div>
 
         <div className="header">
@@ -34,7 +33,6 @@ class Home extends Component {
             <h2>NOW AVAILABLE</h2>
           </div>
         </div>
-
       </div>
     )
   }

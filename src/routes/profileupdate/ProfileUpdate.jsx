@@ -3,8 +3,6 @@ import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import InputForm from '../../components/inputform/InputForm.jsx';
 import AuthService from '../../components/auth/service/auth-service.jsx';
-import CategoryCheckbox from '../../components/categorycheckbox/CategoryCheckbox.jsx';
-import FileUpload from '../../components/auth/service/file-upload.jsx';
 
 class ProfileUpdate extends Component {
   constructor(props) {

@@ -10,9 +10,8 @@ class AdminPage extends Component {
   }
 
   componentDidMount() {
-    console.log('porraaaaaaa', user)
     const { user } = this.props;
-    this.setState({ user }, () => console.log(user));
+    this.setState({ user });
   }
 
   render() {
