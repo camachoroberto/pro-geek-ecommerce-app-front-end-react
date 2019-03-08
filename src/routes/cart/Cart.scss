@@ -30,3 +30,20 @@
   background-color: $blue;
   color: $white;
 }
+
+.fillin0 {
+  height: 5vh
+}
+
+.ButtonKeep {
+  background-color: $white;
+  color: $darkBlue;
+  border-color: $darkBlue;
+  width: 30em;
+}
+
+.ButtonKeep:hover {
+  background-color: $white;
+  color: $blue;
+  border-color: $blue
+}

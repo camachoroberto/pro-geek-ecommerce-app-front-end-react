@@ -9,10 +9,10 @@ class Home extends Component {
   render() {
 
     const { categories, cardList } = this.props
-    console.log(this.props)
+ 
     return (
       <div>
-        <CategoryList categories={categories} />
+        {/* <CategoryList categories={categories} /> */}
         
         <div className="header">
           <div className="caption0 containerCol paddinTop">
@@ -24,10 +24,10 @@ class Home extends Component {
         <div className="row justify-contentcenter">
         
           <div className="col col-md-6 ">
-            <h2>To Sellers</h2>
+            <h2 className="margin30">Top Sellers</h2>
           </div>
      
-          <div className="containerRow">
+          <div className="containerRow margin30">
             {cardList}
           </div>
         </div>
