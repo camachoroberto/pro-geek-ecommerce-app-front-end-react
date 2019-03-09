@@ -21,7 +21,7 @@ class UserPage extends Component {
        <div className="row justify-content-center">
          <div className="col-md-6">
             <ul className="list-group">
-            <Link to="/admin/orders"><li className="list-group-item mb-2 ButtonPG">Manage my orders</li></Link>
+            <Link to="/profile/orders"><li className="list-group-item mb-2 ButtonPG">Manage my orders</li></Link>
             <Link to={`/profile/${user._id}`}><li className="list-group-item mb-2 ButtonPG">Manage my profile</li></Link>
             </ul>
          </div>
