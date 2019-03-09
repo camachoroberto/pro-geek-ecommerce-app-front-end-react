@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './global-css/main.scss';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import CategoryList from './components/categorylist/CategoryList.jsx';
 import NavBar from './components/navbar/Navbar.jsx';
 import Footer from './components/footer/Footer.jsx';
@@ -22,6 +22,7 @@ import ProfileUpdate from './routes/profileupdate/ProfileUpdate.jsx';
 import Category from './routes/categories/Category.jsx';
 import Loader from "react-loaders";
 import Orders from './routes/orders/Orders.jsx';
+import UserPage from './routes/userpage/UserPage.jsx';
 
 class App extends Component {
   constructor() {
@@ -43,7 +44,10 @@ class App extends Component {
           street: '',
           complement: '',
           postalCode: ''
-        }
+        },
+        role: '',
+        userAvaliations: [] ,
+        userOrders: [],
       },
       filterProduct: {},
       filterPrice: ['0', '100000000'],
@@ -315,11 +319,19 @@ class App extends Component {
                 <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
                 <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
                 <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
-                <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
+                {/* <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} /> */}
                 <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
                 <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
                 <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
                 <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+                <Route exact path="/profile" 
+                    render={() =>
+                      loggedInUser.role === 'User'
+                      ? <UserPage user={loggedInUser} />
+                      : loggedInUser.role === 'Admin'
+                      ? <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />
+                      : <Redirect to="/profile"/>
+                       } />
                 <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
                 <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
               </Switch>

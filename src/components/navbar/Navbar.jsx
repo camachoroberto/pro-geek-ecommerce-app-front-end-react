@@ -48,12 +48,18 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
           </Nav>
           <Nav className="links-nav">
             <Link to="/cart" className="cart-counter">
-              {cartCounter}
+              { !!cartCounter ?
+                <span style={{background:'red'}}>
+                  {cartCounter}
+                </span>
+                :
+                ''
+              }
             </Link>
             <Link to="/cart" className="material-icons marg">
               shopping_cart
             </Link>
-            <Link to={`/profile/${user._id}`} className="marg">
+            <Link to={`/profile`} className="marg">
               My Profile
             </Link>
             <Link to="/" onClick={Logout} className="marg">
@@ -97,7 +103,13 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
         </Nav>
         <Nav>
           <Link to="/cart" className="cart-counter">
-            {cartCounter}
+            { !!cartCounter ?
+                <span style={{background:'red'}}>
+                  {cartCounter}
+                </span>
+                :
+                ''
+              }
           </Link>
           <Link to="/cart" className="material-icons marg">
             shopping_cart

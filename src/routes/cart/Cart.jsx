@@ -42,7 +42,7 @@ class Cart extends Component {
       Axios({
         method: 'post',
         url: 'http://localhost:8080/orders',
-        data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address } })
+        data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address, id: loggedInUser._id } })
       })
         .then(() => {
           cartReset();
