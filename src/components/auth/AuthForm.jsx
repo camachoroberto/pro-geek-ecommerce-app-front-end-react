@@ -99,7 +99,7 @@ class AuthForm extends Component {
                 <h5 class="card-title">{type}</h5>
                 <form onSubmit={e => this.handleSubmit(e)}>
                   {this.createForm()}
-                  <input type="submit"className="btn btn-primary" value="Submit" />
+                  <input type="submit"className="btn btn-primary ButtonPG" value="Submit" />
                 </form>
               </div>
             </div>

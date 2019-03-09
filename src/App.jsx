@@ -38,7 +38,12 @@ class App extends Component {
         name: '',
         username: '',
         password: '',
-        birthDate: ''
+        birthDate: '',
+        address: {
+          street: '',
+          complement: '',
+          postalCode: ''
+        }
       },
       filterProduct: {},
       filterPrice: ['0', '100000000'],
@@ -55,6 +60,7 @@ class App extends Component {
     this.deleteCart = this.deleteCart.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
     this.fetchUser = this.fetchUser.bind(this);
+    this.fetchUserAddress = this.fetchUserAddress.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     this.updatePrice = this.updatePrice.bind(this);
     this.selectProduct = this.selectProduct.bind(this);
@@ -81,7 +87,7 @@ class App extends Component {
         this.setState({ categories });
       })
       .then(() => {
-        this.setState({ categoryState: true})
+        this.setState({ categoryState: true })
       })
       .catch((err) => {
         throw err;
@@ -93,7 +99,7 @@ class App extends Component {
         this.setState({ products });
       })
       .then(() => {
-        this.setState({ productState: true})
+        this.setState({ productState: true })
       })
       .catch((err) => {
         throw err;
@@ -105,7 +111,7 @@ class App extends Component {
         this.setState({ orders });
       })
       .then(() => {
-        this.setState({ orderState: true})
+        this.setState({ orderState: true })
       })
       .catch((err) => {
         throw err;
@@ -117,7 +123,7 @@ class App extends Component {
     const { message } = this.state
     if (message) {
       setTimeout(() => {
-        this.setState({message: false});
+        this.setState({ message: false });
       }, 2000)
       return (
         <div class="alert alert-primary" role="alert">
@@ -128,7 +134,7 @@ class App extends Component {
   }
 
   updateMessage(message) {
-    this.setState({message});
+    this.setState({ message });
   }
 
   //categories
@@ -137,7 +143,7 @@ class App extends Component {
   }
 
   selectCategory(category) {
-    this.setState({category})
+    this.setState({ category })
   }
 
   // auth components and functions
@@ -167,6 +173,24 @@ class App extends Component {
         })
     }
   }
+
+  fetchUserAddress() {
+    const { loggedInUser } = this.state;
+    if (loggedInUser.address.street === '' || loggedInUser.address.postalCode === '') {
+      this.service.loggedin()
+        .then((response) => {
+          this.setState({ loggedInUser: response });
+        })
+        .then(() => {
+          this.setState({ loggedInUserState: true })
+        })
+        .catch(() => {
+          this.setState({ loggedInUser: false, loggedInUserState: true });
+        })
+    }
+  }
+
+
 
   // Sidebar functions
   updateFilter(name, checked) {
@@ -282,24 +306,24 @@ class App extends Component {
         return (
           <div className="body">
             <div className="content-wrap">
-            
-            <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser}/>
-            {this.showMessage()}
-            <Switch>
-              <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
-              <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-              <Route exact path="/signup" render={() => <AuthForm name username password birthDate type="Signup" getUser={this.getTheUser} />} />
-              <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
-              <Route exact path="/login" render={() => <AuthForm username password type="Login" getUser={this.getTheUser} />} />
-              <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
-              <Route exact path="/admin/products" render={() => <AdminProducts products={products}  selectProduct={this.selectProduct} />} />
-              <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
-              <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
-              <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
-              <Route exact path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
-              <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders}/>} />
-            </Switch>
-            <Footer />
+
+              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
+              {this.showMessage()}
+              <Switch>
+                <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
+                <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+                <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
+                <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+                <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
+                <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
+                <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
+                <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
+                <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+                <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+                <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
+                <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
+              </Switch>
+              <Footer />
             </div>
           </div>
         );
@@ -307,23 +331,23 @@ class App extends Component {
         return (
           <div className="body">
             <div className="content-wrap">
-            <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser}/>
-            {this.showMessage()}
-            <Switch>
-              <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
-              <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-              <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
-              <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
-              <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
-              <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
-              <Route exact path="/admin/products" render={() => <AdminProducts products={products}  selectProduct={this.selectProduct} />} />
-              <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory}/>} />
-              <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
-              <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
-              <Route exact path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
-              <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders}/>} />
-            </Switch>
-            <Footer />
+              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
+              {this.showMessage()}
+              <Switch>
+                <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
+                <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+                <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
+                <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+                <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
+                <Route exact path="/admin" render={() => <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />} />
+                <Route exact path="/admin/products" render={() => <AdminProducts products={products} selectProduct={this.selectProduct} />} />
+                <Route exact path="/admin/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
+                <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+                <Route path="/admin/products/:id" render={() => <AdminProductDetail product={productDetail} categories={categories} />} />
+                <Route exact path="/profile/:id" render={() => <ProfileUpdate user={loggedInUser} />} />
+                <Route exact path="/admin/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
+              </Switch>
+              <Footer />
             </div>
           </div>
         );
@@ -331,14 +355,14 @@ class App extends Component {
     } else {
       return (
         <div>
-          <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser}/>
+          <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
           <div className="container">
             <div className="row justify-content-center">
-            <div class="col align-self-center">
-              <div class="d-flex align-items-center">
-                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+              <div class="col align-self-center">
+                <div class="d-flex align-items-center">
+                  <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
               </div>
-            </div>
             </div>
           </div>
           <Footer />

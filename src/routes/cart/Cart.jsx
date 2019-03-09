@@ -8,7 +8,8 @@ class Cart extends Component {
     super();
     this.state = {
       redirect: false,
-      logState: true
+      logState: true,
+      address: false
     };
     this.newOrder = this.newOrder.bind(this);
   }
@@ -20,7 +21,7 @@ class Cart extends Component {
   }
 
   newOrder() {
-    const { cartRow, cart, cartReset , products, loggedInUser } = this.props;
+    const { cartRow, cart, cartReset, products, loggedInUser } = this.props;
     const order = [];
     for (let key in cart) {
       products.forEach(element => {
@@ -30,16 +31,20 @@ class Cart extends Component {
       });
     }
     if (loggedInUser === false) {
-      this.setState({logState: false});
+      this.setState({ logState: false });
       return;
-    } else {
+    }
+    if (loggedInUser.address.street === '' || loggedInUser.address.postalCode === '') {
+      this.setState({ address: true })
+      return;
+    } 
+    else {
       Axios({
         method: 'post',
         url: 'http://localhost:8080/orders',
-        data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address }})
+        data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address } })
       })
-        .then((response) => {
-          console.log(Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address }}))
+        .then(() => {
           cartReset();
           this.setRedirect();
         })
@@ -56,6 +61,9 @@ class Cart extends Component {
     if (!this.state.logState) {
       updateMessage('Login is required to checkout')
       return <Redirect to="/login" />;
+    }
+    if (this.state.address) {
+      return <Redirect to={`/profile/${loggedInUser._id}`} />
     }
     if (this.state.redirect) {
       return <Redirect to="/" />
