@@ -16,6 +16,7 @@ class UserPage extends Component {
 
   render() {
     const { user } = this.props;
+    console.log(user)
     return (
       <div className="container mt-5">
        <div className="row justify-content-center">

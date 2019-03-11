@@ -73,10 +73,10 @@ class Cart extends Component {
         .reduce((acc, cur) => (acc += cur))
         .toFixed(2);
       return (
-        <div className="cart">
-          <Row>
-            <Col>
-              <Table responsive>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-md-7 table-responsive">
+              <table className="table">
                 <thead className="class-header">
                   <tr>
                     <td>Product</td>
@@ -88,11 +88,11 @@ class Cart extends Component {
                   </tr>
                 </thead>
                 <tbody>{cartRow()}</tbody>
-              </Table>
+              </table>
               <Link to="/products"><button type="button" className="btn btn-lg ButtonKeep">Keep Buying</button></Link>
-            </Col>
-            <Col md="5">
-              <Table responsive>
+            </div>
+            <div className="col-md-5 table-responsive">
+              <table className="table">
                 <thead className="class-header">
                   <tr>
                     <td className="subtotal">Subtotal</td>
@@ -104,10 +104,10 @@ class Cart extends Component {
                 <tbody className="containerCol">
                   <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
                 </tbody>
-              </Table>
-            </Col>
-          </Row>
-          <div className="fillin0"/>  
+              </table>
+            </div>
+          </div>
+          <div className="fillin0" />
         </div>
       );
     }
