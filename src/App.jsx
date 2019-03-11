@@ -49,6 +49,7 @@ class App extends Component {
         userAvaliations: [],
         userOrders: []
       },
+      filterText: '',
       filterProduct: {},
       filterPrice: ['0', '100000000'],
       category: {},
@@ -75,6 +76,7 @@ class App extends Component {
     this.cartReset = this.cartReset.bind(this);
     this.showMessage = this.showMessage.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
+    this.updateFilterText = this.updateFilterText.bind(this);
   }
 
   // products and categories arrays
@@ -257,6 +259,10 @@ class App extends Component {
     });
   }
 
+  updateFilterText(text) {
+    this.setState({filterText: text});
+  } 
+
   cardList() {
     const { products, cart, filterProduct, filterPrice } = this.state;
     let productsFilter = [];
@@ -303,7 +309,7 @@ class App extends Component {
           <div className="body">
             <div className="content-wrap">
 
-              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
+              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText} />
               {this.showMessage()}
               <Switch>
                 <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
@@ -351,7 +357,7 @@ class App extends Component {
       return (
         <div className="body">
             <div className="content-wrap">
-              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
+              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText}/>
               {this.showMessage()}
               <Switch>
                 <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />

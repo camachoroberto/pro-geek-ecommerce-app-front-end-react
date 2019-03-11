@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthService from '../auth/service/auth-service.jsx'; 
 
-const NavBar = ({ cartCounter, user, getTheUser }) => {
+const NavBar = ({ cartCounter, user, getTheUser, filterText }) => {
+  const [text, setText] = useState('');
+
   const service = new AuthService();
 
   const Logout = () => {
@@ -11,7 +13,10 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
       .then(() => {
         getTheUser(false)
       })
+  }
 
+  const submitFilter = () => {
+    filterText(text);
   }
 
   if (user) {
@@ -30,9 +35,11 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
                 placeholder="Recipient's username"
                 aria-label="Recipient's username"
                 aria-describedby="basic-addon2"
+                value={text}
+                onChange={e => setText(e.currentTarget.value)}
               />
               <InputGroup.Append>
-                <Button variant="outline-secondary" className="material-icons">
+                <Button variant="outline-secondary" className="material-icons" onClick={() => submitFilter()}>
                   search
                 </Button>
               </InputGroup.Append>
@@ -85,6 +92,8 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
               placeholder="Recipient's username"
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
+              value={text}
+              onChange={e => setText(e.currentTarget.value)}
             />
             <InputGroup.Append>
               <Button variant="outline-secondary" className="material-icons">
