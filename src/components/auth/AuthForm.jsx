@@ -51,7 +51,7 @@ class AuthForm extends Component {
           password: '',
           birthDate: ''
         });
-        getUser(response);
+        getUser(response.user);
         this.success();
       });
   }
