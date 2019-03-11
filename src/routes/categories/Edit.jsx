@@ -56,16 +56,16 @@ const Edit = ({show, handleClose, updateCategories, categories, setSuccess, add,
         <Modal.Title>{action} Category</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <form onSubmit={e => handleSubmit(e, name)}>
-        <div className="form-group">
-          <label htmlFor="text">Category name</label>
-          <input type="text" className="form-control" id="text" name="name" value={name} aria-describedby="category-name" placeholder="Enter name" onChange={handleText} />
-          <small id="category-name" className="form-text text-danger">{message}</small>
-        </div>
-        <button className="btn btn-primary" type="submit">
-          Submit
-        </button>
-      </form>
+        <form onSubmit={e => handleSubmit(e, name)}>
+          <div className="form-group">
+            <label htmlFor="text">Category name</label>
+            <input type="text" className="form-control" id="text" name="name" value={name} aria-describedby="category-name" placeholder="Enter name" onChange={handleText} />
+            <small id="category-name" className="form-text text-danger">{message}</small>
+          </div>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
+        </form>
       </Modal.Body>
     </Modal>
   );

@@ -34,7 +34,7 @@ class AuthForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { type, getUser } = this.props;
+    const { type, getUser, updateMessage } = this.props;
     const { name, username, Password, birthDate} = this.state;
     let route = '';
     if (type === 'Signup') {
@@ -50,10 +50,14 @@ class AuthForm extends Component {
           username: '',
           password: '',
           birthDate: ''
-        });
-        getUser(response.user);
-        this.success();
-      });
+        })
+        if (response.user) {
+          getUser(response.user);
+          this.success();
+        } else {
+          updateMessage(response.message);
+        }
+      })
   }
 
   handleText(e) {
