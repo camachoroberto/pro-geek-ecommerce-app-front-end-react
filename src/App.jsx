@@ -159,7 +159,6 @@ class App extends Component {
 
   fetchUser() {
     const { loggedInUser } = this.state;
-    console.log('oi', loggedInUser)
     if (loggedInUser.name === '') {
       this.service.loggedin()
         .then((response) => {

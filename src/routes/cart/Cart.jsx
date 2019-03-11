@@ -91,8 +91,8 @@ class Cart extends Component {
               </table>
               <Link to="/products"><button type="button" className="btn btn-lg ButtonKeep">Keep Buying</button></Link>
             </div>
-            <Col md="5">
-              <Table responsive>
+            <div className="col-md-5 table-responsive">
+              <table className="table">
                 <thead className="class-header">
                   <tr>
                     <td className="subtotal">Subtotal</td>
@@ -104,8 +104,8 @@ class Cart extends Component {
                 <tbody className="containerCol">
                   <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
                 </tbody>
-              </Table>
-            </Col>
+              </table>
+            </div>
           </div>
           <div className="fillin0" />
         </div>
