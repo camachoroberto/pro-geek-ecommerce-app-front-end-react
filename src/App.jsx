@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './global-css/main.scss';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import Loader from 'react-loaders';
 import CategoryList from './components/categorylist/CategoryList.jsx';
 import NavBar from './components/navbar/Navbar.jsx';
 import Footer from './components/footer/Footer.jsx';
@@ -20,7 +21,6 @@ import Cart from './routes/cart/Cart.jsx';
 import AdminProductDetail from './routes/adminproductdetail/AdminProductDetail.jsx';
 import ProfileUpdate from './routes/profileupdate/ProfileUpdate.jsx';
 import Category from './routes/categories/Category.jsx';
-import Loader from "react-loaders";
 import Orders from './routes/orders/Orders.jsx';
 import UserPage from './routes/userpage/UserPage.jsx';
 
@@ -47,7 +47,7 @@ class App extends Component {
         },
         role: '',
         userAvaliations: [],
-        userOrders: [],
+        userOrders: []
       },
       filterProduct: {},
       filterPrice: ['0', '100000000'],
@@ -74,7 +74,7 @@ class App extends Component {
     this.selectCategory = this.selectCategory.bind(this);
     this.cartReset = this.cartReset.bind(this);
     this.showMessage = this.showMessage.bind(this);
-    this.updateMessage = this.updateMessage.bind(this)
+    this.updateMessage = this.updateMessage.bind(this);
   }
 
   // products and categories arrays
@@ -91,7 +91,7 @@ class App extends Component {
         this.setState({ categories });
       })
       .then(() => {
-        this.setState({ categoryState: true })
+        this.setState({ categoryState: true });
       })
       .catch((err) => {
         throw err;
@@ -103,7 +103,7 @@ class App extends Component {
         this.setState({ products });
       })
       .then(() => {
-        this.setState({ productState: true })
+        this.setState({ productState: true });
       })
       .catch((err) => {
         throw err;
@@ -115,22 +115,29 @@ class App extends Component {
         this.setState({ orders });
       })
       .then(() => {
-        this.setState({ orderState: true })
+        this.setState({ orderState: true });
       })
       .catch((err) => {
         throw err;
       });
   }
 
-  //message functions
+  // auth components and functions
+  getTheUser(userObj) {
+    this.setState({
+      loggedInUser: userObj
+    });
+  }
+
+  // message functions
   showMessage() {
-    const { message } = this.state
+    const { message } = this.state;
     if (message) {
       setTimeout(() => {
         this.setState({ message: false });
-      }, 2000)
+      }, 2000);
       return (
-        <div class="alert alert-primary" role="alert">
+        <div className="alert alert-primary" role="alert">
           {message}
         </div>
       );
@@ -141,25 +148,13 @@ class App extends Component {
     this.setState({ message });
   }
 
-  //categories
-  updateCategories(categories) {
-    this.setState({ categories })
-  }
-
-  selectCategory(category) {
-    this.setState({ category })
-  }
-
-  // auth components and functions
-  getTheUser(userObj) {
-    this.setState({
-      loggedInUser: userObj
-    });
-  }
-
   // categories
   updateCategories(categories) {
     this.setState({ categories });
+  }
+
+  selectCategory(category) {
+    this.setState({ category });
   }
 
   fetchUser() {
@@ -170,11 +165,11 @@ class App extends Component {
           this.setState({ loggedInUser: response });
         })
         .then(() => {
-          this.setState({ loggedInUserState: true })
+          this.setState({ loggedInUserState: true });
         })
         .catch(() => {
           this.setState({ loggedInUser: false, loggedInUserState: true });
-        })
+        });
     }
   }
 
@@ -186,15 +181,13 @@ class App extends Component {
           this.setState({ loggedInUser: response });
         })
         .then(() => {
-          this.setState({ loggedInUserState: true })
+          this.setState({ loggedInUserState: true });
         })
         .catch(() => {
           this.setState({ loggedInUser: false, loggedInUserState: true });
-        })
+        });
     }
   }
-
-
 
   // Sidebar functions
   updateFilter(name, checked) {
@@ -305,7 +298,6 @@ class App extends Component {
     this.fetchUser();
     const { categories, cart, productDetail, total, products, orders, loggedInUser, category, categoryState, productState, orderState, loggedInUserState } = this.state;
     if (categoryState && productState && orderState && loggedInUserState) {
-
       if (loggedInUser) {
         return (
           <div className="body">
@@ -322,23 +314,30 @@ class App extends Component {
                 <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
 
                 {/* Admin routes */}
-                <Route exact path="/profile/products" render={() =>
-                   loggedInUser.role === 'User'
-                  ? <AdminProducts products={products} selectProduct={this.selectProduct} />
-                  : <Redirect to="/profile" />
-                } />                
+                <Route
+                  exact
+                  path="/profile/products"
+                  render={() => (loggedInUser.role === 'User'
+                    ? <AdminProducts products={products} selectProduct={this.selectProduct} />
+                    : <Redirect to="/profile" />)
+                }
+                />
                 <Route exact path="/profile/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
-                <Route path="/profile/products/:id" render={() =>
-                  loggedInUser.role === 'Admin'
+                <Route
+                  path="/profile/products/:id"
+                  render={() => (loggedInUser.role === 'Admin'
                     ? <AdminProductDetail product={productDetail} categories={categories} />
-                    : <Redirect to="/" />} />
-                <Route exact path="/profile"
-                  render={() =>
-                    loggedInUser.role === 'User'
-                      ? <UserPage user={loggedInUser} />
-                      : loggedInUser.role === 'Admin'
-                        ? <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />
-                        : <Redirect to="/profile" />} />
+                    : <Redirect to="/" />)}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  render={() => (loggedInUser.role === 'User'
+                    ? <UserPage user={loggedInUser} />
+                    : loggedInUser.role === 'Admin'
+                      ? <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />
+                      : <Redirect to="/profile" />)}
+                />
 
                 {/* User routes */}
                 <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
@@ -348,9 +347,9 @@ class App extends Component {
             </div>
           </div>
         );
-      } else {
-        return (
-          <div className="body">
+      }
+      return (
+        <div className="body">
             <div className="content-wrap">
               <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
               {this.showMessage()}
@@ -365,25 +364,23 @@ class App extends Component {
               <Footer />
             </div>
           </div>
-        );
-      }
-    } else {
-      return (
-        <div>
-          <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
-          <div className="container">
-            <div className="row justify-content-center">
-              <div class="col align-self-center">
-                <div class="d-flex align-items-center">
-                  <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
-                </div>
+      );
+    }
+    return (
+      <div>
+        <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col align-self-center">
+              <div className="d-flex align-items-center">
+                <div className="spinner-border ml-auto" role="status" aria-hidden="true" />
               </div>
             </div>
           </div>
-          <Footer />
         </div>
-      );
-    }
+        <Footer />
+      </div>
+    );
   }
 }
 
