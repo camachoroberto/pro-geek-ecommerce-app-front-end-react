@@ -107,7 +107,7 @@ class Cart extends Component {
               </Table>
             </Col>
           </Row>
-          <div className="fillin0" />
+          <div className="fillin0"/>  
         </div>
       );
     }
