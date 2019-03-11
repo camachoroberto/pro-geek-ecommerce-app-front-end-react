@@ -23,6 +23,7 @@ import ProfileUpdate from './routes/profileupdate/ProfileUpdate.jsx';
 import Category from './routes/categories/Category.jsx';
 import Orders from './routes/orders/Orders.jsx';
 import UserPage from './routes/userpage/UserPage.jsx';
+import AboutUs from './routes/aboutus/AboutUs.jsx';
 
 class App extends Component {
   constructor() {
@@ -348,6 +349,9 @@ class App extends Component {
                 {/* User routes */}
                 <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
                 <Route exact path="/profile/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
+                <Route exact path="/aboutus"render={()=>
+                <AboutUs/>
+                }/>
               </Switch>
               <Footer />
             </div>
@@ -366,6 +370,9 @@ class App extends Component {
                 <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
                 <Route exact path="/login" render={() => <AuthForm username Password updateMessage={this.updateMessage} type="Login" getUser={this.getTheUser} />} />
                 <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+                <Route exact path="/aboutus"render={()=>
+                <AboutUs/>
+                }/>        
               </Switch>
               <Footer />
             </div>

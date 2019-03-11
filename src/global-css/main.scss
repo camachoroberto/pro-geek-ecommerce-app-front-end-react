@@ -18,6 +18,7 @@
 @import '../routes/profileupdate/ProfileUpdate.scss';
 @import '../routes/orders/Orders.scss';
 @import '../routes/userpage/UserPage.scss';
+@import '../routes/aboutus/AboutUs.scss';
 
 .ButtonPG {
   background-color: $darkBlue;
@@ -57,7 +58,7 @@
 }
 
 .content-wrap {
-  padding-bottom: 2.5rem;
+  padding-bottom: 0px;
 }
 
 .table-responsive {
