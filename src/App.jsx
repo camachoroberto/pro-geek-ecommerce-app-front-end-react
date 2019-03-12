@@ -311,15 +311,15 @@ class App extends Component {
                 <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
                 <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
                 <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
-                <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+                <Route exact path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
 
                 {/* Admin routes */}
                 <Route
                   exact
                   path="/profile/products"
-                  render={() => (loggedInUser.role === 'User'
-                    ? <AdminProducts products={products} selectProduct={this.selectProduct} />
-                    : <Redirect to="/profile" />)
+                  render={() => (loggedInUser.role === 'Admin'
+                    ? <AdminProducts products={products} selectProduct={this.selectProduct} deleteProduct={this.deleteProduct} />
+                    : <Redirect to="/login" />)
                 }
                 />
                 <Route exact path="/profile/categories" render={() => <Category categories={categories} updateCategories={this.updateCategories} category={category} selectCategory={this.selectCategory} />} />
@@ -340,8 +340,8 @@ class App extends Component {
                 />
 
                 {/* User routes */}
-                <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
                 <Route exact path="/profile/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
+                <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
               </Switch>
               <Footer />
             </div>
@@ -356,7 +356,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
                 <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-                <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" getUser={this.getTheUser} />} />
+                <Route exact path="/signup" render={() => <AuthForm Name username Password Birthdate type="Signup" getUser={this.getTheUser} />} />
                 <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
                 <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
                 <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />

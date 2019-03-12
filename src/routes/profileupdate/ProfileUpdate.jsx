@@ -21,22 +21,22 @@ const ProfileUpdate = ({ user, fetchUserAddress }) => {
 
   const handleText = (e) => {
     const { name, value } = e.currentTarget;
-    if ('name' === name) {
+    if (name === 'name') {
       setName(value);
     }
-    if ('username' === name) {
+    if (name === 'username') {
       setUsername(value);
     }
-    if ('street' === name) {
+    if (name === 'street') {
       setStreet(value);
     }
-    if ('complement' === name) {
+    if (name === 'complement') {
       setComplement(value);
     }
-    if ('postalCode' === name) {
+    if (name === 'postalCode') {
       setPostalCode(value);
     }
-  }
+  };
 
   const saveUser = (e) => {
     e.preventDefault();
@@ -44,34 +44,40 @@ const ProfileUpdate = ({ user, fetchUserAddress }) => {
       method: 'put',
       url: `http://localhost:8080/users/${user._id}`,
       data: {
-        name: name,
-        username: username,
-        street: street,
-        complement: complement,
-        postalCode: postalCode
+        name,
+        username,
+        street,
+        complement,
+        postalCode
       }
     })
-      .then(() =>  fetchUserAddress())
-      .catch(err => {
+      .then(() => fetchUserAddress())
+      .catch((err) => {
         throw err;
       });
-  }
+  };
 
   return (
-    <Form onSubmit={e => saveUser(e)}>
-      <InputForm labelText="Name" type="text" name="name" placeholder="" value={name} change={handleText} />
-      <InputForm labelText="Email" type="email" name="username" placeholder="" value={username} change={handleText} />
-      <InputForm labelText="Street" type="text" name="street" placeholder="" value={street} change={handleText} />
-      <InputForm labelText="Complement" type="text" name="complement" placeholder="" value={complement} change={handleText} />
-      <InputForm labelText="Postal Code" type="text" name="postalCode" placeholder="" value={postalCode} change={handleText} />
-
-
-
-      <Button variant="primary" type="submit" className="ButtonPG">
-        Save Changes
-        </Button>
-    </Form>
+    <div className="container mt-5 mb-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h3>Update my Profile</h3>
+              <Form onSubmit={e => saveUser(e)}>
+                <InputForm labelText="Name" type="text" name="name" placeholder="" value={name} change={handleText} />
+                <InputForm labelText="Email" type="email" name="username" placeholder="" value={username} change={handleText} />
+                <InputForm labelText="Street" type="text" name="street" placeholder="" value={street} change={handleText} />
+                <InputForm labelText="Complement" type="text" name="complement" placeholder="" value={complement} change={handleText} />
+                <InputForm labelText="Postal Code" type="text" name="postalCode" placeholder="" value={postalCode} change={handleText} />
+                <Button variant="primary" type="submit" className="ButtonPG">Save Changes</Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default ProfileUpdate;

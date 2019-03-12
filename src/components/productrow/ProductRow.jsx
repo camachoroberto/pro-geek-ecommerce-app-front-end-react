@@ -32,7 +32,7 @@ class ProductRow extends Component {
     const total = counter * product.price;
     return (
       <tr>
-        <td>{product.image}</td>
+        <td><img src={product.image[0]} alt="product img" width="100" /></td>
         <td>{product.name}</td>
         <td>{product.price.toFixed(2)}</td>
         <td><Counter counter={counter} plus1={this.plus1} minus1={this.minus1} /></td>

@@ -19,24 +19,28 @@
 @import '../routes/orders/Orders.scss';
 @import '../routes/userpage/UserPage.scss';
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .ButtonPG {
   background-color: $darkBlue;
   color: $white;
-  border-color: $darkBlue
+  border-color: $darkBlue;
 }
 
 .ButtonPG:hover {
   background-color: $blue;
   color: $white;
-  border-color: $darkBlue
+  border-color: $darkBlue;
 }
 
 .white {
-  color: $white
+  color: $white;
 }
 
 .blue {
-  color: $blue
+  color: $blue;
 }
 
 .containerCol {
@@ -58,4 +62,8 @@
 
 .content-wrap {
   padding-bottom: 2.5rem;
+}
+
+.table-responsive {
+  overflow-x: visible;
 }

@@ -76,35 +76,39 @@ class Cart extends Component {
         <div className="cart">
           <Row>
             <Col>
-              <Table responsive>
-                <thead className="class-header">
-                  <tr>
-                    <td>Product</td>
-                    <td />
-                    <td>Price</td>
-                    <td>Quantity</td>
-                    <td>Total</td>
-                    <td />
-                  </tr>
-                </thead>
-                <tbody>{cartRow()}</tbody>
-              </Table>
+              <div>
+                <table className="table">
+                  <thead className="class-header">
+                    <tr>
+                      <td>Product</td>
+                      <td />
+                      <td>Price</td>
+                      <td>Quantity</td>
+                      <td>Total</td>
+                      <td />
+                    </tr>
+                  </thead>
+                  <tbody>{cartRow()}</tbody>
+                </table>
+              </div>
               <Link to="/products"><button type="button" className="btn btn-lg ButtonKeep">Keep Buying</button></Link>
             </Col>
             <Col md="5">
-              <Table responsive>
-                <thead className="class-header">
-                  <tr>
-                    <td className="subtotal">Subtotal</td>
-                    <td />
-                    <td />
-                    <td>${subtotal}</td>
-                  </tr>
-                </thead>
-                <tbody className="containerCol">
-                  <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
-                </tbody>
-              </Table>
+              <div>
+                <table className="table">
+                  <thead className="class-header">
+                    <tr>
+                      <td className="subtotal">Subtotal</td>
+                      <td />
+                      <td />
+                      <td>${subtotal}</td>
+                    </tr>
+                  </thead>
+                  <tbody className="containerCol">
+                    <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
+                  </tbody>
+                </table>
+              </div>
             </Col>
           </Row>
           <div className="fillin0" />
