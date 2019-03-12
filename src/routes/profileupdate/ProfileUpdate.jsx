@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import InputForm from '../../components/inputform/InputForm.jsx';
-import AuthService from '../../components/auth/service/auth-service.jsx';
+import { Redirect } from 'react-router-dom';
 
-const ProfileUpdate = ({ user, fetchUserAddress }) => {
+const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [street, setStreet] = useState('');
   const [complement, setComplement] = useState('');
   const [postalCode, setPostalCode] = useState('');
+  const [updateState, setUpdateState] = useState(false);
 
   useEffect(() => {
     setName(user.name);
@@ -57,6 +58,12 @@ const ProfileUpdate = ({ user, fetchUserAddress }) => {
       });
   };
 
+
+  if (updateState) {
+    updateMessage('Data updated successfully');
+    return <Redirect to="/profile" />
+  }
+
   return (
     <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
@@ -70,7 +77,7 @@ const ProfileUpdate = ({ user, fetchUserAddress }) => {
                 <InputForm labelText="Street" type="text" name="street" placeholder="" value={street} change={handleText} />
                 <InputForm labelText="Complement" type="text" name="complement" placeholder="" value={complement} change={handleText} />
                 <InputForm labelText="Postal Code" type="text" name="postalCode" placeholder="" value={postalCode} change={handleText} />
-                <Button variant="primary" type="submit" className="ButtonPG">Save Changes</Button>
+                <Button variant="primary" type="submit" className="ButtonPG" onClick={() => {setUpdateState(true)}}>Save Changes</Button>
               </Form>
             </div>
           </div>

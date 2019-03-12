@@ -45,6 +45,7 @@ class AuthForm extends Component {
     }
     route
       .then((response) => {
+        console.log(response.name)
         this.setState({
           Name: '',
           username: '',
@@ -52,13 +53,16 @@ class AuthForm extends Component {
           BirthDate: ''
         })
         if (response.user) {
-          console.log('s')
           getUser(response.user);
+          this.success();
+        } else if (response.name) {
+          getUser(response);
           this.success();
         } else {
           updateMessage(response.message);
         }
       })
+      .catch(err => console.log('oi'))
   }
 
   handleText(e) {
@@ -92,6 +96,7 @@ class AuthForm extends Component {
 
   render() {
     const { type } = this.props;
+    console.log(this.state.success)
     if (this.state.success) {
       return <Redirect to="/" />;
     }

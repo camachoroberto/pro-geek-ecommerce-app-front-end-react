@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { Collapse, Button } from 'react-bootstrap';
 
 
-const Order = ({ user, date, order }) => {
+const Order = ({ user, date, order, updateMessage }) => {
   const [status, setStatus] = useState(order.status);
   const [open, setOpen] = useState(false);
 
@@ -43,13 +43,13 @@ const Order = ({ user, date, order }) => {
   const handleSubmit = () => {
     Axios.patch(`http://localhost:8080/orders/${order._id}`, { status })
       .then((response) => {
-        console.log(response.data);
+        updateMessage('Status updated!');
       })
       .catch((err) => {
         throw err;
       })
   }
-  
+
   if (user.role === 'Admin') {
     return (
       <tr>
@@ -80,7 +80,7 @@ const Order = ({ user, date, order }) => {
       </tr>
     )
   }
-  console.log(order)
+
   return (
     <tr>
       <td>{order._id}

@@ -344,8 +344,8 @@ class App extends Component {
                 />
 
                 {/* User routes */}
-                <Route exact path="/profile/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
-                <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
+                <Route exact path="/profile/orders" render={() => <Orders updateMessage={this.updateMessage} user={loggedInUser} orders={orders} />} />
+                <Route exact path="/profile/:id" render={() => <ProfileUpdate updateMessage={this.updateMessage} fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
                 <Route exact path="/aboutus" render={() => <AboutUs />} />
               </Switch>
               <Footer />
