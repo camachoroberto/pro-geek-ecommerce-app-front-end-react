@@ -6,6 +6,10 @@ import { Collapse, Button } from 'react-bootstrap';
 const Order = ({ user, date, order }) => {
   const [status, setStatus] = useState(order.status);
   const [open, setOpen] = useState(false);
+  const [openEva, setOpenEva] = useState(false);
+  const [rating, setRating] = useState(3);
+  const [comment, setComment] = useState('');
+
 
   const swap = (idx, array) => {
     const temp = array[0];
@@ -24,16 +28,61 @@ const Order = ({ user, date, order }) => {
 
   const handleOpen = () => {
     setOpen(!open);
-    console.log('ae', open)
   }
+
+  const handleOpenEva = () => {
+    setOpenEva(!openEva);
+  }
+
+  let submitEvaluation = (e, product) => {
+    e.preventDefault();
+    console.log(comment,rating)
+    Axios({
+      method: 'post',
+      url: `http://localhost:8080/evaluations`,
+      data: {
+        rating,
+        comment,
+        orderId: order._id,
+        userId: order.user.id,
+        productId: product._id
+      }
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
+
 
   const detailProducts = () => {
     return order.products.map((product) => {
-      return <p> {product.name} |
-        QTY {product.quantity} |
-        $ {product.price} | 
-        Amount$ {product.price * product.quantity}</p>
+      return (
+        <tr>
+          <td>{product.name}</td>
+          <td>{product.quantity}</td>
+          <td>{product.price}</td>
+          <td>{product.price * product.quantity}</td>
+        </tr>
+      )
+
     });
+  }
+
+  const rateProducts = () => {
+    return order.products.map((product) => {
+      return (
+        <div>
+          <img src={product.image[0]} alt="product img" width="80px" />
+          <p>{product.name}</p>
+          <form onSubmit={(e) => submitEvaluation(e, product)}>
+            <label htmlFor="rating">Rating</label>
+            <input id="rating" type="number" name="rating" onChange={e => setRating(e.currentTarget.value)} />
+            <label htmlFor="comment">Short Comment</label>
+            <textarea id="comment" rows="2" cols="20" onChange={e => setComment(e.currentTarget.value)} />
+            <input className="ButtonPG" type="submit" value="Evaluate"/>
+          </form>
+        </div>
+      )
+    })
   }
 
 
@@ -51,16 +100,24 @@ const Order = ({ user, date, order }) => {
       })
   }
 
-  console.log('oi', open)
   if (user.role === 'Admin') {
     return (
+
       <tr>
         <td>
           {order._id}
           <Collapse in={open}>
             <div id="example-collapse-text">
-              {detailProducts()}
               {detailUser()}
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+                {detailProducts()}
+              </table>
             </div>
           </Collapse>
         </td>
@@ -82,24 +139,42 @@ const Order = ({ user, date, order }) => {
       </tr>
     )
   }
-  console.log(order)
+
   return (
     <tr>
       <td>{order._id}
         <Collapse in={open}>
           <div id="example-collapse-text">
             <div className="card card-body margin10">
-              {detailProducts()}
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+                {detailProducts()}
+              </table>
             </div>
           </div>
         </Collapse>
+
+        <Collapse in={openEva}>
+          <div id="example-collapse-text">
+            {rateProducts()}
+          </div>
+        </Collapse>
+
       </td>
       <td>{date}</td>
       <td>
         <p className="form-control form-control-lg">{status}</p>
       </td>
       <td>
-        {status === 'Delivered' ? <button className="btn btn-primary ButtonPG" >Evaluate Order</button> : ''}
+        {status === 'Delivered' ? <Button onClick={() => handleOpenEva()}
+          aria-controls="example-collapse-text"
+          aria-expanded={openEva}
+          className="btn btn-primary ButtonPG">Evaluate Products</Button> : ''}
       </td>
       <td>
         <Button onClick={() => handleOpen()}
