@@ -73,44 +73,40 @@ class Cart extends Component {
         .reduce((acc, cur) => (acc += cur))
         .toFixed(2);
       return (
-        <div className="cart">
-          <Row>
-            <Col>
-              <div>
-                <table className="table">
-                  <thead className="class-header">
-                    <tr>
-                      <td>Product</td>
-                      <td />
-                      <td>Price</td>
-                      <td>Quantity</td>
-                      <td>Total</td>
-                      <td />
-                    </tr>
-                  </thead>
-                  <tbody>{cartRow()}</tbody>
-                </table>
-              </div>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-md-7 table-responsive">
+              <table className="table">
+                <thead className="class-header">
+                  <tr>
+                    <td>Product</td>
+                    <td />
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Total</td>
+                    <td />
+                  </tr>
+                </thead>
+                <tbody>{cartRow()}</tbody>
+              </table>
               <Link to="/products"><button type="button" className="btn btn-lg ButtonKeep">Keep Buying</button></Link>
-            </Col>
-            <Col md="5">
-              <div>
-                <table className="table">
-                  <thead className="class-header">
-                    <tr>
-                      <td className="subtotal">Subtotal</td>
-                      <td />
-                      <td />
-                      <td>${subtotal}</td>
-                    </tr>
-                  </thead>
-                  <tbody className="containerCol">
-                    <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
-                  </tbody>
-                </table>
-              </div>
-            </Col>
-          </Row>
+            </div>
+            <div className="col-md-5 table-responsive">
+              <table className="table">
+                <thead className="class-header">
+                  <tr>
+                    <td className="subtotal">Subtotal</td>
+                    <td />
+                    <td />
+                    <td>${subtotal}</td>
+                  </tr>
+                </thead>
+                <tbody className="containerCol">
+                  <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div className="fillin0" />
         </div>
       );

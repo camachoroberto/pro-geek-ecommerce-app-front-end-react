@@ -18,6 +18,8 @@
 @import '../routes/profileupdate/ProfileUpdate.scss';
 @import '../routes/orders/Orders.scss';
 @import '../routes/userpage/UserPage.scss';
+@import '../routes/aboutus/AboutUs.scss';
+@import '../components/order/Order.scss';
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -61,9 +63,10 @@ body {
 }
 
 .content-wrap {
-  padding-bottom: 2.5rem;
+  padding-bottom: 0px;
 }
 
 .table-responsive {
-  overflow-x: visible;
+  overflow-x: visible; 
+  padding-bottom: 0;
 }

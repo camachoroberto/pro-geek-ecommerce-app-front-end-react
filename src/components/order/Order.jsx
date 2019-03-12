@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Axios from 'axios';
+import { Collapse, Button } from 'react-bootstrap';
+
 
 const Order = ({ user, date, order }) => {
   const [status, setStatus] = useState(order.status);
+  const [open, setOpen] = useState(false);
 
   const swap = (idx, array) => {
     const temp = array[0];
@@ -19,6 +22,24 @@ const Order = ({ user, date, order }) => {
     })
   }
 
+  const handleOpen = () => {
+    setOpen(!open);
+    console.log('ae', open)
+  }
+
+  const detailProducts = () => {
+    return order.products.map((product) => {
+      return <p> {product.name} |
+        QTY {product.quantity} |
+        $ {product.price} | 
+        Amount$ {product.price * product.quantity}</p>
+    });
+  }
+
+
+  const detailUser = () => {
+    return <p> User Name: {order.user.name} </p>
+  }
 
   const handleSubmit = () => {
     Axios.patch(`http://localhost:8080/orders/${order._id}`, { status })
@@ -30,10 +51,19 @@ const Order = ({ user, date, order }) => {
       })
   }
 
+  console.log('oi', open)
   if (user.role === 'Admin') {
     return (
       <tr>
-        <td>{order._id}</td>
+        <td>
+          {order._id}
+          <Collapse in={open}>
+            <div id="example-collapse-text">
+              {detailProducts()}
+              {detailUser()}
+            </div>
+          </Collapse>
+        </td>
         <td>{date}</td>
         <td>
           <select className="form-control form-control-lg" onChange={e => setStatus(e.currentTarget.value)}>
@@ -44,15 +74,26 @@ const Order = ({ user, date, order }) => {
           <button className="btn btn-primary ButtonPG" onClick={handleSubmit}>Update status</button>
         </td>
         <td>
-          <button className="btn btn-primary ButtonPG">details</button>
+          <Button onClick={() => handleOpen()}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+            className="btn btn-primary ButtonPG"> details</Button>
         </td>
       </tr>
     )
   }
-
+  console.log(order)
   return (
     <tr>
-      <td>{order._id}</td>
+      <td>{order._id}
+        <Collapse in={open}>
+          <div id="example-collapse-text">
+            <div className="card card-body margin10">
+              {detailProducts()}
+            </div>
+          </div>
+        </Collapse>
+      </td>
       <td>{date}</td>
       <td>
         <p className="form-control form-control-lg">{status}</p>
@@ -61,7 +102,10 @@ const Order = ({ user, date, order }) => {
         {status === 'Delivered' ? <button className="btn btn-primary ButtonPG" >Evaluate Order</button> : ''}
       </td>
       <td>
-        <button className="btn btn-primary ButtonPG">details</button>
+        <Button onClick={() => handleOpen()}
+          aria-controls="example-collapse-text"
+          aria-expanded={open}
+          className="btn btn-primary ButtonPG"> details</Button>
       </td>
     </tr>
   )

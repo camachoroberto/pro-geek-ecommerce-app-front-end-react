@@ -12,7 +12,7 @@
 
 .cart {
   border-color: $lightBlue;
-  padding: 5%;
+  padding: 5% 5% 0 5%;
 }
 
 .cart:hover {
@@ -31,14 +31,14 @@
 }
 
 .fillin0 {
-  height: 5vh
+  height: 20vh
 }
 
 .ButtonKeep {
   background-color: $white;
   color: $darkBlue;
   border-color: $darkBlue;
-  width: 30em;
+  width: 100%;
 }
 
 .ButtonKeep:hover {
