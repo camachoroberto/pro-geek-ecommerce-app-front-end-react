@@ -349,9 +349,7 @@ class App extends Component {
                 {/* User routes */}
                 <Route exact path="/profile/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
                 <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
-                <Route exact path="/aboutus"render={()=>
-                <AboutUs/>
-                }/>
+                <Route exact path="/aboutus" render={() => <AboutUs />} />
               </Switch>
               <Footer />
             </div>
@@ -360,23 +358,21 @@ class App extends Component {
       }
       return (
         <div className="body">
-            <div className="content-wrap">
-              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText}/>
-              {this.showMessage()}
-              <Switch>
-                <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
-                <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
-                <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" updateMessage={this.updateMessage} getUser={this.getTheUser} />} />
-                <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
-                <Route exact path="/login" render={() => <AuthForm username Password updateMessage={this.updateMessage} type="Login" getUser={this.getTheUser} />} />
-                <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
-                <Route exact path="/aboutus"render={()=>
-                <AboutUs/>
-                }/>        
-              </Switch>
-              <Footer />
-            </div>
+          <div className="content-wrap">
+            <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText}/>
+            {this.showMessage()}
+            <Switch>
+              <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
+              <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
+              <Route exact path="/signup" render={() => <AuthForm name username Password birthDate type="Signup" updateMessage={this.updateMessage} getUser={this.getTheUser} />} />
+              <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+              <Route exact path="/login" render={() => <AuthForm username Password updateMessage={this.updateMessage} type="Login" getUser={this.getTheUser} />} />
+              <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} product={productDetail} counterCart={cart[productDetail._id]} />} />
+              <Route exact path="/aboutus" render={() => <AboutUs />} />
+            </Switch>
+            <Footer />
           </div>
+        </div>
       );
     }
     return (

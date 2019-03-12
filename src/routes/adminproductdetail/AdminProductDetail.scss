@@ -1,28 +1,3 @@
-.image-container {
-  display: flex;
-  margin: 2px, solid, black;
-}
-  
-.input-file {
-  display: none;
-}
-
-.button-input-file {
-  background-color: $darkBlue;
-  color: $white;
-  border-radius: 5px;
-  border-color: $darkBlue;
-  padding: 2%;
-}
-
-.button-input-file:hover {
-  background-color: $blue;
-  color: $white;
-  border-radius: 5px;
-  border-color: $darkBlue;
-  padding: 2%;
-}
-
 .categories-container {
   border: 2px, solid, $darkBlue;
 }
