@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { Table, Row, Col } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
+
+const client = {
+  sandbox: process.env.CLIENT_ID,
+  production: ''
+}
 
 class Cart extends Component {
   constructor() {
@@ -102,7 +108,8 @@ class Cart extends Component {
                   </tr>
                 </thead>
                 <tbody className="containerCol">
-                  <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button>
+                  {/* <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button> */}
+                  <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal)} onError={() => console.log('Something went wrong')} onSuccess={this.newOrder} onCancel={() => console.log('Purchase canceled by customer')} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
                 </tbody>
               </table>
             </div>
