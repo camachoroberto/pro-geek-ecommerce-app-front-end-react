@@ -12,7 +12,7 @@ const AdminOrders = ({ user, orders }) => {
 
   const OrderListUser = () => {
     return orders.map((order) => {
-  
+
       if (user._id === order.user.id) {
         const date = order.created_at.slice(0, 10).split('-').join('/');
         return <Order user={user} date={date} order={order} />
@@ -34,16 +34,17 @@ const AdminOrders = ({ user, orders }) => {
               </tr>
             </thead>
             <tbody>
-              { user.role === 'User'
+              {user.role === 'User'
                 ? OrderListUser()
                 : user.role === 'Admin'
-                ? OrderList()
-                : <Redirect to="/profile/orders"/>
+                  ? OrderList()
+                  : <Redirect to="/profile/orders" />
               }
             </tbody>
           </table>
         </div>
       </div>
+      <div className="fillin"></div>
     </div>
   )
 };
