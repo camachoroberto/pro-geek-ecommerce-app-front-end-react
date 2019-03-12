@@ -24,8 +24,8 @@ class CategoryCheckbox extends Component {
     const { id, name, check } = this.props;
     return (
       <div>
-        <label name={id}>{name}</label>
         <input type="checkbox" name={id} id={id} checked={check} onChange={e => this.checkHandleChange(e)} />
+        <label htmlFor={id} name={id}>{name}</label>
       </div>
     );
   }

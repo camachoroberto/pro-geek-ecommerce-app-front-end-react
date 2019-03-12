@@ -6,10 +6,10 @@ class AuthForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      Name: '',
       username: '',
-      password: '',
-      birthDate: '',
+      Password: '',
+      BirthDate: '',
       success: false
     };
     this.inputType = '';
@@ -35,10 +35,10 @@ class AuthForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { type, getUser, updateMessage } = this.props;
-    const { name, username, Password, birthDate} = this.state;
+    const { Name, username, Password, BirthDate} = this.state;
     let route = '';
     if (type === 'Signup') {
-      route = this.service.signup(name, username, Password, birthDate);
+      route = this.service.signup(Name, username, Password, BirthDate);
     }
     if (type === 'Login') {
       route = this.service.login(username, Password);
@@ -46,12 +46,13 @@ class AuthForm extends Component {
     route
       .then((response) => {
         this.setState({
-          name: '',
+          Name: '',
           username: '',
-          password: '',
-          birthDate: ''
+          Password: '',
+          BirthDate: ''
         })
         if (response.user) {
+          console.log('s')
           getUser(response.user);
           this.success();
         } else {
@@ -69,7 +70,7 @@ class AuthForm extends Component {
 
   createForm() {
     return Object.keys(this.props).map((prop, idx) => {
-      if (prop === 'username' || prop === 'name' || prop === 'Password' || prop === 'birthDate') {
+      if (prop === 'username' || prop === 'Name' || prop === 'Password' || prop === 'BirthDate') {
         if (prop === 'username') {
           return (
             <div class="form-group" key={idx}>
@@ -92,18 +93,18 @@ class AuthForm extends Component {
   render() {
     const { type } = this.props;
     if (this.state.success) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
     return (
       <div className="container mt-5 mb-5">
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">{type}</h5>
+            <div className="card shadow-sm">
+              <div className="card-body">
+                <h5 className="card-title">{type}</h5>
                 <form onSubmit={e => this.handleSubmit(e)}>
                   {this.createForm()}
-                  <input type="submit"className="btn btn-primary ButtonPG" value="Submit" />
+                  <input type="submit" className="btn btn-primary ButtonPG" value="Submit" />
                 </form>
               </div>
             </div>

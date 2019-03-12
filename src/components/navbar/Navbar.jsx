@@ -74,7 +74,7 @@ const NavBar = ({ cartCounter, user, getTheUser, filterText, updateFilter }) => 
     <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
       <Navbar.Brand>
         <Link to="/">
-          <img src="./public/images/progeek.png" width="100px" alt="" />
+        <img src="./public/images/progeek.png" width="100px" alt="" />
         </Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />

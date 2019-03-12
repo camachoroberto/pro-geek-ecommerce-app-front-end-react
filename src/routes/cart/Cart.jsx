@@ -15,15 +15,43 @@ class Cart extends Component {
     this.state = {
       redirect: false,
       logState: true,
-      address: false
+      address: false,
+      checkOrder: false
     };
     this.newOrder = this.newOrder.bind(this);
+    this.checkOrder = this.checkOrder.bind(this);
+    this.displayButton = this.displayButton.bind(this);
   }
 
   setRedirect() {
     this.setState({
       redirect: true
     });
+  }
+
+  checkOrder() {
+    const { loggedInUser } = this.props;
+    if (loggedInUser === false) {
+      this.setState({ logState: false });
+      return;
+    }
+    if (loggedInUser.address.street === '' || loggedInUser.address.postalCode === '') {
+      this.setState({ address: true })
+      return;
+    }
+    this.setState({ checkOrder: true });
+  }
+
+  displayButton() {
+    const { total } = this.props
+    const subtotal = Object.values(total)
+        .reduce((acc, cur) => (acc += cur))
+        .toFixed(2);
+    if (this.state.checkOrder) {
+      return <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal)} onError={() => console.log('Something went wrong')} onSuccess={this.newOrder} onCancel={() => console.log('Purchase canceled by customer')} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
+    } else {
+      return <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.checkOrder}> Validate Data</button>
+    }
   }
 
   newOrder() {
@@ -35,29 +63,20 @@ class Cart extends Component {
           order.push(Object.assign(element, { quantity: cart[key] }))
         }
       });
-    }
-    if (loggedInUser === false) {
-      this.setState({ logState: false });
-      return;
-    }
-    if (loggedInUser.address.street === '' || loggedInUser.address.postalCode === '') {
-      this.setState({ address: true })
-      return;
     } 
-    else {
-      Axios({
-        method: 'post',
-        url: 'http://localhost:8080/orders',
-        data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address, id: loggedInUser._id } })
+    Axios({
+      method: 'post',
+      url: 'http://localhost:8080/orders',
+      data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address, id: loggedInUser._id } })
+    })
+      .then(() => {
+        cartReset();
+        this.setState({checkOrder:false})
+        this.setRedirect();
       })
-        .then(() => {
-          cartReset();
-          this.setRedirect();
-        })
-        .catch((err) => {
-          throw err;
-        });
-    }
+      .catch((err) => {
+        throw err;
+      });
   }
 
   render() {
@@ -69,12 +88,13 @@ class Cart extends Component {
       return <Redirect to="/login" />;
     }
     if (this.state.address) {
+      updateMessage('Address is required to checkout')
       return <Redirect to={`/profile/${loggedInUser._id}`} />
     }
     if (this.state.redirect) {
       return <Redirect to="/" />
     }
-    if (totalArr.length > 0) {
+    if (totalArr.length > 0 ) {
       subtotal = Object.values(total)
         .reduce((acc, cur) => (acc += cur))
         .toFixed(2);
@@ -108,8 +128,7 @@ class Cart extends Component {
                   </tr>
                 </thead>
                 <tbody className="containerCol">
-                  {/* <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.newOrder}> Proceed to checkout</button> */}
-                  <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal)} onError={() => console.log('Something went wrong')} onSuccess={this.newOrder} onCancel={() => console.log('Purchase canceled by customer')} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
+                  {this.displayButton()}
                 </tbody>
               </table>
             </div>

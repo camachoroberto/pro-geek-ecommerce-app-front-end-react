@@ -91,25 +91,38 @@ class FormProduct extends Component {
 
   render() {
     return (
-      <Form onSubmit={e => this.saveProduct(e)}>
-        <div>
-          <input type="file" onChange={e => this.handleFileUpload(e)} />
-          {this.listImages()}
+      <div className="container mt-5 mb-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card shadow-sm">
+              <div className="card-body">
+                <Form onSubmit={e => this.saveProduct(e)}>
+                  <div>
+                    <label className="button-input-file" htmlFor="file">Add a Product Photo</label>
+                    <input className="input-file" type="file" id="file" onChange={e => this.handleFileUpload(e)} />
+                    <div className="image-container mt-2 mb-2">
+                      {this.listImages()}
+                    </div>
+                  </div>
+                  <InputForm labelText="Product Name" type="text" name="name" placeholder="Enter product name" value={this.state.name} change={this.handleText} />
+                  <InputForm labelText="Product Description" type="text" as="textarea" name="description" placeholder="Enter product description" value={this.state.description} change={this.handleText} />
+                  <InputForm labelText="Product Price" type="number" name="price" placeholder="Enter product price" value={this.state.price} change={this.handleText} />
+                  <InputForm labelText="Delivery Lead Time" type="number" name="leadTime" placeholder="Enter product lead time" value={this.state.leadTime} change={this.handleText} />
+                  <InputForm labelText="Material" type="text" name="material" placeholder="Describe product material" value={this.state.material} change={this.handleText} />
+                  <InputForm labelText="Product Height" type="number" name="height" placeholder="Enter product height in centimeters" value={this.state.height} change={this.handleText} />
+                  <InputForm labelText="Manufacturer" type="text" name="manufacturer" placeholder="Enter product manufacturer" value={this.state.manufacturer} change={this.handleText} />
+                  <Form.Group controlId="formBasicChecbox">
+                    {this.listCategories()}
+                  </Form.Group>
+                  <Button variant="primary" type="submit" className="ButtonPG">
+                    Create Product
+                  </Button>
+                </Form>
+              </div>
+            </div>
+          </div>
         </div>
-        <InputForm labelText="Product Name" type="text" name="name" placeholder="Enter product name" value={this.state.name} change={this.handleText} />
-        <InputForm labelText="Product Description" type="text" as="textarea" name="description" placeholder="Enter product description" value={this.state.description} change={this.handleText} />
-        <InputForm labelText="Product Price" type="number" name="price" placeholder="Enter product price" value={this.state.price} change={this.handleText} />
-        <InputForm labelText="Delivery Lead Time" type="number" name="leadTime" placeholder="Enter product lead time" value={this.state.leadTime} change={this.handleText} />
-        <InputForm labelText="Material" type="text" name="material" placeholder="Describe product material" value={this.state.material} change={this.handleText} />
-        <InputForm labelText="Product Height" type="number" name="height" placeholder="Enter product height in centimeters" value={this.state.height} change={this.handleText} />
-        <InputForm labelText="Manufacturer" type="text" name="manufacturer" placeholder="Enter product manufacturer" value={this.state.manufacturer} change={this.handleText} />
-        <Form.Group controlId="formBasicChecbox">
-          {this.listCategories()}
-        </Form.Group>
-        <Button variant="primary" type="submit" className="ButtonPG">
-          Create Product
-        </Button>
-      </Form>
+      </div>
     );
   }
 }

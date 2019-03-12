@@ -8,26 +8,32 @@ const AdminProducts = ({ products, selectProduct, deleteProduct }) => {
       <td>{element.name}</td>
       <td>{element.price}</td>
       <td>
-        <Link to={`/admin/products/${element._id}`} onClick={() => selectProduct(element)}><button type="button" className="btn ButtonCardP">Edit Product</button></Link>
+        <Link to={`/profile/products/${element._id}`} onClick={() => selectProduct(element)}><button type="button" className="btn ButtonPG">Edit Product</button></Link>
       </td>
       <td>
-        <Link to="/admin/products"><button type="button" className="btn btn-danger" onClick={() => deleteProduct(element)}>Delete Product</button></Link>
+        <button type="button" className="btn btn-danger" onClick={() => deleteProduct(element)}>Delete Product</button>
       </td>
     </tr>
   ));
   return (
-    <table className="table table-responsive">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Description</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {productTable}
-      </tbody>
-    </table>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col md-5 table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Description</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productTable}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   );
 };
 
