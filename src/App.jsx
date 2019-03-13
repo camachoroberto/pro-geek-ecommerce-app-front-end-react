@@ -206,10 +206,13 @@ class App extends Component {
   // cart functions and components
   addCart(obj) {
     const { cart } = this.state;
-    this.setState({
-      cart: Object.assign(cart, obj)
-    });
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const item = Object.values(obj);
+    if (item[0] !== 0) {
+      this.setState({
+        cart: Object.assign(cart, obj)
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
   }
 
   addTotal(obj) {

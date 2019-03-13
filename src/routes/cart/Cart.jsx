@@ -48,7 +48,7 @@ class Cart extends Component {
         .reduce((acc, cur) => (acc += cur))
         .toFixed(2);
     if (this.state.checkOrder) {
-      return <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal)} onError={() => console.log('Something went wrong')} onSuccess={this.newOrder} onCancel={() => console.log('Purchase canceled by customer')} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
+      return <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal)} onError={() => console.log('Something went wrong')} onSuccess={() => console.log('Purchase canceled by customer')} onCancel={this.newOrder} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
     } else {
       return <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.checkOrder}> Validate Data</button>
     }
@@ -58,9 +58,9 @@ class Cart extends Component {
     const { cartRow, cart, cartReset, products, loggedInUser } = this.props;
     const order = [];
     for (let key in cart) {
-      products.forEach(element => {
-        if (element._id === key) {
-          order.push(Object.assign(element, { quantity: cart[key] }))
+      products.forEach(product => {
+        if (product._id === key) {
+          order.push(Object.assign(product, { quantity: cart[key] }, { commented: false }))
         }
       });
     } 

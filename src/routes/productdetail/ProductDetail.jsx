@@ -31,6 +31,7 @@ class ProductCard extends Component {
     const id = product._id;
     const total = counter + (counterCart || 0);
     const subtotal = counter * product.price;
+    console.log('product', product)
     return (
       <div className="containerRowB">
         <div className="containerCol margin">

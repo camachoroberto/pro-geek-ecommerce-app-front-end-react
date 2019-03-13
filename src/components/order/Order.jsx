@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from 'axios';
 import { Collapse, Button } from 'react-bootstrap';
 
 
-const Order = ({ user, date, order, updateMessage }) => {
-  const [status, setStatus] = useState(order.status);
+const Order = ({ user, date, updateMessage, getOrder }) => {
+  const [status, setStatus] = useState(getOrder.status);
   const [open, setOpen] = useState(false);
   const [openEva, setOpenEva] = useState(false);
   const [rating, setRating] = useState(3);
   const [comment, setComment] = useState('');
-
+  const [order, setOrder] = useState(getOrder);
 
   const swap = (idx, array) => {
     const temp = array[0];
@@ -25,6 +25,7 @@ const Order = ({ user, date, order, updateMessage }) => {
       return <option value={status}>{status}</option>
     })
   }
+
 
   const handleOpen = () => {
     setOpen(!open);
@@ -47,18 +48,37 @@ const Order = ({ user, date, order, updateMessage }) => {
         productId: product._id
       }
     })
-      .then((res) => {
+      .then(() => {
         Axios({
           method: 'patch',
           url: `http://localhost:8080/products/${product._id}`,
           data: { rating: {
             rating,
             comment,
-            id: res.data_id
+            id: res.data_id,
+            user: order.user.name
           } }
         })
-        .then((res) => {
-          console.log(res)
+        .then(() => {
+          order.products.forEach((item) => {
+            if (item._id === product._id) {
+              Object.assign(item, {commented: true});
+            }
+          })
+          Axios({
+            method: 'patch',
+            url: `http://localhost:8080/orders/${order._id}`,
+            data: {
+              products: order.products,
+              status: order.status
+            }
+          })
+        })
+        .then(() => {
+          setOrder(order);
+        })
+        .then(() => {
+          handleOpenEva();
         })
       })
       .catch((err) => console.log(err));
@@ -81,25 +101,28 @@ const Order = ({ user, date, order, updateMessage }) => {
 
   const rateProducts = () => {
     return order.products.map((product) => {
-      return (
-        <div>
-          <img src={product.image[0]} alt="product img" width="80px" />
-          <p>{product.name}</p>
-          <form onSubmit={(e) => submitEvaluation(e, product)}>
-            <label htmlFor="rating">Rating</label>
-            <select id="rating" name="rating" onChange={e => setRating(e.currentTarget.value)} >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <label htmlFor="comment">Short Comment</label>
-            <textarea id="comment" rows="2" cols="20" onChange={e => setComment(e.currentTarget.value)} />
-            <input className="ButtonPG" type="submit" value="Evaluate"/>
-          </form>
-        </div>
-      )
+      if (!product.commented) {
+        return (
+          <div>
+            <img src={product.image[0]} alt="product img" width="80px" />
+            <p>{product.name}</p>
+            <form onSubmit={(e) => submitEvaluation(e, product)}>
+              <label htmlFor="rating">Rating</label>
+              <select id="rating" name="rating" onChange={e => setRating(e.currentTarget.value)} >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <label htmlFor="comment">Short Comment</label>
+              <textarea id="comment" rows="2" cols="20" onChange={e => setComment(e.currentTarget.value)} />
+              <input className="ButtonPG" type="submit" value="Evaluate"/>
+            </form>
+          </div>
+        )
+      }
+      return <p>Product evaluated</p>
     })
   }
 
@@ -109,7 +132,7 @@ const Order = ({ user, date, order, updateMessage }) => {
   }
 
   const handleSubmit = () => {
-    Axios.patch(`http://localhost:8080/orders/${order._id}`, { status })
+    Axios.patch(`http://localhost:8080/orders/${order._id}`, { status, products: order.products })
       .then((response) => {
         updateMessage('Status updated!');
       })
@@ -118,7 +141,7 @@ const Order = ({ user, date, order, updateMessage }) => {
       })
   }
   
-  if (user.role === 'Asmin') {
+  if (user.role === 'Admin') {
     return (
 
       <tr>
@@ -202,8 +225,6 @@ const Order = ({ user, date, order, updateMessage }) => {
       </td>
     </tr>
   )
-
-
 }
 
 export default Order;
