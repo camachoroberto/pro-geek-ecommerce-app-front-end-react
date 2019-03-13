@@ -34,8 +34,8 @@ class ProductCard extends Component {
       console.log(item, user, user.role)
       if (item.userId === user._id || user.role === 'Admin') {
         return (
-          <div>
-            <button className="btn btn-danger" onClick={() => {this.deleteComment(item)}}>delete</button>
+          <div className="card margin">
+            <button className="btn btn-danger" onClick={() => { this.deleteComment(item) }}>delete</button>
             <h2>{item.user}</h2>
             <h4>rating: {item.rating}</h4>
             <p>{item.comment}</p>
@@ -43,7 +43,7 @@ class ProductCard extends Component {
         )
       }
       return (
-        <div>
+        <div className="card margin">
           <h2>{item.user}</h2>
           <h4>rating: {item.rating}</h4>
           <p>{item.comment}</p>
@@ -54,9 +54,14 @@ class ProductCard extends Component {
 
   rating() {
     const { product } = this.props;
-    return (product.rating.reduce((acc, curr) => {
-      return acc + curr.rating;
-    }, 0))/ product.rating.length;
+
+    if (product.rating.length > 0) {
+      return (product.rating.reduce((acc, curr) => {
+        return acc + curr.rating;
+      }, 0)) / product.rating.length;
+    }
+    return 'Not Available'
+
   }
 
   deleteComment(item) {
@@ -84,24 +89,41 @@ class ProductCard extends Component {
     console.log('product', product)
     return (
       <div className="containerRowB">
-        <div className="containerCol margin">
+        <div className="containerCol margin card">
 
-          <img className="margin" src={product.image[0]} alt={product.name} />
+          {product.image[0]
+            ? <img className="margin" src={product.image[0]} alt={product.name} />
+            : ''
+          }
+
 
           <div className="containerRowB">
-            <img className="margin" src={product.image[1]} alt={product.name} />
-            <img className="margin" src={product.image[2]} alt={product.name} />
+            {product.image[1]
+              ? <img className="margin" src={product.image[1]} alt={product.name} />
+              : ''
+            }
+            {product.image[2]
+              ? <img className="margin" src={product.image[2]} alt={product.name} />
+              : ''
+            }
           </div>
 
           <div className="containerRowB">
-            <img className="margin" src={product.image[3]} alt={product.name} />
-            <img className="margin" src={product.image[4]} alt={product.name} />
+            {product.image[3]
+              ? <img className="margin" src={product.image[3]} alt={product.name} />
+              : ''
+            }
+            {product.image[4]
+              ? <img className="margin" src={product.image[4]} alt={product.name} />
+              : ''
+            }
           </div>
 
         </div>
 
-        <div className="containerCol margin">
+        <div className="containerCol margin card">
           <p className="margin fontHeader">{product.name}</p>
+          <div className="margin">Rating: {this.rating()}</div>
           <p>_________________________</p>
           <p className="margin">Price: ${product.price},00</p>
           <div className="containerCol">
@@ -113,13 +135,12 @@ class ProductCard extends Component {
           <p className="margin">Height: {product.height} </p>
           <p className="margin">Manufacturer: {product.manufacturer} </p>
           <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
-          <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>
+          <Button variant="primary" className=" margin ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal }); }}>BUY</Button>
         </div>
-        <div>
-          <h3>Comments</h3>
-          {this.listRating()}
+        <div className="card margin">
+            <h3 className="margin">Comments</h3>
+            {this.listRating()}
         </div>
-        <div>curr: {this.rating()}</div>
       </div>
     );
   }
