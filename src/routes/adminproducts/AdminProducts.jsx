@@ -19,6 +19,7 @@ const AdminProducts = ({ products, selectProduct, deleteProduct }) => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col md-5 table-responsive">
+          <Link to="/profile/products/new" className="btn ButtonKeep btn-lg btn-block mt-2">Create New Product</Link>
           <table className="table">
             <thead>
               <tr>
