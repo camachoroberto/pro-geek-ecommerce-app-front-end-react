@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AuthService from './service/auth-service.jsx';
 import { Redirect } from 'react-router-dom';
+import AuthService from './service/auth-service.jsx';
 
 class AuthForm extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class AuthForm extends Component {
       Name: '',
       username: '',
       Password: '',
-      BirthDate: '',
+      Birthdate: '',
       success: false
     };
     this.inputType = '';
@@ -29,16 +29,16 @@ class AuthForm extends Component {
   }
 
   success() {
-    this.setState({success: true})
+    this.setState({ success: true });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const { type, getUser, updateMessage } = this.props;
-    const { Name, username, Password, BirthDate} = this.state;
+    const { Name, username, Password, Birthdate } = this.state;
     let route = '';
     if (type === 'Signup') {
-      route = this.service.signup(Name, username, Password, BirthDate);
+      route = this.service.signup(Name, username, Password, Birthdate);
     }
     if (type === 'Login') {
       route = this.service.login(username, Password);
@@ -50,7 +50,7 @@ class AuthForm extends Component {
           Name: '',
           username: '',
           Password: '',
-          BirthDate: ''
+          Birthdate: ''
         })
         if (response.user) {
           getUser(response.user);
@@ -62,7 +62,7 @@ class AuthForm extends Component {
           updateMessage(response.message);
         }
       })
-      .catch(err => console.log('oi'))
+      .catch(err => { throw err })
   }
 
   handleText(e) {
@@ -74,20 +74,20 @@ class AuthForm extends Component {
 
   createForm() {
     return Object.keys(this.props).map((prop, idx) => {
-      if (prop === 'username' || prop === 'Name' || prop === 'Password' || prop === 'BirthDate') {
+      if (prop === 'username' || prop === 'Name' || prop === 'Password' || prop === 'Birthdate') {
         if (prop === 'username') {
           return (
-            <div class="form-group" key={idx}>
+            <div className="form-group" key={idx}>
               <label htmlFor="email">Email address</label>
-              <input type="text" class="form-control" id="email" name={prop} value={this.state[prop]} onChange={e => this.handleText(e)}placeholder="Enter email" />
+              <input type="text" class="form-control" id="email" name={prop} value={this.state[prop]} onChange={e => this.handleText(e)} placeholder="Enter email" />
             </div>
           );
         }
         this.getInputType(prop);
         return (
-          <div class="form-group" key={idx}>
+          <div className="form-group" key={idx}>
             <label htmlFor={prop}>{prop}</label>
-            <input type={prop} class="form-control" id={prop} name={prop} value={this.state[prop]} onChange={e => this.handleText(e)}placeholder={prop} />
+            <input type={prop} class="form-control" id={prop} name={prop} value={this.state[prop]} onChange={e => this.handleText(e)} placeholder={prop} />
           </div>
         );
       }
@@ -115,7 +115,7 @@ class AuthForm extends Component {
             </div>
           </div>
         </div>
-        <div className="fillin0"/>  
+        <div className="fillin0" />
       </div>
     );
   }

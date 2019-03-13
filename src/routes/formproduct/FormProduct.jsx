@@ -71,7 +71,7 @@ class FormProduct extends Component {
 
   listImages() {
     const { image } = this.state;
-    return image.map((element, idx) => <div key={idx}><img src={element} alt="product images" width="100" onClick={e => this.deleteImage(e)} /></div>);
+    return image.map((element, idx) => <div key={idx} className="mr-2"><img src={element} alt="product images" width="100" onClick={e => this.deleteImage(e)} /></div>);
   }
 
   deleteImage(e) {
