@@ -9,8 +9,10 @@ class ProductCard extends Component {
     this.state = {
       counter: 0
     };
-    this.plus1 = this.plus1.bind(this)
-    this.minus1 = this.minus1.bind(this)
+    this.plus1 = this.plus1.bind(this);
+    this.minus1 = this.minus1.bind(this);
+    this.listRating = this.listRating.bind(this);
+    this.rating = this.rating.bind(this);
   }
 
   plus1() {
@@ -23,6 +25,26 @@ class ProductCard extends Component {
     if (counter > 0) {
       this.setState({ counter: counter - 1 });
     }
+  }
+
+  listRating() {
+    const { product } = this.props;
+    return product.rating.map((item) => {
+      return (
+        <div>
+          <h2>{item.user}</h2>
+          <h4>rating: {item.rating}</h4>
+          <p>{item.comment}</p>
+        </div>
+      )
+    })
+  }
+
+  rating() {
+    const { product } = this.props;
+    return (product.rating.reduce((acc, curr) => {
+      return acc + curr.rating;
+    }, 0))/ product.rating.length;
   }
 
   render() {
@@ -65,6 +87,11 @@ class ProductCard extends Component {
           <Counter counter={counter} plus1={this.plus1} minus1={this.minus1} />
           <Button variant="primary" className="ButtonCardP" onClick={() => { addCart({ [id]: total }); addTotal({ [id]: subtotal });}}>BUY</Button>
         </div>
+        <div>
+          <h3>Comments</h3>
+          {this.listRating()}
+        </div>
+        <div>curr: {this.rating()}</div>
       </div>
     );
   }

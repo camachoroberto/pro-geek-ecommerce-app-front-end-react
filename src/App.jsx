@@ -83,6 +83,7 @@ class App extends Component {
   componentWillMount() {
     this.setState({ cart: (JSON.parse(localStorage.getItem('cart')) || {}) });
     this.setState({ total: (JSON.parse(localStorage.getItem('total')) || {}) });
+    this.setState({ productDetail: (JSON.parse(localStorage.getItem('productDetail')) || {}) });
   }
 
   componentDidMount() {
@@ -288,9 +289,16 @@ class App extends Component {
   }
 
   selectProduct(obj) {
-    this.setState({
-      productDetail: obj
-    });
+    new Promise((resolve) => {
+      resolve(this.setState({
+        productDetail: obj
+      }));
+    })
+    .then(() => {
+      const { productDetail } = this.state;
+      localStorage.setItem('productDetail', JSON.stringify(productDetail));
+    })
+      
   }
 
   logoutUser() {

@@ -48,7 +48,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
         productId: product._id
       }
     })
-      .then(() => {
+      .then((res) => {
         Axios({
           method: 'patch',
           url: `http://localhost:8080/products/${product._id}`,
@@ -56,7 +56,8 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
             rating,
             comment,
             id: res.data_id,
-            user: order.user.name
+            user: order.user.name,
+            userId: order.user.id
           } }
         })
         .then(() => {
