@@ -77,7 +77,6 @@ class App extends Component {
     this.cartReset = this.cartReset.bind(this);
     this.showMessage = this.showMessage.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
-    this.updateFilterText = this.updateFilterText.bind(this);
   }
 
   // products and categories arrays
@@ -178,7 +177,6 @@ class App extends Component {
 
   fetchUserAddress() {
     const { loggedInUser } = this.state;
-    if (loggedInUser.address.street === '' || loggedInUser.address.postalCode === '') {
       this.service.loggedin()
         .then((response) => {
           this.setState({ loggedInUser: response });
@@ -189,7 +187,6 @@ class App extends Component {
         .catch(() => {
           this.setState({ loggedInUser: false, loggedInUserState: true });
         });
-    }
   }
 
   // Sidebar functions
@@ -310,7 +307,7 @@ class App extends Component {
           <div className="body">
             <div className="content-wrap">
 
-              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText} />
+              <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} updateFilter={this.updateFilter} filterText={this.filterText} />
               {this.showMessage()}
               <Switch>
                 <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
@@ -359,8 +356,8 @@ class App extends Component {
                 />
 
                 {/* User routes */}
-                <Route exact path="/profile/orders" render={() => <Orders user={loggedInUser} orders={orders} />} />
-                <Route exact path="/profile/:id" render={() => <ProfileUpdate fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
+                <Route exact path="/profile/orders" render={() => <Orders updateMessage={this.updateMessage} user={loggedInUser} orders={orders} />} />
+                <Route exact path="/profile/:id" render={() => <ProfileUpdate updateMessage={this.updateMessage} fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
                 <Route exact path="/aboutus" render={() => <AboutUs />} />
               </Switch>
               <Footer />
