@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import InputForm from '../../components/inputform/InputForm.jsx';
 import CategoryCheckbox from '../../components/categorycheckbox/CategoryCheckbox.jsx';
 import FileUpload from '../../components/auth/service/file-upload.jsx';
+import { Redirect } from 'react-router-dom';
 
 class FormProduct extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class FormProduct extends Component {
       material: '',
       height: '',
       manufacturer: '',
-      category: {}
+      category: {},
+      productState: false
     };
     this.handleText = this.handleText.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -44,7 +46,6 @@ class FormProduct extends Component {
         .then((response) => {
           image.push(response.secure_url);
           this.setState({ image });
-          console.log(image);
         })
         .catch((err) => {
           throw err;
@@ -82,14 +83,24 @@ class FormProduct extends Component {
 
   saveProduct(e) {
     e.preventDefault();
+    const { updateProducts } = this.props;
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.state;
     const categoryArray = Object.keys(category);
     axios.post('http://localhost:8080/products', { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray })
-      .then(response => console.log(response.data))
+      .then((response) => {
+        this.setState({productState: true});
+        updateProducts(response.data)
+      })
       .catch(err => console.log(err));
   }
 
   render() {
+    const { updateMessage } = this.props;
+    const { productState } = this.state;
+    if (productState) {
+      updateMessage('Product created successfully');
+      return <Redirect to="/profile/products" />
+    }
     return (
       <div className="container mt-5 mb-5">
         <div className="row justify-content-center">

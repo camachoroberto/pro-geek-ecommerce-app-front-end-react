@@ -113,7 +113,6 @@ class AuthForm extends Component {
             </div>
           </div>
         </div>
-        <div className="fillin0" />
       </div>
     );
   }

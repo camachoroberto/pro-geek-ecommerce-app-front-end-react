@@ -3,7 +3,7 @@ import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthService from '../auth/service/auth-service.jsx'; 
 
-const NavBar = ({ cartCounter, user, getTheUser, filterText, updateFilter }) => {
+const NavBar = ({ cartCounter, user, getTheUser }) => {
 
   const service = new AuthService();
 
@@ -23,21 +23,7 @@ const NavBar = ({ cartCounter, user, getTheUser, filterText, updateFilter }) => 
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto container">
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="Recipient's username"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-              <InputGroup.Append>
-                <Button variant="outline-secondary" className="material-icons">
-                  search
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </Nav>
+        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
           <Nav>
             <Link to="/" className="marg">
               Home
@@ -78,21 +64,7 @@ const NavBar = ({ cartCounter, user, getTheUser, filterText, updateFilter }) => 
         </Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto container">
-          <InputGroup className="mb-3">
-            <FormControl
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-            <InputGroup.Append>
-              <Button variant="outline-secondary" className="material-icons">
-                search
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Nav>
+      <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
         <Nav>
           <Link to="/" className="marg">
             Home

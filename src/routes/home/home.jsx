@@ -8,7 +8,6 @@ class Home extends Component {
     const { categories, cardList } = this.props
     return (
       <div>
-        <CategoryList categories={categories} />
         <div className="header">
           <div className="caption0 containerCol paddinTop">
             <h2>NEW STAR WARS COLLECTIBLE</h2>
@@ -17,8 +16,8 @@ class Home extends Component {
         </div>
 
         <div className="container">
-        <div className="row justify-contentcenter">
-          <div className="col col-md-6 ">
+        <div className="row justify-content-center">
+          <div className="col-md-12 ">
             <h2 className="margin30">Top Sellers</h2>
           </div>
 

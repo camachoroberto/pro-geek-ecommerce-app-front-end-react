@@ -84,6 +84,7 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
         <Edit handleClose={handleClose} updateCategories={updateCategories} setSuccess={setMessage} add={add} action={action} categories={categories} show={show} categoryIndex={idx} category={category} />
         <div className="cart table-responsive">
         {showMessage()}
+          <button className="btn ButtonKeep btn-lg btn-block mt-2" onClick={() => {handleShow(true)}}>add</button>
           <table className="table">
             <thead>
               <tr>
@@ -94,7 +95,6 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
             </thead>
             <tbody>{categoriesList()}</tbody>
           </table>
-          <button className="btn btn-lg lightblue btn-block" onClick={() => {handleShow(true)}}>add</button>
         </div>
       </div>
     );

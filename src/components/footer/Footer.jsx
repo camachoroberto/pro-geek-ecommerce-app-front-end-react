@@ -14,9 +14,9 @@ const Footer = () => (
       <div className="col-md-3 align-center">
         <p><strong className="headerFoot">My Account</strong></p>
         <p className="lb">__________</p>
-        <p><a className="footer-links" href="/users/:id">My Profile</a></p>
-        <p><a className="footer-links" href="/users/:id">My Orders</a></p>
-        <p><a className="footer-links" href="/users/:id">My Cart</a></p>
+        <p><a className="footer-links" href="/profile">My Profile</a></p>
+        <p><a className="footer-links" href="/profile/orders">My Orders</a></p>
+        <p><a className="footer-links" href="/cart">My Cart</a></p>
       </div>
 
       <div className="col-md-3 align-center">

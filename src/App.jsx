@@ -76,6 +76,7 @@ class App extends Component {
     this.cartReset = this.cartReset.bind(this);
     this.showMessage = this.showMessage.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
+    this.updateProducts = this.updateProducts.bind(this);
   }
 
   // products and categories arrays
@@ -308,6 +309,12 @@ class App extends Component {
       });
   }
 
+  updateProducts(obj) {
+    const { products } = this.state;
+    products.push(obj)
+    this.setState({products: products});
+  }
+
   render() {
     this.fetchUser();
     const { categories, cart, productDetail, total, products, orders, loggedInUser, category, categoryState, productState, orderState, loggedInUserState } = this.state;
@@ -340,7 +347,7 @@ class App extends Component {
                   exact
                   path="/profile/products/new"
                   render={() => (loggedInUser.role === 'Admin'
-                    ? <FormProduct categories={categories} />
+                    ? <FormProduct categories={categories} updateMessage={this.updateMessage} updateProducts={this.updateProducts} />
                     : <Redirect to="/login" />)
                 }
                 />
@@ -370,8 +377,8 @@ class App extends Component {
                 <Route exact path="/profile/:id" render={() => <ProfileUpdate updateMessage={this.updateMessage} fetchUserAddress={this.fetchUserAddress} user={loggedInUser} />} />
                 <Route exact path="/aboutus" render={() => <AboutUs />} />
               </Switch>
-              <Footer />
             </div>
+              <Footer />
           </div>
         );
       }
@@ -388,9 +395,10 @@ class App extends Component {
               <Route exact path="/login" render={() => <AuthForm username Password updateMessage={this.updateMessage} type="Login" getUser={this.getTheUser} />} />
               <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} user={loggedInUser} product={productDetail} counterCart={cart[productDetail._id]} />} />
               <Route exact path="/aboutus" render={() => <AboutUs />} />
+              <Route path="/:params" render={() => {this.updateMessage('Pelase login first!'); return <Redirect to="/login" />}} />
             </Switch>
-            <Footer />
           </div>
+            <Footer />
         </div>
       );
     }

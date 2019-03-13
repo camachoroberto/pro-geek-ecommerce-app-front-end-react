@@ -133,7 +133,6 @@ class Cart extends Component {
               </table>
             </div>
           </div>
-          <div className="fillin0" />
         </div>
       );
     }

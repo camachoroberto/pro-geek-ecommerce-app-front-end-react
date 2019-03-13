@@ -22,7 +22,6 @@ const Products = ({ cardList, updateFilter, updatePrice, categories }) => {
           </div>
         </div>
       </Container>
-      <div className="fillin" />
     </div>
   );
 };

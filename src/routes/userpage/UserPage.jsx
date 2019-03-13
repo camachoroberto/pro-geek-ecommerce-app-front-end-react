@@ -27,7 +27,6 @@ class UserPage extends Component {
             </ul>
           </div>
         </div>
-        <div className="fillin"></div>
       </div>
     );
   }
