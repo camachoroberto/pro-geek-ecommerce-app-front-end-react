@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Counter from '../../components/counter/Counter.jsx';
+import Axios from 'axios';
 
 class ProductCard extends Component {
   constructor(props) {
@@ -28,8 +29,19 @@ class ProductCard extends Component {
   }
 
   listRating() {
-    const { product } = this.props;
+    const { product, user } = this.props;
     return product.rating.map((item) => {
+      console.log(item, user, user.role)
+      if (item.userId === user._id || user.role === 'Admin') {
+        return (
+          <div>
+            <button className="btn btn-danger" onClick={() => {this.deleteComment(item)}}>delete</button>
+            <h2>{item.user}</h2>
+            <h4>rating: {item.rating}</h4>
+            <p>{item.comment}</p>
+          </div>
+        )
+      }
       return (
         <div>
           <h2>{item.user}</h2>
@@ -47,6 +59,22 @@ class ProductCard extends Component {
     }, 0))/ product.rating.length;
   }
 
+  deleteComment(item) {
+    const { product } = this.props;
+    product.rating.splice(product.rating.indexOf(item), 1);
+    Axios({
+      method: 'put',
+      url: `http://localhost:8080/products/comment/${product._id}`,
+      data: {
+        rating: product.rating
+      }
+    })
+      .then((res) => {
+        localStorage.setItem('productDetail', JSON.stringify(product));
+        console.log(res)
+      })
+
+  }
   render() {
     const { addCart, product, counterCart, addTotal } = this.props;
     const { counter } = this.state;
