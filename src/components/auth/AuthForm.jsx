@@ -9,7 +9,6 @@ class AuthForm extends Component {
       Name: '',
       username: '',
       Password: '',
-      Birthdate: '',
       success: false
     };
     this.inputType = '';
@@ -35,10 +34,10 @@ class AuthForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { type, getUser, updateMessage } = this.props;
-    const { Name, username, Password, Birthdate } = this.state;
+    const { Name, username, Password } = this.state;
     let route = '';
     if (type === 'Signup') {
-      route = this.service.signup(Name, username, Password, Birthdate);
+      route = this.service.signup(Name, username, Password);
     }
     if (type === 'Login') {
       route = this.service.login(username, Password);
@@ -50,7 +49,6 @@ class AuthForm extends Component {
           Name: '',
           username: '',
           Password: '',
-          Birthdate: ''
         })
         if (response.user) {
           getUser(response.user);
@@ -74,7 +72,7 @@ class AuthForm extends Component {
 
   createForm() {
     return Object.keys(this.props).map((prop, idx) => {
-      if (prop === 'username' || prop === 'Name' || prop === 'Password' || prop === 'Birthdate') {
+      if (prop === 'username' || prop === 'Name' || prop === 'Password') {
         if (prop === 'username') {
           return (
             <div className="form-group" key={idx}>
