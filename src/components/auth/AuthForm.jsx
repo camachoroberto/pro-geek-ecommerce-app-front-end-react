@@ -44,12 +44,11 @@ class AuthForm extends Component {
     }
     route
       .then((response) => {
-        console.log(response.name)
         this.setState({
           Name: '',
           username: '',
           Password: '',
-        })
+        });
         if (response.user) {
           getUser(response.user);
           this.success();
@@ -60,7 +59,7 @@ class AuthForm extends Component {
           updateMessage(response.message);
         }
       })
-      .catch(err => { throw err })
+      .catch(err => { throw err });
   }
 
   handleText(e) {
