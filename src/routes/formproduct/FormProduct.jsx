@@ -86,7 +86,7 @@ class FormProduct extends Component {
     const { updateProducts } = this.props;
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.state;
     const categoryArray = Object.keys(category);
-    axios.post('http://localhost:8080/products', { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray })
+    axios.post(`${process.env.API_URL}/products`, { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray })
       .then((response) => {
         this.setState({productState: true});
         updateProducts(response.data)
