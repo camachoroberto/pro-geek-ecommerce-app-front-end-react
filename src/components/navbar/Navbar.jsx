@@ -18,7 +18,7 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
       <Navbar collapseOnSelect expand="lg" className="nav-bg" sticky="top">
         <Navbar.Brand>
           <Link to="/">
-            <img src="./public/images/progeek.png" width="100px" alt="" />
+            <img src="https://res.cloudinary.com/dobzwgcvl/image/upload/v1552600171/pro-geek-ecommerce/product-pictures/progeek.png" width="100px" alt="" />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

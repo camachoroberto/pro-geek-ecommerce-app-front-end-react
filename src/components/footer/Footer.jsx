@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 const Footer = () => (
   <div className="footer-container ">
@@ -6,17 +7,17 @@ const Footer = () => (
       <div className="col-md-3 align-center">
         <p><strong className="headerFoot">About Us</strong></p>
         <p className="lb">__________</p>
-        <p><a className="footer-links" href="/aboutus">Wo are We?</a></p>
-        <p><a className="footer-links" href="/aboutus">Delivery & Payment</a></p>
-        <p><a className="footer-links" href="/aboutus">Devolutions & Exchanges Policy</a></p>
+        <p><Link className="footer-links" to="/aboutus">Wo are We?</Link></p>
+        <p><Link className="footer-links" to="/aboutus">Delivery & Payment</Link></p>
+        <p><Link className="footer-links" to="/aboutus">Devolutions & Exchanges Policy</Link></p>
       </div>
 
       <div className="col-md-3 align-center">
         <p><strong className="headerFoot">My Account</strong></p>
         <p className="lb">__________</p>
-        <p><a className="footer-links" href="/profile">My Profile</a></p>
-        <p><a className="footer-links" href="/profile/orders">My Orders</a></p>
-        <p><a className="footer-links" href="/cart">My Cart</a></p>
+        <p><Link className="footer-links" to="/profile">My Profile</Link></p>
+        <p><Link className="footer-links" to="/profile/orders">My Orders</Link></p>
+        <p><Link className="footer-links" to="/cart">My Cart</Link></p>
       </div>
 
       <div className="col-md-3 align-center">

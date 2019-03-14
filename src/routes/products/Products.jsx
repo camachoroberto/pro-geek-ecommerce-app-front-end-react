@@ -11,7 +11,7 @@ const Products = ({ cardList, updateFilter, updatePrice, categories }) => {
         categories={categories}
         pageWrapId="page-wrap"
         outerContainerId="App"
-        customBurgerIcon={<img src="./public/images/filter.svg" alt="sidebar" />}
+        customBurgerIcon={<img src="https://res.cloudinary.com/dobzwgcvl/image/upload/v1552603904/pro-geek-ecommerce/product-pictures/filter.svg" alt="sidebar" />}
       />
       <Container>
         <div className="pt-5">
