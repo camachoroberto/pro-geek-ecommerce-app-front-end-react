@@ -96,3 +96,11 @@ body {
   border-color: $darkBlue;
   padding: 2%;
 }
+
+.top-fixed {
+  position: fixed;
+  top: 130px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}

@@ -140,7 +140,7 @@ class App extends Component {
         this.setState({ message: false });
       }, 2000);
       return (
-        <div className="alert alert-primary" role="alert">
+        <div className="alert alert-primary top-fixed" role="alert">
           {message}
         </div>
       );

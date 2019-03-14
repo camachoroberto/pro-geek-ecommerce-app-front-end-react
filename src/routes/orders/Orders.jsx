@@ -57,7 +57,6 @@ const AdminOrders = ({ user, updateMessage }) => {
             </table>
           </div>
         </div>
-        <div className="fillin"></div>
       </div>
     )
   } else {

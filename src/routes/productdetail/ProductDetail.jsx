@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Counter from '../../components/counter/Counter.jsx';
 import Axios from 'axios';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css'; 
 
 class ProductCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      counter: 0
+      counter: 0,
+      photoIndex: 0,
+      isOpen: false
     };
     this.plus1 = this.plus1.bind(this);
     this.minus1 = this.minus1.bind(this);
@@ -82,42 +86,59 @@ class ProductCard extends Component {
   }
   render() {
     const { addCart, product, counterCart, addTotal } = this.props;
-    const { counter } = this.state;
+    const { photoIndex, isOpen, counter } = this.state;
     const id = product._id;
     const total = counter + (counterCart || 0);
     const subtotal = counter * product.price;
-    console.log('product', product)
     return (
       <div className="containerRowB">
         <div className="containerCol margin card">
 
           {product.image[0]
-            ? <img className="margin" src={product.image[0]} alt={product.name} />
+            ? <img className="margin" src={product.image[0]} alt={product.name} onClick={() => {this.setState({isOpen: true}); this.setState({photoIndex: 0})} } />
             : ''
           }
 
 
           <div className="containerRowB">
             {product.image[1]
-              ? <img className="margin" src={product.image[1]} alt={product.name} />
+              ? <img className="margin" src={product.image[1]} alt={product.name} onClick={() => {this.setState({isOpen: true}); this.setState({photoIndex: 1})} } />
               : ''
             }
             {product.image[2]
-              ? <img className="margin" src={product.image[2]} alt={product.name} />
+              ? <img className="margin" src={product.image[2]} alt={product.name} onClick={() => {this.setState({isOpen: true}); this.setState({photoIndex: 2})} } />
               : ''
             }
           </div>
 
           <div className="containerRowB">
             {product.image[3]
-              ? <img className="margin" src={product.image[3]} alt={product.name} />
+              ? <img className="margin" src={product.image[3]} alt={product.name} onClick={() => {this.setState({isOpen: true}); this.setState({photoIndex: 3})} } />
               : ''
             }
             {product.image[4]
-              ? <img className="margin" src={product.image[4]} alt={product.name} />
+              ? <img className="margin" src={product.image[4]} alt={product.name} onClick={() => { this.setState({isOpen: true}); this.setState({photoIndex: 4}) }} />
               : ''
             }
           </div>
+          {isOpen && (
+          <Lightbox
+            mainSrc={product.image[photoIndex]}
+            nextSrc={product.image[(photoIndex + 1) % product.image.length]}
+            prevSrc={product.image[(photoIndex + product.image.length - 1) % product.image.length]}
+            onCloseRequest={() => this.setState({ isOpen: false })}
+            onMovePrevRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + product.image.length - 1) % product.image.length,
+              })
+            }
+            onMoveNextRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + 1) % product.image.length,
+              })
+            }
+          />
+        )}
 
         </div>
 
