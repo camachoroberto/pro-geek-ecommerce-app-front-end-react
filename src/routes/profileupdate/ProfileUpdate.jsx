@@ -68,6 +68,7 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
     return <Redirect to="/profile" />;
   }
 
+    console.log (name)
   return (
     <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
@@ -75,7 +76,7 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
           <div className="card shadow-sm">
             <div className="card-body">
               <h3>Update my Profile</h3>
-              <Form onSubmit={e => saveUser(e)}>
+              <Form onSubmit={e => {saveUser(e); setUpdateState(true)}}>
                 <InputForm labelText="Name" type="text" name="name" placeholder="" value={name} change={handleText} />
                 <InputForm labelText="Email" type="email" name="username" placeholder="" value={username} change={handleText} />
                 <InputForm labelText="Street" type="text" name="street" placeholder="" value={street} change={handleText} />

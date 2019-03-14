@@ -48,7 +48,7 @@ class Cart extends Component {
         .reduce((acc, cur) => (acc += cur))
         .toFixed(2);
     if (this.state.checkOrder) {
-      return <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal)} onError={() => console.log('Something went wrong')} onSuccess={() => console.log('Purchase canceled by customer')} onCancel={this.newOrder} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
+      return <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal).toFixed(2)} onError={() => console.log('Something went wrong')} onSuccess={this.newOrder} onCancel={ () => console.log('Purchase canceled by customer')} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
     } else {
       return <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.checkOrder}> Validate Data</button>
     }
@@ -134,7 +134,6 @@ class Cart extends Component {
               </table>
             </div>
           </div>
-          <div className="fillin0" />
         </div>
       );
     }

@@ -1,3 +1,10 @@
+.container {
+  font-weight: 300;
+  line-height: 1.6;
+  color: #777;
+  font-family: "Roboto", sans-serif;
+}
+
 .containerRowB {
   display: flex;
   flex-flow: row wrap;
@@ -5,11 +12,45 @@
     justify-content: center;
 }
 
+.line {
+  border-bottom: 5px $darkBlue solid;
+  padding-bottom: 4%;
+  padding-right: 0px;
+  margin: 0;
+}
+
+.black {
+  color: $black;
+  display: inline;
+}
+
+.top-line {
+  border-top: dotted 1px $darkBlue;
+  padding-bottom: 2%;
+}
+
 .margin {
   margin: 20px;
+}
+
+.padding {
+  padding: 3%;
+}
+
+.no-margin {
+  margin: 0;
+  padding: 0;
 }
 
 .fontHeader {
   font-weight: 900;
   font-size: large;
+}
+
+.float-rigth {
+float: right;
+}
+
+.float-left{
+float: left;
 }

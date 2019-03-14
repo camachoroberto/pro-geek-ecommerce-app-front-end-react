@@ -4,7 +4,6 @@ import { Form } from 'react-bootstrap';
 
 const CategoryList = ({ categories, check }) => {
   const listMount = () => {
-    const NavBar = categories.map((element, idx) => (<div key={idx}><Link className="list-item" to={`/categories/${element._id}`}>{element.name}</Link></div>));
     const CheckBox = categories.map((element, idx) => (
       <div key={idx}>
         <Form.Check type="checkbox" label={element.name} />
@@ -13,7 +12,6 @@ const CategoryList = ({ categories, check }) => {
     if (check) {
       return CheckBox;
     }
-    return NavBar;
   };
 
   return (
