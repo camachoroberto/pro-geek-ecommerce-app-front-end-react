@@ -39,7 +39,6 @@ const Footer = () => (
         <img src="./public/images/pagseguro.png" alt="" height="80" />
         <img src="./public/images/correios.png" alt="" height="80" />
       </div>
-      <div className="col-md-2 side-container" />
     </div>
 
     <div className="row">
