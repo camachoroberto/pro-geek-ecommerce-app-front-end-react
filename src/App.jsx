@@ -359,7 +359,7 @@ class App extends Component {
                 <Route
                   path="/profile/products/:id"
                   render={() => (loggedInUser.role === 'Admin'
-                    ? <AdminProductDetail product={productDetail} categories={categories} />
+                    ? <AdminProductDetail product={productDetail} updateProducts={this.updateProducts} categories={categories} />
                     : <Redirect to="/" />)}
                 />
                 <Route
