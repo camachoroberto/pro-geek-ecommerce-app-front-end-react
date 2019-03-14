@@ -31,7 +31,6 @@ class App extends Component {
     this.state = {
       categories: [],
       products: [],
-      orders: [],
       cart: {},
       productDetail: {},
       total: {},
@@ -55,7 +54,6 @@ class App extends Component {
       category: {},
       categoryState: false,
       productState: false,
-      orderState: false,
       loggedInUserState: false,
       message: ''
     };
@@ -112,17 +110,7 @@ class App extends Component {
         throw err;
       });
 
-    axios.get('http://localhost:8080/orders')
-      .then((response) => {
-        const orders = response.data.response;
-        this.setState({ orders });
-      })
-      .then(() => {
-        this.setState({ orderState: true });
-      })
-      .catch((err) => {
-        throw err;
-      });
+
   }
 
   // auth components and functions
@@ -318,7 +306,7 @@ class App extends Component {
   render() {
     this.fetchUser();
     const { categories, cart, productDetail, total, products, orders, loggedInUser, category, categoryState, productState, orderState, loggedInUserState } = this.state;
-    if (categoryState && productState && orderState && loggedInUserState) {
+    if (categoryState && productState && loggedInUserState) {
       if (loggedInUser) {
         return (
           <div className="body">
