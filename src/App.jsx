@@ -86,7 +86,7 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchUser();
-    axios.get('http://localhost:8080/categories')
+    axios.get(`${process.env.API_URL}/categories`)
       .then((response) => {
         const categories = response.data.response;
         this.setState({ categories });
@@ -98,7 +98,7 @@ class App extends Component {
         throw err;
       });
 
-    axios.get('http://localhost:8080/products')
+    axios.get(`${process.env.API_URL}/products`)
       .then((response) => {
         const products = response.data.response;
         this.setState({ products });
@@ -231,7 +231,7 @@ class App extends Component {
 
   deleteProduct(product) {
     const { products } = this.state;
-    axios.delete(`http://localhost:8080/products/${product._id}`)
+    axios.delete(`${process.env.API_URL}/products/${product._id}`)
       .then(() => {
         const filteredProducts = products.filter(element => !element._id.includes(product._id));
         this.setState({ products: filteredProducts });

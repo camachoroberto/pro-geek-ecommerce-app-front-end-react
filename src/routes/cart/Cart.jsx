@@ -66,7 +66,7 @@ class Cart extends Component {
     } 
     Axios({
       method: 'post',
-      url: 'http://localhost:8080/orders',
+      url: `${process.env.API_URL}/orders`,
       data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address, id: loggedInUser._id } })
     })
       .then((res) => {
@@ -100,7 +100,7 @@ class Cart extends Component {
         .reduce((acc, cur) => (acc += cur))
         .toFixed(2);
       return (
-        <div className="container">
+        <div className="container mb-5 mt-5">
           <div className="row justify-content-center">
             <div className="col-md-7 table-responsive">
               <table className="table">

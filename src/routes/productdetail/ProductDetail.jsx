@@ -82,7 +82,7 @@ class ProductCard extends Component {
     product.rating.splice(product.rating.indexOf(item), 1);
     Axios({
       method: "put",
-      url: `http://localhost:8080/products/comment/${product._id}`,
+      url: `${process.env.API_URL}/products/comment/${product._id}`,
       data: {
         rating: product.rating
       }

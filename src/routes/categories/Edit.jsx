@@ -20,7 +20,7 @@ const Edit = ({show, handleClose, updateCategories, categories, setSuccess, add,
         if (add) {
           Axios({
             method: 'post',
-            url: 'http://localhost:8080/categories',
+            url: `${process.env.API_URL}/categories`,
             data: {name: name}
           })
             .then((response) => {
@@ -31,7 +31,7 @@ const Edit = ({show, handleClose, updateCategories, categories, setSuccess, add,
         } else {
           Axios({
             method: 'put',
-            url: `http://localhost:8080/categories/${category._id}`,
+            url: `${process.env.API_URL}/categories/${category._id}`,
             data: { name: name }
           })
             .then(response => {

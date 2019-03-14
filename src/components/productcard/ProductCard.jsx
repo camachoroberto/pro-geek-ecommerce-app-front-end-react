@@ -39,9 +39,9 @@ class ProductCard extends Component {
     const total = counter + (counterCart || 0);
     const subtotal = counter * product.price;
     return (
-      <div className="col-md-3 margin10">
+      <div className="margin30">
         <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src="" />
+          <Card.Img variant="top" src={product.image[0]} width="250" />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">${product.price.toFixed(2)}</Card.Subtitle>
