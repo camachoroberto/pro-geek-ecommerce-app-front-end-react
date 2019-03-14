@@ -36,8 +36,7 @@ const Footer = () => (
       <div className="col-md-2 side-container" />
       <div className="col-md-8 methods-container footer-bg">
         <h5 className="lb"> Payment & Delivery</h5>
-        <img src="./public/images/pagseguro.png" alt="" height="80" />
-        <img src="./public/images/correios.png" alt="" height="80" />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMdWv48B6WHm02BOm377OqBOa-RB2R8dh07nO1rCsV7Tf_Zkfcyw" alt="" height="80" />
       </div>
     </div>
 
