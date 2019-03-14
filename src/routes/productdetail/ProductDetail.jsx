@@ -35,7 +35,6 @@ class ProductCard extends Component {
   listRating() {
     const { product, user } = this.props;
     return product.rating.map(item => {
-      console.log(item, user, user.role);
       if (item.userId === user._id || user.role === "Admin") {
         return (
           <div className="mt-3 card">
@@ -79,7 +78,7 @@ class ProductCard extends Component {
   }
 
   deleteComment(item) {
-    const { product, updateProducts } = this.props;
+    const { product, selectProduct } = this.props;
     product.rating.splice(product.rating.indexOf(item), 1);
     Axios({
       method: "put",
@@ -88,8 +87,7 @@ class ProductCard extends Component {
         rating: product.rating
       }
     }).then(res => {
-      localStorage.setItem("productDetail", JSON.stringify(product));
-      updateProducts(product)
+      selectProduct(product)
     });
   }
   render() {

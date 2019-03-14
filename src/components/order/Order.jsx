@@ -60,7 +60,8 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
             userId: order.user.id
           } }
         })
-        .then(() => {
+        .then((res) => {
+          console.log(res)
           order.products.forEach((item) => {
             if (item._id === product._id) {
               Object.assign(item, {commented: true});
