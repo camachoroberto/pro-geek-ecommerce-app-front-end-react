@@ -7,7 +7,7 @@ import PaypalExpressBtn from 'react-paypal-express-checkout';
 const client = {
   sandbox: process.env.CLIENT_ID,
   production: ''
-}
+};
 
 class Cart extends Component {
   constructor() {

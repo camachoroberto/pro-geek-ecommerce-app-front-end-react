@@ -1,18 +1,17 @@
 import React from 'react';
-import { Navbar, Nav, Button, FormControl, InputGroup } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthService from '../auth/service/auth-service.jsx'; 
 
 const NavBar = ({ cartCounter, user, getTheUser }) => {
-
   const service = new AuthService();
 
   const Logout = () => {
     service.logout()
       .then(() => {
-        getTheUser(false)
-      })
-  }
+        getTheUser(false);
+      });
+  };
 
   if (user) {
     return (
@@ -34,18 +33,12 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
           </Nav>
           <Nav className="links-nav">
             <Link to="/cart" className="cart-counter">
-              { !!cartCounter ?
-                <span style={{background:'red'}}>
-                  {cartCounter}
-                </span>
-                :
-                ''
-              }
+              {cartCounter}
             </Link>
             <Link to="/cart" className="material-icons marg">
               shopping_cart
             </Link>
-            <Link to={`/profile`} className="marg">
+            <Link to="/profile" className="marg">
               My Profile
             </Link>
             <Link to="/" onClick={Logout} className="marg">
@@ -75,13 +68,7 @@ const NavBar = ({ cartCounter, user, getTheUser }) => {
         </Nav>
         <Nav>
           <Link to="/cart" className="cart-counter">
-            { !!cartCounter ?
-                <span style={{background:'red'}}>
-                  {cartCounter}
-                </span>
-                :
-                ''
-              }
+            {cartCounter}
           </Link>
           <Link to="/cart" className="material-icons marg">
             shopping_cart
