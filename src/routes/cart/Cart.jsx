@@ -55,7 +55,7 @@ class Cart extends Component {
   }
 
   newOrder() {
-    const { cartRow, cart, cartReset, products, loggedInUser } = this.props;
+    const { cartRow, cart, cartReset, products, loggedInUser, newOrderCheckout } = this.props;
     const order = [];
     for (let key in cart) {
       products.forEach(product => {
@@ -69,11 +69,12 @@ class Cart extends Component {
       url: 'http://localhost:8080/orders',
       data: Object.assign({}, { products: order }, { user: { name: loggedInUser.name, address: loggedInUser.address, id: loggedInUser._id } })
     })
-      .then(() => {
+      .then((res) => {
         cartReset();
-        this.setState({checkOrder:false})
-        this.setRedirect();
+        this.setState({ checkOrder: false });
+        newOrderCheckout(res.data.response._id);
       })
+      .then(() => this.setRedirect())
       .catch((err) => {
         throw err;
       });
@@ -84,15 +85,15 @@ class Cart extends Component {
     const totalArr = Object.values(total);
     let subtotal = 0;
     if (!this.state.logState) {
-      updateMessage('Login is required to checkout')
+      updateMessage('Login is required to checkout');
       return <Redirect to="/login" />;
     }
     if (this.state.address) {
       updateMessage('Address is required to checkout')
-      return <Redirect to={`/profile/${loggedInUser._id}`} />
+      return <Redirect to={`/profile/${loggedInUser._id}`} />;
     }
     if (this.state.redirect) {
-      return <Redirect to="/" />
+      return <Redirect to="/cart/checkout" />;
     }
     if (totalArr.length > 0 ) {
       subtotal = Object.values(total)

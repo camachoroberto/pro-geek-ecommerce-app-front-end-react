@@ -40,6 +40,7 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
   };
 
   const saveUser = (e) => {
+    console.log('OEEEEEEE');
     e.preventDefault();
     axios({
       method: 'put',
@@ -52,7 +53,10 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
         postalCode
       }
     })
-      .then(() => fetchUserAddress())
+      .then(() => {
+        fetchUserAddress();
+        setUpdateState(true);
+      })
       .catch((err) => {
         throw err;
       });
@@ -61,7 +65,7 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
 
   if (updateState) {
     updateMessage('Data updated successfully');
-    return <Redirect to="/profile" />
+    return <Redirect to="/profile" />;
   }
 
   return (
@@ -77,7 +81,7 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
                 <InputForm labelText="Street" type="text" name="street" placeholder="" value={street} change={handleText} />
                 <InputForm labelText="Complement" type="text" name="complement" placeholder="" value={complement} change={handleText} />
                 <InputForm labelText="Postal Code" type="text" name="postalCode" placeholder="" value={postalCode} change={handleText} />
-                <Button variant="primary" type="submit" className="ButtonPG" onClick={() => {setUpdateState(true)}}>Save Changes</Button>
+                <Button variant="primary" type="submit" className="ButtonPG">Save Changes</Button>
               </Form>
             </div>
           </div>

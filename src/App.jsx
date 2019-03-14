@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './global-css/main.scss';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Loader from 'react-loaders';
-import CategoryList from './components/categorylist/CategoryList.jsx';
 import NavBar from './components/navbar/Navbar.jsx';
 import Footer from './components/footer/Footer.jsx';
 import ProductCard from './components/productcard/ProductCard.jsx';
 import AuthForm from './components/auth/AuthForm.jsx';
 import AuthService from './components/auth/service/auth-service.jsx';
 import FormProduct from './routes/formproduct/FormProduct.jsx';
-import ProtectedRoute from './components/auth/service/protected-routes.jsx';
 import ProductRow from './components/productrow/ProductRow.jsx';
 import Home from './routes/home/home.jsx';
 import Products from './routes/products/Products.jsx';
@@ -24,6 +21,7 @@ import Category from './routes/categories/Category.jsx';
 import Orders from './routes/orders/Orders.jsx';
 import UserPage from './routes/userpage/UserPage.jsx';
 import AboutUs from './routes/aboutus/AboutUs.jsx';
+import CartCheckout from './routes/cartcheckout/CartCheckout.jsx';
 
 class App extends Component {
   constructor() {
@@ -49,7 +47,7 @@ class App extends Component {
         userAvaliations: [],
         userOrders: []
       },
-      filterText: '',
+      newOrder: '',
       filterProduct: {},
       filterPrice: ['0', '100000000'],
       category: {},
@@ -71,6 +69,7 @@ class App extends Component {
     this.selectProduct = this.selectProduct.bind(this);
     this.productRowTable = this.productRowTable.bind(this);
     this.addTotal = this.addTotal.bind(this);
+    this.newOrderCheckout = this.newOrderCheckout.bind(this);
     this.updateCategories = this.updateCategories.bind(this);
     this.selectCategory = this.selectCategory.bind(this);
     this.cartReset = this.cartReset.bind(this);
@@ -83,6 +82,7 @@ class App extends Component {
     this.setState({ cart: (JSON.parse(localStorage.getItem('cart')) || {}) });
     this.setState({ total: (JSON.parse(localStorage.getItem('total')) || {}) });
     this.setState({ productDetail: (JSON.parse(localStorage.getItem('productDetail')) || {}) });
+    this.setState({ newOrder: (JSON.parse(localStorage.getItem('newOrder')) || '') });
   }
 
   componentDidMount() {
@@ -176,17 +176,16 @@ class App extends Component {
   }
 
   fetchUserAddress() {
-    const { loggedInUser } = this.state;
-      this.service.loggedin()
-        .then((response) => {
-          this.setState({ loggedInUser: response });
-        })
-        .then(() => {
-          this.setState({ loggedInUserState: true });
-        })
-        .catch(() => {
-          this.setState({ loggedInUser: false, loggedInUserState: true });
-        });
+    this.service.loggedin()
+      .then((response) => {
+        this.setState({ loggedInUser: response });
+      })
+      .then(() => {
+        this.setState({ loggedInUserState: true });
+      })
+      .catch(() => {
+        this.setState({ loggedInUser: false, loggedInUserState: true });
+      });
   }
 
   // Sidebar functions
@@ -198,7 +197,6 @@ class App extends Component {
       this.setState({ category: Object.assign({}, delete filterProduct[name], filterProduct) });
     }
   }
-
   updatePrice(priceMin, priceMax) {
     this.setState({ filterPrice: [priceMin, priceMax] });
   }
@@ -287,17 +285,21 @@ class App extends Component {
     });
   }
 
+  newOrderCheckout(order) {
+    this.setState({ newOrder: order });
+    localStorage.setItem('newOrder', JSON.stringify(order));
+  }
+
   selectProduct(obj) {
     new Promise((resolve) => {
       resolve(this.setState({
         productDetail: obj
       }));
     })
-    .then(() => {
-      const { productDetail } = this.state;
-      localStorage.setItem('productDetail', JSON.stringify(productDetail));
-    })
-      
+      .then(() => {
+        const { productDetail } = this.state;
+        localStorage.setItem('productDetail', JSON.stringify(productDetail));
+      });
   }
 
   logoutUser() {
@@ -310,7 +312,7 @@ class App extends Component {
 
   render() {
     this.fetchUser();
-    const { categories, cart, productDetail, total, products, orders, loggedInUser, category, categoryState, productState, orderState, loggedInUserState } = this.state;
+    const { categories, cart, productDetail, total, products, orders, loggedInUser, category, categoryState, productState, orderState, loggedInUserState, newOrder } = this.state;
     if (categoryState && productState && orderState && loggedInUserState) {
       if (loggedInUser) {
         return (
@@ -323,7 +325,8 @@ class App extends Component {
                 <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
                 <Route exact path="/products" render={() => <Products cardList={this.cardList()} updateFilter={this.updateFilter} categories={categories} updatePrice={this.updatePrice} />} />
                 <Route exact path="/signup" render={() => <AuthForm name username Password type="Signup" getUser={this.getTheUser} />} />
-                <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+                <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} newOrderCheckout={this.newOrderCheckout} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
+                <Route exact path="/cart/checkout" render={() => <CartCheckout newOrder={newOrder} />} />
                 <Route exact path="/login" render={() => <AuthForm username Password type="Login" getUser={this.getTheUser} />} />
                 <Route exact path="/products/:id" render={() => <ProductDetail addCart={this.addCart} user={loggedInUser} product={productDetail} counterCart={cart[productDetail._id]} />} />
 

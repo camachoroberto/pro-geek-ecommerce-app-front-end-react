@@ -16,7 +16,6 @@ class UserPage extends Component {
 
   render() {
     const { user } = this.props;
-    console.log(user)
     return (
       <div className="container mt-5">
         <div className="row justify-content-center">
@@ -27,7 +26,7 @@ class UserPage extends Component {
             </ul>
           </div>
         </div>
-        <div className="fillin"></div>
+        <div className="fillin" />
       </div>
     );
   }
