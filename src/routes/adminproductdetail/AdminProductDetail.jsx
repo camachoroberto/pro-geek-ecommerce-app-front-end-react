@@ -105,7 +105,7 @@ class AdminProductDetail extends Component {
     e.preventDefault();
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.state;
     const categoryArray = Object.keys(category);
-    axios.put(`http://localhost:8080/products/${this.props.product._id}`, { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray })
+    axios.put(`${process.env.API_URL}/products/${this.props.product._id}`, { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray })
       .then(response => console.log(response.data))
       .catch(err => console.log(err));
   }

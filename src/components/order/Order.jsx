@@ -35,7 +35,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
     e.preventDefault();
     Axios({
       method: 'post',
-      url: 'http://localhost:8080/evaluations',
+      url: `${process.env.API_URL}/evaluations`,
       data: {
         rating,
         comment,
@@ -47,7 +47,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
       .then((res) => {
         Axios({
           method: 'patch',
-          url: `http://localhost:8080/products/${product._id}`,
+          url: `${process.env.API_URL}/products/${product._id}`,
           data: { rating: {
             rating,
             comment,
@@ -64,7 +64,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
             });
             Axios({
               method: 'patch',
-              url: `http://localhost:8080/orders/${order._id}`,
+              url: `${process.env.API_URL}/orders/${order._id}`,
               data: {
                 products: order.products,
                 status: order.status
@@ -171,7 +171,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
   );
 
   const handleSubmit = () => {
-    Axios.patch(`http://localhost:8080/orders/${order._id}`, { status, products: order.products })
+    Axios.patch(`${process.env.API_URL}/orders/${order._id}`, { status, products: order.products })
       .then(() => {
         updateMessage('Status updated!');
       })

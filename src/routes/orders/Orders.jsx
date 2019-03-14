@@ -8,7 +8,7 @@ const AdminOrders = ({ user, updateMessage }) => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    Axios.get('http://localhost:8080/orders')
+    Axios.get(`${process.env.API_URL}/orders`)
       .then((res) => {
         setOrders(res.data.response);
       });

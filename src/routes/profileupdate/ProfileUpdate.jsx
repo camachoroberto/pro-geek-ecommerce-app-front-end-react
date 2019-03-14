@@ -44,7 +44,7 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
     e.preventDefault();
     axios({
       method: 'put',
-      url: `http://localhost:8080/users/${user._id}`,
+      url: `${process.env.API_URL}/users/${user._id}`,
       data: {
         name,
         username,

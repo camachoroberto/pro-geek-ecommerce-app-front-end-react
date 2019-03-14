@@ -54,7 +54,7 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
   const deleteCategory = (idx, category) => {
     Axios({
       method: 'delete',
-      url: `http://localhost:8080/categories/${category._id}`
+      url: `${process.env.API_URL}/categories/${category._id}`
     })
       .then(() => {
         categories.splice(idx, 1);
