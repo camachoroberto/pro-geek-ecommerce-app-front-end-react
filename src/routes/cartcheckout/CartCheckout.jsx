@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CartCheckout = ({ newOrder }) => {
-  console.log('newOrder', newOrder);
-  return(
+  return (
     <div className="mt-5 checkout-container">
       <div className="container-fluid">
         <div className="row">

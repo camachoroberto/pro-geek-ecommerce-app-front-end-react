@@ -40,7 +40,7 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
           setAction('Add');
           setShow(true);
         })
-        .catch(err => console.log(err))
+        .catch((err) => { throw err; });
     } else {
       setShow(true);
       setAction('Edit');
@@ -60,9 +60,7 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
         categories.splice(idx, 1);
         updateCategories(categories);
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => { throw err; });
   }
 
   const categoriesList = () => {

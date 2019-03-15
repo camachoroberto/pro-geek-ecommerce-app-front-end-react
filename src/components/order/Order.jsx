@@ -78,7 +78,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
             handleOpenEva();
           });
       })
-      .catch(err => console.log(err));
+      .catch((err) => { throw err; });
   };
 
 

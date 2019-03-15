@@ -149,7 +149,7 @@ const AdminOrders = ({ user, updateMessage }) => {
     setFilter(value);
   };
 
-  if (userOrders.length !== 0) {
+  if (userOrders.length !== 0 || user.role === 'Admin') {
     return (
       <div className="container mt-3">
         <div className="row justify-content-center">

@@ -12,7 +12,7 @@ class AuthService {
   signup(name, username, password) {
     return this.service.post('/users/signup', { name, username, password })
       .then(response => response.data)
-      .catch(err => console.log(err));
+      .catch((err) => { throw err; });
   }
 
   loggedin() {

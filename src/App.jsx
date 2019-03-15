@@ -109,8 +109,6 @@ class App extends Component {
       .catch((err) => {
         throw err;
       });
-
-
   }
 
   // auth components and functions
@@ -186,6 +184,7 @@ class App extends Component {
       this.setState({ category: Object.assign({}, delete filterProduct[name], filterProduct) });
     }
   }
+
   updatePrice(priceMin, priceMax) {
     this.setState({ filterPrice: [priceMin, priceMax] });
   }
@@ -300,9 +299,13 @@ class App extends Component {
   }
 
   updateProducts(obj) {
+    if (Array.isArray(obj)) {
+      this.setState( { products: obj });
+      return
+    }
     const { products } = this.state;
     products.push(obj)
-    this.setState({products: products});
+    this.setState({ products });
   }
 
   render() {
@@ -313,7 +316,6 @@ class App extends Component {
         return (
           <div className="body">
             <div className="content-wrap">
-
               <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} updateFilter={this.updateFilter} filterText={this.filterText} />
               {this.showMessage()}
               <Switch>
@@ -350,7 +352,7 @@ class App extends Component {
                 <Route
                   path="/profile/products/:id"
                   render={() => (loggedInUser.role === 'Admin'
-                    ? <AdminProductDetail product={productDetail} categories={categories} />
+                    ? <AdminProductDetail selectProduct={this.selectProduct} updateMessage={this.updateMessage}products={products} product={productDetail} categories={categories} updateProducts={this.updateProducts} />
                     : <Redirect to="/" />)}
                 />
                 <Route
@@ -358,9 +360,7 @@ class App extends Component {
                   path="/profile"
                   render={() => (loggedInUser.role === 'User'
                     ? <UserPage user={loggedInUser} />
-                    : loggedInUser.role === 'Admin'
-                      ? <AdminPage products={products} user={loggedInUser} categories={categories} orders={orders} />
-                      : <Redirect to="/profile" />)}
+                    : <AdminPage user={loggedInUser} />)}
                 />
 
                 {/* User routes */}
@@ -369,14 +369,14 @@ class App extends Component {
                 <Route exact path="/aboutus" render={() => <AboutUs />} />
               </Switch>
             </div>
-              <Footer />
+            <Footer />
           </div>
         );
       }
       return (
         <div className="body">
           <div className="content-wrap">
-            <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText}/>
+            <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} filterText={this.filterText} />
             {this.showMessage()}
             <Switch>
               <Route exact path="/" render={() => <Home categories={categories} cardList={this.cardList().slice(0, 3)} />} />
@@ -384,12 +384,12 @@ class App extends Component {
               <Route exact path="/signup" render={() => <AuthForm Name username Password type="Signup" updateMessage={this.updateMessage} getUser={this.getTheUser} />} />
               <Route exact path="/cart" render={() => <Cart cartRow={this.productRowTable} cartReset={this.cartReset} updateMessage={this.updateMessage} products={products} loggedInUser={loggedInUser} cart={cart} total={total} />} />
               <Route exact path="/login" render={() => <AuthForm username Password updateMessage={this.updateMessage} type="Login" getUser={this.getTheUser} />} />
-              <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart}  selectProduct={this.selectProduct} user={loggedInUser} product={productDetail} counterCart={cart[productDetail._id]} />} />
+              <Route path="/products/:id" render={() => <ProductDetail addCart={this.addCart} selectProduct={this.selectProduct} user={loggedInUser} product={productDetail} counterCart={cart[productDetail._id]} />} />
               <Route exact path="/aboutus" render={() => <AboutUs />} />
-              <Route path="/:params" render={() => {this.updateMessage('Pelase login first!'); return <Redirect to="/login" />}} />
+              <Route path="/:params" render={() => { this.updateMessage('Pelase login first!'); return <Redirect to="/login" />; }} />
             </Switch>
           </div>
-            <Footer />
+          <Footer />
         </div>
       );
     }

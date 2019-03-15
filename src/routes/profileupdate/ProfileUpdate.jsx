@@ -40,7 +40,6 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
   };
 
   const saveUser = (e) => {
-    console.log('OEEEEEEE');
     e.preventDefault();
     axios({
       method: 'put',
@@ -68,7 +67,6 @@ const ProfileUpdate = ({ user, fetchUserAddress, updateMessage }) => {
     return <Redirect to="/profile" />;
   }
 
-    console.log (name)
   return (
     <div className="container mt-5 mb-5">
       <div className="row justify-content-center">

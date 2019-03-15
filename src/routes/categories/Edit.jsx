@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, InputForm } from 'react-bootstrap';
 import Axios from 'axios';
 
-const Edit = ({show, handleClose, updateCategories, categories, setSuccess, add, action, label, categoryIndex, category}) => {
+const Edit = ({ show, handleClose, updateCategories, categories, setSuccess, add, action, label, categoryIndex, category }) => {
   const [name, setName] = useState(false);
   const [message, setMessage] = useState('');
  
@@ -12,43 +12,41 @@ const Edit = ({show, handleClose, updateCategories, categories, setSuccess, add,
     setName( value );
   }
 
-  const handleSubmit = (e, name) => {
+  const handleSubmit = (e, categoryName) => {
     e.preventDefault();
-      if (name === '' || !name) {
-        setMessage('Category name must not be empty');
+    if (categoryName === '' || !categoryName) {
+      setMessage('Category name must not be empty');
+    } else {
+      if (add) {
+        Axios({
+          method: 'post',
+          url: `${process.env.API_URL}/categories`,
+          data: { categoryName }
+        })
+          .then((response) => {
+            categories.push(response.data.category);
+            updateCategories(categories);
+            setSuccess('Category created');
+          })
       } else {
-        if (add) {
-          Axios({
-            method: 'post',
-            url: `${process.env.API_URL}/categories`,
-            data: {name: name}
+        Axios({
+          method: 'put',
+          url: `${process.env.API_URL}/categories/${category._id}`,
+          data: { categoryName }
+        })
+          .then(() => {
+            categories[categoryIndex] = Object.assign({}, categories[categoryIndex], { categoryName });
+            updateCategories(categories);
           })
-            .then((response) => {
-              categories.push(response.data.category);
-              updateCategories(categories)
-              setSuccess('Category created')
-            })
-        } else {
-          Axios({
-            method: 'put',
-            url: `${process.env.API_URL}/categories/${category._id}`,
-            data: { name: name }
-          })
-            .then(response => {
-              categories[categoryIndex] = Object.assign({}, categories[categoryIndex], {name: name});
-              updateCategories(categories);
-            })
-            .catch(err => {
-              console.log(err);
-            })
-        }
+          .catch((err) => { throw err; });
+      }
       setMessage('');
       setName('');
       handleClose();
     }
-  }
+  };
 
-  useEffect(() => {setName(category.name)}, [category]);
+  useEffect(() => { setName(category.name); }, [category]);
 
   return (
     <Modal show={show} onHide={handleClose}>

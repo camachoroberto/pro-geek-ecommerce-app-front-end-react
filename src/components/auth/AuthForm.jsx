@@ -93,7 +93,6 @@ class AuthForm extends Component {
 
   render() {
     const { type } = this.props;
-    console.log(this.state.success)
     if (this.state.success) {
       return <Redirect to="/" />;
     }

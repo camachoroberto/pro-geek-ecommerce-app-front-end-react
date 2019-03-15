@@ -45,13 +45,12 @@ class Cart extends Component {
   displayButton() {
     const { total } = this.props
     const subtotal = Object.values(total)
-        .reduce((acc, cur) => (acc += cur))
-        .toFixed(2);
+      .reduce((acc, cur) => (acc += cur))
+      .toFixed(2);
     if (this.state.checkOrder) {
-      return <PaypalExpressBtn env='sandbox' client={client} currency='BRL' total={parseFloat(subtotal).toFixed(2)} onError={() => console.log('Something went wrong')} onSuccess={this.newOrder} onCancel={ () => console.log('Purchase canceled by customer')} style={{ size:'large', color: 'blue', shape: 'rect', label: 'checkout' }} />
-    } else {
-      return <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.checkOrder}> Validate Data</button>
+      return <PaypalExpressBtn env="sandbox" client={client} currency="BRL" total={parseFloat(subtotal).toFixed(2)} onError={(err) => { throw err; }} onSuccess={this.newOrder} onCancel={() => alert('Purchase canceled by customer')} style={{ size: 'large', color: 'blue', shape: 'rect', label: 'checkout' }} />;
     }
+    return <button type="button" className="btn btn lightblue btn-lg btn-block" onClick={this.checkOrder}> Validate Data</button>;
   }
 
   newOrder() {

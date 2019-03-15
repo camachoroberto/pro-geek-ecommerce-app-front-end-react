@@ -18,7 +18,8 @@ class AdminProductDetail extends Component {
       material: '',
       height: '',
       manufacturer: '',
-      category: {}
+      category: {},
+      redirect: false
     };
     this.handleText = this.handleText.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -57,11 +58,8 @@ class AdminProductDetail extends Component {
         .then((response) => {
           image.push(response.secure_url);
           this.setState({ image });
-          console.log(image);
         })
-        .catch((err) => {
-          console.log('Error while uploading the file: ', err);
-        });
+        .catch((err) => { throw err; });
     } else {
       alert('Max number of uploads reached.');
     }
@@ -103,14 +101,30 @@ class AdminProductDetail extends Component {
 
   saveProduct(e) {
     e.preventDefault();
+    const { products, updateProducts, updateMessage } = this.props;
     const { name, price, leadTime, image, description, material, height, manufacturer, category } = this.state;
     const categoryArray = Object.keys(category);
     axios.put(`${process.env.API_URL}/products/${this.props.product._id}`, { name, price, leadTime, image, description, material, height, manufacturer, category: categoryArray })
-      .then(response => console.log(response.data))
-      .catch(err => console.log(err));
+      .then((res) => {
+        let idx = 0;
+        for (let i = 0; i < products.length; i += 1) {
+          if (products[i]._id === res.data.response_id) {
+            idx = i;
+            break;
+          }
+        }
+        products[idx] = res.data.response;
+        updateProducts(products);
+        this.setState({ redirect: true });
+        updateMessage('Product updated successfully');
+      })
+      .catch((err) => { throw err; });
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/profile/products" />;
+    }
     if (!this.props.product.category) {
       return <Redirect to="/profile/products" />;
     }

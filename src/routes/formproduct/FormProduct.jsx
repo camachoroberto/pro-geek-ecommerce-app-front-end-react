@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import InputForm from '../../components/inputform/InputForm.jsx';
 import CategoryCheckbox from '../../components/categorycheckbox/CategoryCheckbox.jsx';
 import FileUpload from '../../components/auth/service/file-upload.jsx';
-import { Redirect } from 'react-router-dom';
 
 class FormProduct extends Component {
   constructor(props) {
@@ -91,7 +91,7 @@ class FormProduct extends Component {
         this.setState({productState: true});
         updateProducts(response.data)
       })
-      .catch(err => console.log(err));
+      .catch((err) => { throw err; });
   }
 
   render() {
