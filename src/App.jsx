@@ -396,12 +396,10 @@ class App extends Component {
     return (
       <div>
         <NavBar user={loggedInUser} cartCounter={Object.keys(cart).length} getTheUser={this.getTheUser} />
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col align-self-center">
-              <div className="d-flex align-items-center">
+        <div className="container load">
+          <div className="containerCol">
+            <div className="marginTop">              
                 <div className="spinner-border ml-auto" role="status" aria-hidden="true" />
-              </div>
             </div>
           </div>
         </div>
