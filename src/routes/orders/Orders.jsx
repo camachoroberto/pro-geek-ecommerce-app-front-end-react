@@ -49,7 +49,7 @@ const AdminOrders = ({ user, updateMessage }) => {
               date.splice(1, 0, item);
             }
           });
-          return <Order key={order._id} user={user} date={date.join('/')} order={order} getOrder={order} />;
+          return <Order key={order._id} user={user} updateMessage={updateMessage} date={date.join('/')} order={order} getOrder={order} />;
         });
     }
     return ordersArray
@@ -73,7 +73,7 @@ const AdminOrders = ({ user, updateMessage }) => {
             date.splice(1, 0, item);
           }
         });
-        return <Order key={order._id} user={user} date={date.join('/')} order={order} getOrder={order} />;
+        return <Order key={order._id} user={user} updateMessage={updateMessage} date={date.join('/')} order={order} getOrder={order} />;
       });
   };
 
@@ -156,9 +156,9 @@ const AdminOrders = ({ user, updateMessage }) => {
           <div className="col-md-12 table-responsive ">
             <select className="form-control" onChange={e => filterOrders(e)}>
               <option value="All">All</option>
-              <option value="Pending Payment">Pending Payment</option>
-              <option value="In Production">In Production</option>
-              <option value="To be forwarded">To be forwarded</option>
+              <option value="Pending payment">Pending payment</option>
+              <option value="In production">In production</option>
+              <option value="To be fowarded">To be fowarded</option>
               <option value="Posted">Posted</option>
               <option value="Delivered">Delivered</option>
             </select>
@@ -198,9 +198,9 @@ const AdminOrders = ({ user, updateMessage }) => {
       <div className="containerCol paddinTop">
         <select className="form-control" onChange={e => filterOrders(e)}>
           <option value="All">All</option>
-          <option value="Pending Payment">Pending Payment</option>
-          <option value="In Production">In Production</option>
-          <option value="To be forwarded">To be forwarded</option>
+          <option value="Pending payment">Pending payment</option>
+          <option value="In production">In production</option>
+          <option value="To be fowarded">To be fowarded</option>
           <option value="Posted">Posted</option>
           <option value="Delivered">Delivered</option>
         </select>
