@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, InputForm } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
 
 const Edit = ({ show, handleClose, updateCategories, categories, setSuccess, add, action, label, categoryIndex, category }) => {
   const [name, setName] = useState(false);
   const [message, setMessage] = useState('');
- 
 
   const handleText = (e) => {
-    const { value } = e.currentTarget
-    setName( value );
-  }
+    const { value } = e.currentTarget;
+    setName(value);
+  };
 
   const handleSubmit = (e, categoryName) => {
     e.preventDefault();
@@ -21,21 +20,21 @@ const Edit = ({ show, handleClose, updateCategories, categories, setSuccess, add
         Axios({
           method: 'post',
           url: `${process.env.API_URL}/categories`,
-          data: { categoryName }
+          data: { name: categoryName }
         })
           .then((response) => {
             categories.push(response.data.category);
             updateCategories(categories);
             setSuccess('Category created');
-          })
+          });
       } else {
         Axios({
           method: 'put',
           url: `${process.env.API_URL}/categories/${category._id}`,
-          data: { categoryName }
+          data: { name: categoryName }
         })
           .then(() => {
-            categories[categoryIndex] = Object.assign({}, categories[categoryIndex], { categoryName });
+            categories[categoryIndex] = Object.assign({}, categories[categoryIndex], { name: categoryName });
             updateCategories(categories);
           })
           .catch((err) => { throw err; });

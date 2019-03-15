@@ -12,7 +12,7 @@ const AdminOrders = ({ user, updateMessage }) => {
       .then((res) => {
         setOrders(res.data.response);
       });
-  }, []);
+  });
 
   const userOrders = orders.filter(item => user._id === item.user.id);
 

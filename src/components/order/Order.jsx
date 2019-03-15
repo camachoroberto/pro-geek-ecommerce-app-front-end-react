@@ -18,7 +18,7 @@ const Order = ({ user, date, updateMessage, getOrder }) => {
     return array;
   };
 
-  let statusOptions = ['Peding payment', 'In production', 'To be fowarded', 'Posted', 'Delivered'];
+  let statusOptions = ['Pending payment', 'In production', 'To be fowarded', 'Posted', 'Delivered'];
   statusOptions = swap(statusOptions.indexOf(order.status), statusOptions);
   const listOptions = () => statusOptions.map(status => <option value={status}>{status}</option>);
 

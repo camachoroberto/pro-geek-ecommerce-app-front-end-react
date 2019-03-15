@@ -12,13 +12,13 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
 
   const handleClose = () => {
     setShow(false);
-  }
+  };
 
   const updateAdd = () => {
     return new Promise((resolve) => {
       resolve(setAdd(true));
-    })
-  }
+    });
+  };
 
   const showMessage = () => {
     if (message) {
@@ -31,7 +31,7 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
         </div>
       );
     }
-  }
+  };
 
   const handleShow = (add) => {
     if (add) {
@@ -45,11 +45,11 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
       setShow(true);
       setAction('Edit');
     }
-  }
+  };
 
   const selectCategoryIndex = (idx) => {
     setIdx(idx);
-  }
+  };
 
   const deleteCategory = (idx, category) => {
     Axios({
@@ -61,41 +61,41 @@ const Category = ({ categories, updateCategories, selectCategory, category }) =>
         updateCategories(categories);
       })
       .catch((err) => { throw err; });
-  }
+  };
 
   const categoriesList = () => {
     return categories.map((category, idx) => (
       <tr key={category._id}>
         <td>{category.name}</td>
         <td>
-          <button onClick={() => { handleShow(); selectCategory(category); selectCategoryIndex(idx) }} className="btn ButtonCardP">Edit</button>
+          <button type="button" onClick={() => { handleShow(); selectCategory(category); selectCategoryIndex(idx); }} className="btn ButtonCardP">Edit</button>
         </td>
         <td>
-          <button className="btn btn-danger" onClick={() => { selectCategoryIndex(idx); deleteCategory(idx, category) }} >delete</button>
+          <button type="button" className="btn btn-danger" onClick={() => { selectCategoryIndex(idx); deleteCategory(idx, category); }}>delete</button>
         </td>
       </tr>
     ));
-  }
+  };
 
-    return (
-      <div>
-        <Edit handleClose={handleClose} updateCategories={updateCategories} setSuccess={setMessage} add={add} action={action} categories={categories} show={show} categoryIndex={idx} category={category} />
-        <div className="cart table-responsive">
-        {showMessage()}
-          <button className="btn ButtonKeep btn-lg btn-block mt-2" onClick={() => {handleShow(true)}}>add</button>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th />
-                <th />
-              </tr>
-            </thead>
-            <tbody>{categoriesList()}</tbody>
-          </table>
-        </div>
+  return (
+    <div>
+      <Edit handleClose={handleClose} updateCategories={updateCategories} setSuccess={setMessage} add={add} action={action} categories={categories} show={show} categoryIndex={idx} category={category} />
+      <div className="cart table-responsive">
+      {showMessage()}
+        <button type="button" className="btn ButtonKeep btn-lg btn-block mt-2" onClick={() => { handleShow(true); }}>add</button>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th />
+              <th />
+            </tr>
+          </thead>
+          <tbody>{categoriesList()}</tbody>
+        </table>
       </div>
-    );
-}
+    </div>
+  );
+};
 
 export default Category;
