@@ -10,18 +10,18 @@ It was 3 weeks with a lot of work and dedication after almost 2 months bootcampi
 
 * Stack used in production: REACT, Axios & Bootstrap
 * Stack used during app development: Webpack, Sass, Babel (code compilers and transpilers)
-* APIs used: Paypal, Correios (for freight) & Facebook
-* Deployed at: Heroku
+* APIs used: Paypal & Facebook
+* Deployed at: Surge
 
-* Link to the Ecommerce (mainly in case you want to buy something ;-]): [https://pro-geek-ecommerce.herokuapp.com/]
-* Admin Credentials: 
+* Link to the Ecommerce (mainly in case you want to buy something ;-]): [https:pro-geek.surge.sh]
+* Admin Credentials: login: admin@admin.com.br / password: 123456
 
 * Link to Back-End aplication: [https://pro-geek-ecommerce-api.herokuapp.com/]
 * Link to Back-end repository: [https://github.com/henriquegmendes/pro-geek-ecommerce-app-backend-api]
 
 ## Prerequisites
 
-No hardware prerequisites and no instalation needed. This aplication works 100% online and can be accessed in any device (100% responsive!).
+No hardware prerequisites and no instalation needed. This aplication works 100% online and can be accessed in any device.
 
 ## How to navigate
 
@@ -36,7 +36,9 @@ If you login with an ADMIN account, you will have some additiona access priviled
 
 Althouth the app is fully functional, improvements can be made to increase user's experience:
 
-* Add a rating grade to each restaurant and show search results by the highest to lowest grade.
+* Admin manage view with graphics showing ecommerce's statistics (best-seller products, most accessed products, etc.)
+* Implement a "return to previous page" button in some views
+* Add a image carroussel in home view to advertise new product releases and products promotion
 
 ## Contributing
 
